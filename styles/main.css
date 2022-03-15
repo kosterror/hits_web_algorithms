@@ -1,0 +1,19 @@
+* {
+    background-color: #1891AC;
+}
+
+h1 {
+    text-align: center;
+}
+
+body > .text {
+    margin: auto;
+    max-width: 900px;
+    font-size: 20px;
+    text-align: justify;
+}
+
+body > .pictures {
+    margin: auto;
+    max-width: 300px;
+}
