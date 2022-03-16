@@ -1,19 +1,14 @@
 * {
     background-color: #1891AC;
+    margin: 0;
+    padding: 0;
 }
 
-h1 {
-    text-align: center;
-}
-
-body > .text {
-    margin: auto;
-    max-width: 900px;
-    font-size: 20px;
-    text-align: justify;
-}
-
-body > .pictures {
-    margin: auto;
-    max-width: 300px;
+#rectangle-7 {
+    /* float: right;
+    height: 100%; */
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
 }
