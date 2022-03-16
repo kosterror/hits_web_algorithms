@@ -12,9 +12,49 @@
     height: 100%;
 }
 
-#button1 {
+.button {
+    background-color:rgba(0, 0, 0, 0);
     position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 20%;
+    display: inline;
+    width: 15%;
 }
+
+#button1 {
+    left: 10%;
+    top: 20%;
+}
+
+#button2 {
+    left: 30%;
+    top: 20%;
+}
+
+#button3 {
+    left: 50%;
+    top: 20%;
+}
+
+#button4 {
+    left: 10%;
+    top: 60%;
+}
+
+#button5 {
+    left: 30%;
+    top: 60%;
+}
+
+#button6 {
+    left: 50%;
+    top: 60%;
+}
+
+h1 {
+    position: absolute;
+    left: 30%;
+    top: 5%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 50px;
+}
+
+
