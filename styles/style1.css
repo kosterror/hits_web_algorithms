@@ -3,3 +3,28 @@
     margin: 0;
     padding: 0;
 }
+
+canvas {
+    background-color: #fff;
+    position: absolute;
+    left: 25%;
+    top: 15%;
+    width: 70%;
+}
+
+#toolbar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 20%;
+}
+
+h1 {
+    background-color:rgba(0, 0, 0, 0);
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 40px;
+    position: absolute;
+    left: 50%;
+    top: 5%;
+}
