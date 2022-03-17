@@ -6,12 +6,48 @@
     
 }
 
+h1 {
+    background-color:rgba(0, 0, 0, 0);
+    left: 30%;
+    top: 5%;
+    position: absolute;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 50px;
+}
+
 #background-right {
     position: absolute;
     right: 0;
     top: 0;
     height: 100%;
 }
+
+#icon {
+    background-color:rgba(0, 0, 0, 0);
+    position: absolute;
+    width: 4%;
+    top: 5.5%;
+    right: 3%;
+}
+
+a{
+    background-color: rgba(0, 0, 0, 0);
+    text-decoration: none;
+    color: black;
+}
+
+#team {
+    width: 125px;
+    background-color: rgba(0, 0, 0, 0);
+    color: black;
+    font-size: 30px;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    text-align: right;
+    position: absolute;
+    top: 5%;
+    right: 10%;
+}
+
 
 .button {
     background-color:rgba(0, 0, 0, 0);
@@ -48,13 +84,4 @@
 #button6 {
     left: 50%;
     top: 60%;
-}
-
-h1 {
-    background-color:rgba(0, 0, 0, 0);
-    left: 30%;
-    top: 5%;
-    position: absolute;
-    font-family: Georgia, "Times New Roman", Times, serif;
-    font-size: 50px;
 }
