@@ -5,11 +5,9 @@
 }
 
 canvas {
-    background-color: #fff;
-    position: absolute;
-    left: 25%;
-    top: 15%;
-    width: 70%;
+    background-color:#D2ECF9;
+    margin-left: 550px;
+    margin-top: 175px;
 }
 
 #toolbar {
@@ -26,5 +24,5 @@ h1 {
     font-size: 40px;
     position: absolute;
     left: 50%;
-    top: 5%;
+    top: 2%;
 }
