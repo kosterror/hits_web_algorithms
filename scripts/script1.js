@@ -116,8 +116,8 @@ let finish = {
 let length = 100;       //длина стороны квадрата
 let matrixNumber;       //двумерный массив, на котором будет работать алгоритм
 let matrixSquare;       //двумерный массив, в котором будут хранится квадраты
-let rowCount = width / length;
-let colCount = width / length;
+let ROW = height / length - 1;
+let COL = width / length - 1;
 let radius = 20;
 let padding = 2;
 let activeMode = 0;     //текущий режим
@@ -150,34 +150,34 @@ changesize100.addEventListener('click', changeSize100);
 changesize150.addEventListener('click', changeSize150);
 
 function handler(event) {
-    const currentX = event.offsetX;
-    const currentY = event.offsetY;
+    const x = event.offsetX - length / 2;
+    const y = event.offsetY - length / 2;
 
-    let currentCol = Math.trunc(currentX / length);   //чтобы понять попали ли мы в сам квадрат: надо понять в каком квадрате надо искать попадание
-    let currentRow = Math.trunc(currentY / length);   //для найдем единственные возможные row и col для матрицы
+    let col = Math.trunc(x / length);   //чтобы понять попали ли мы в сам квадрат: надо понять в каком квадрате надо искать попадание
+    let row = Math.trunc(y / length);   //для найдем единственные возможные row и col для матрицы
     if (activeMode === 1) {
         //затычка
         //можно печатать текст с призывом пользователя к выбору чего-либо
     }
 
     if (activeMode === 2) {    //добавляем стену
-        if (matrixSquare[currentRow][currentCol].canRedraw(currentX, currentY, currentRow, currentCol)) {
-            matrixSquare[currentRow][currentCol].draw(colorWall);
+        if (matrixSquare[row][col].canRedraw(x, y, row, col)) {
+            matrixSquare[row][col].draw(colorWall);
             //TO DO: прописать логику в матрице
         }
     }
 
     else if (activeMode === 3) {    //добавляем дорогу
-        if (matrixSquare[currentRow][currentCol].canRedraw(currentX, currentY, currentRow, currentCol)) {
-            matrixSquare[currentRow][currentCol].draw(colorRoad);
+        if (matrixSquare[row][col].canRedraw(x, y, row, col)) {
+            matrixSquare[row][col].draw(colorRoad);
             //TO DO: прописать логику в матрице
         }
     }
 
     else if (activeMode === 4) {    //выбираем стартовую клетку
-        if (matrixSquare[currentRow][currentCol].canRedraw(currentX, currentY, currentRow, currentCol)) {
+        if (matrixSquare[row][col].canRedraw(x, y, row, col)) {
             //TO DO: прописать логику в матрице
-            matrixSquare[currentRow][currentCol].draw(colorRoad);
+            matrixSquare[row][col].draw(colorRoad);
 
             let font = length / 2 + 'px s';
 
@@ -185,16 +185,16 @@ function handler(event) {
             ctx.textBaseline = 'middle';
             ctx.fillStyle = 'black'
             ctx.font = font;
-            ctx.fillText('S', currentCol * length + length / 2, currentRow * length + length / 2);
+            ctx.fillText('S', col * length + length / 2, row * length + length / 2);
 
             activeMode = 1;
         }
     }
 
     else if (activeMode === 5) {    //выбираем финишную клетку
-        if (matrixSquare[currentRow][currentCol].canRedraw(currentX, currentY, currentRow, currentCol)) {
+        if (matrixSquare[row][col].canRedraw(x, y, row, col)) {
             //TO DO: прописать логику в матрице
-            matrixSquare[currentRow][currentCol].draw(colorRoad);
+            matrixSquare[row][col].draw(colorRoad);
 
             let font = length / 2 + 'px s';
 
@@ -202,7 +202,7 @@ function handler(event) {
             ctx.textBaseline = 'middle';
             ctx.fillStyle = 'black'
             ctx.font = font;
-            ctx.fillText('F', currentCol * length + length / 2, currentRow * length + length / 2);
+            ctx.fillText('F', col * length + length / 2, row * length + length / 2);
 
             activeMode = 1; //переключаем в стандартный режим
         }
@@ -211,16 +211,20 @@ function handler(event) {
 }
 
 function generateMaze() {
-    console.log('Потом сделаю');
+    console.log(ROW + ' ' + COL);
+    console.log(matrixSquare);
+
+
+
     activeMode = 1;
 }
 
 function fillWall() {
-    matrixSquare = new Array(rowCount);
-    for (let i = 0; i < rowCount; i++) {
-        matrixSquare[i] = new Array(colCount);
-        for (let j = 0; j < colCount; j++) {
-            matrixSquare[i][j] = new Square(j * length, i * length, length, radius, padding);
+    matrixSquare = new Array(ROW);
+    for (let i = 0; i < ROW; i++) {
+        matrixSquare[i] = new Array(COL);
+        for (let j = 0; j < COL; j++) {
+            matrixSquare[i][j] = new Square(j * length + length / 2, i * length + length / 2, length, radius, padding);
             matrixSquare[i][j].draw(colorWall);
         }
     }
@@ -228,11 +232,11 @@ function fillWall() {
 }
 
 function fillRoad() {
-    matrixSquare = new Array(rowCount);
-    for (let i = 0; i < rowCount; i++) {
-        matrixSquare[i] = new Array(colCount);
-        for (let j = 0; j < colCount; j++) {
-            matrixSquare[i][j] = new Square(j * length, i * length, length, radius, padding);
+    matrixSquare = new Array(ROW);
+    for (let i = 0; i < ROW; i++) {
+        matrixSquare[i] = new Array(COL);
+        for (let j = 0; j < COL; j++) {
+            matrixSquare[i][j] = new Square(j * length + length / 2, i * length + length / 2, length, radius, padding);
             matrixSquare[i][j].draw(colorRoad);
         }
     }
@@ -255,37 +259,37 @@ function changeFinish() {
     activeMode = 5;
 }
 
-function changeSize50(){
+function changeSize50() {
     length = 50;
-    colCount = width / length;
-    rowCount = width / length;
+    COL = width / length - 1;
+    ROW = height / length - 1;
     radius = 10;
-    padding = 2.5;
+    padding = 1.5;
     ctx.clearRect(0, 0, width, height);
 }
 
-function changeSize75(){
+function changeSize75() {
     length = 75;
-    colCount = width / length;
-    rowCount = width / length;
+    COL = width / length - 1;
+    ROW = height / length - 1;
     radius = 15;
     padding = 3;
     ctx.clearRect(0, 0, width, height);
 }
 
-function changeSize100(){
+function changeSize100() {
     length = 100;
-    colCount = width / length;
-    rowCount = width / length;
+    COL = width / length - 1;
+    ROW = height / length - 1;
     radius = 20;
     padding = 5;
     ctx.clearRect(0, 0, width, height);
 }
 
-function changeSize150(){
+function changeSize150() {
     length = 150;
-    colCount = width / length;
-    rowCount = width / length;
+    COL = width / length - 1;
+    ROW = height / length - 1;
     radius = 25;
     padding = 5;
     ctx.clearRect(0, 0, width, height);
