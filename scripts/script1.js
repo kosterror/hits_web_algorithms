@@ -29,7 +29,7 @@ class Square {
         ctx.closePath();
     }
 
-    canRedraw(xPoint, yPoint, row, col) {
+    isHitIcon(xPoint, yPoint, row, col) {
         //сам квадрат можно разбить на несколько фигур, которые пересекаются, но не выходят за пределы самого квадрата
         //так будет удобнее чтобы проверить входит ли в него какая-то точка или нет
         //фигуры: 4 окружности, 2 прямоугольника (вертикальный и горизонтальный)
@@ -100,19 +100,21 @@ const height = 600;
 canvas.width = width;
 canvas.height = height;
 
-// let defaultColor = '#8D9091';
-const colorWall = '#8D9091';
-const colorRoad = '#1891AC';
+const colorWall = '#51585a';
+const colorRoad = '#bbc6ca';
+
 let start = {
     row: -1,
     col: -1,
     isInit: false,
 };
+
 let finish = {
     col: -1,
     row: -1,
     isInit: false
 };
+
 let length = 100;       //длина стороны квадрата
 let matrixNumber;       //двумерный массив, на котором будет работать алгоритм
 let matrixSquare;       //двумерный массив, в котором будут хранится квадраты
@@ -121,20 +123,6 @@ let COL = width / length - 1;
 let radius = 20;
 let padding = 2;
 let activeMode = 0;     //текущий режим
-//1 - лабиринт сгенерирован или не сгенерирован, кнопки не активированы
-//данный режим включается после:
-//генерации лабиринта
-//запуска алгоритма
-//паузы алгоритма
-//отмены алгоритма
-//выбора скорости 
-//выбора размера поля
-//2 - режим добавления стен
-//3 - режим удаления стен
-//4 - задать старт
-//5 - задать финиш
-//выбор размера карты и скорости не требует состояния, но после этих действий включается режим 0.
-
 
 canvas.addEventListener('click', handler);
 generate.addEventListener('click', generateMaze);
@@ -161,85 +149,218 @@ function handler(event) {
     }
 
     if (activeMode === 2) {    //добавляем стену
-        if (matrixSquare[row][col].canRedraw(x, y, row, col)) {
+        if (matrixSquare[row][col].isHitIcon(x, y, row, col)) {
+            matrixNumber[row][col] = -1;
             matrixSquare[row][col].draw(colorWall);
-            //TO DO: прописать логику в матрице
         }
     }
 
     else if (activeMode === 3) {    //добавляем дорогу
-        if (matrixSquare[row][col].canRedraw(x, y, row, col)) {
+        if (matrixSquare[row][col].isHitIcon(x, y, row, col)) {
+            matrixNumber[row][col] = 0;
             matrixSquare[row][col].draw(colorRoad);
-            //TO DO: прописать логику в матрице
         }
     }
 
     else if (activeMode === 4) {    //выбираем стартовую клетку
-        if (matrixSquare[row][col].canRedraw(x, y, row, col)) {
-            //TO DO: прописать логику в матрице
-            matrixSquare[row][col].draw(colorRoad);
-
-            let font = length / 2 + 'px s';
-
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillStyle = 'black'
-            ctx.font = font;
-            ctx.fillText('S', col * length + length / 2, row * length + length / 2);
-
-            activeMode = 1;
+        if (matrixSquare[row][col].isHitIcon(x, y, row, col)) {
+            defineStart(row, col);
+            activeMode = 4;
         }
     }
 
     else if (activeMode === 5) {    //выбираем финишную клетку
-        if (matrixSquare[row][col].canRedraw(x, y, row, col)) {
-            //TO DO: прописать логику в матрице
-            matrixSquare[row][col].draw(colorRoad);
+        if (matrixSquare[row][col].isHitIcon(x, y, row, col)) {
+            defineFinish(row, col);
 
-            let font = length / 2 + 'px s';
-
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillStyle = 'black'
-            ctx.font = font;
-            ctx.fillText('F', col * length + length / 2, row * length + length / 2);
-
-            activeMode = 1; //переключаем в стандартный режим
+            activeMode = 5;
         }
-
     }
 }
 
 function generateMaze() {
-    console.log(ROW + ' ' + COL);
-    console.log(matrixSquare);
-
-
+    createNumberMaze();
+    createMatrixSquare();
+    drawMatrixSquare();
 
     activeMode = 1;
 }
 
-function fillWall() {
+function createNumberMaze() {
+    //-1 - стена
+    // 0 - дорога
+
+    matrixNumber = new Array(ROW);
+
+    let result = (ROW + 1) * (COL + 1) / 4;
+    let counter = 0;
+
+    rubber = {
+        x: 0,
+        y: 0,
+    }
+
+    for (let i = 0; i < ROW; i++) {
+        matrixNumber[i] = new Array(COL);
+        for (let j = 0; j < COL; j++) {
+            matrixNumber[i][j] = -1;
+        }
+    }
+
+    while (counter != result) {
+        let openDirection = [rubber.y > 0, rubber.x < COL - 1, rubber.y < ROW - 1, rubber.x > 0];
+        let direction;
+
+        while (true) {   //таким образом мы никогда не отправимся за границы матрицы
+            direction = getDirection();
+            if (openDirection[direction] == true) {
+                break;
+            }
+        }
+
+        rubber.x = rubber.x + 2 * (direction == 1) - 2 * (direction == 3);
+        rubber.y = rubber.y - 2 * (direction == 0) + 2 * (direction == 2);
+
+        if (matrixNumber[rubber.y][rubber.x] == -1) {
+            matrixNumber[rubber.y][rubber.x] = 0;
+            matrixNumber[rubber.y + 1 * (direction == 0) - 1 * (direction == 2)][rubber.x - 1 * (direction == 1) + 1 * (direction == 3)] = 0;
+            counter++;
+        }
+    }
+
+    matrixNumber[0][0] = 1;
+    matrixNumber[ROW - 1][COL - 1] = 2;
+}
+
+function createMatrixNumber(value) {
+    matrixNumber = new Array(ROW);
+
+    for (let i = 0; i < ROW; i++) {
+        matrixNumber[i] = new Array(COL);
+
+        for (let j = 0; j < COL; j++) {
+            matrixNumber[i][j] = value;
+        }
+    }
+}
+
+function createMatrixSquare() {
     matrixSquare = new Array(ROW);
+
     for (let i = 0; i < ROW; i++) {
         matrixSquare[i] = new Array(COL);
         for (let j = 0; j < COL; j++) {
-            matrixSquare[i][j] = new Square(j * length + length / 2, i * length + length / 2, length, radius, padding);
-            matrixSquare[i][j].draw(colorWall);
+            matrixSquare[i][j] = new Square(length * (j + 0.5), length * (i + 0.5), length, radius, padding);
         }
     }
+}
+
+function drawMatrixSquare() {
+    for (let i = 0; i < ROW; i++) {
+        for (let j = 0; j < COL; j++) {
+            if (matrixNumber[i][j] == -1) {
+                matrixSquare[i][j].draw(colorWall);
+            }
+            else if (matrixNumber[i][j] == 0) {
+                matrixSquare[i][j].draw(colorRoad);
+            }
+
+            else if (matrixNumber[i][j] == 1) {
+                defineStart(i, j);
+            }
+
+            else if (matrixNumber[i][j] == 2) {
+                defineFinish(i, j);
+            }
+
+            else {
+                console.log('GG WP, что-то идет не так, непонятно что\nПривет из drawMatrixSquare');
+            }
+        }
+    }
+}
+
+function drawLetter(row, col, letter) {
+    matrixSquare[row][col].draw(colorRoad);
+
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = 'black'
+    ctx.font = length / 2 + 'px s';
+    ctx.fillText(letter, (col + 1) * length, (row + 1) * length);
+}
+
+function defineStart(row, col) {
+    resetStart();
+
+    start.row = row;
+    start.col = col;
+    start.isInit = true;
+
+    matrixNumber[start.row][start.col] = 1;
+    matrixSquare[start.row][start.col].draw(colorRoad);
+    drawLetter(row, col, 'S');
+}
+
+function defineFinish(row, col) {
+    resetFinish();
+
+    finish.row = row;
+    finish.col = col;
+    finish.isInit = true;
+
+    matrixNumber[finish.row][finish.col] = 2;
+    matrixSquare[finish.row][finish.col].draw(colorRoad);
+    drawLetter(row, col, 'F');
+}
+
+function resetStart() {
+    if (start.isInit) {
+        matrixNumber[start.row][start.col] = 0;
+        matrixSquare[start.row][start.col].draw(colorRoad);
+    }
+
+    start.col = -1;
+    start.row = -1;
+    start.isInit = false;
+}
+
+function resetFinish() {
+    if (finish.isInit) {
+        matrixNumber[finish.row][finish.col] = 0;
+        matrixSquare[finish.row][finish.col].draw(colorRoad);
+    }
+
+    finish.col = -1;
+    finish.row = -1;
+    finish.isInit = false;
+}
+
+function getDirection() {
+    return Math.floor(Math.random() * 4);
+}
+
+function fillWall() {
+    resetStart();  
+    resetFinish();
+
+    createMatrixNumber(-1);
+    createMatrixSquare();
+
+    drawMatrixSquare();
+
     activeMode = 1;
 }
 
 function fillRoad() {
-    matrixSquare = new Array(ROW);
-    for (let i = 0; i < ROW; i++) {
-        matrixSquare[i] = new Array(COL);
-        for (let j = 0; j < COL; j++) {
-            matrixSquare[i][j] = new Square(j * length + length / 2, i * length + length / 2, length, radius, padding);
-            matrixSquare[i][j].draw(colorRoad);
-        }
-    }
+    resetStart();
+    resetFinish();
+
+    createMatrixNumber(0);
+    createMatrixSquare();
+
+    drawMatrixSquare();
+
     activeMode = 1;
 }
 
