@@ -5,18 +5,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/style1.css">
-
-    <title>Алгоритм А*</title>
+    <link rel="stylesheet" , href="../styles/style1.css">
+    <title>Test</title>
 </head>
 
 <body>
-    <h1>Алгоритм А*</h1>
-    <img id="toolbar" src="/images/left-toolbar.png" />
-    <canvas>
-        <script src="/scripts/script1.js"></script>
-    </canvas>
+    <h1>Алгоритм A*</h1>
+    <div class="wrapper">
+        <div class="buttons">
+            <input type="button" class="button" id="generate" value="Сгенерировать лабиринт">
+            <input type="button" class="button" id="fillwall" value="Заполнить карту стенами">
+            <input type="button" class="button" id="fillroad" value="Заполнить карту дорогами">
+            <input type="button" class="button" id="addwall" value="Построить стену">
+            <input type="button" class="button" id="addroad" value="Построить дорогу">
+            <input type="button" class="button" id="changestart" value="Указать старт">
+            <input type="button" class="button" id="changefinish" value="Указать финиш">
+            <input type="button" class="button" id="changesize50" value="24x12">
+            <input type="button" class="button" id="changesize75" value="16x8">
+            <input type="button" class="button" id="changesize100" value="12x6">
+            <input type="button" class="button" id="changesize150" value="8x4">
+        </div>
+        <div class="canvas">
+            <canvas></canvas>
+        </div>
+    </div>
 
+    <script src="../scripts/script1.js"></script>
 </body>
 
 </html>

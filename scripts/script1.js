@@ -1,42 +1,18 @@
-class Circle {
-    constructor(xPoint, yPoint, radius) {
-        this.xPoint = xPoint;
-        this.yPoint = yPoint;
-        this.radius = radius;
-    }
-
-    draw(fillColor, strokeColor, doFill, doStroke, lineWidth) {
-        ctx.strokeStyle = strokeColor;
-        ctx.fillStyle = fillColor;
-        ctx.lineWidth = lineWidth;
-
-        ctx.beginPath();
-        ctx.arc(this.xPoint, this.yPoint, this.radius, 0, Math.PI * 2, false);
-        ctx.closePath();
-
-        if (doFill) {
-            ctx.fill();
-        }
-
-        if (doStroke) {
-            ctx.stroke();
-        }
-    }
-}
-
 class Square {
-    constructor(x, y, length, padding, radius, color) { //radius > padding!
+    constructor(x, y, length, radius, padding) { //radius > padding!
         this.x = x;
         this.y = y;
         this.length = length;   //длина стороны квадрата
-        this.padding = padding; //отступ от квадратной клетки, которая могла быть нарисована с параметрами x, y, length
         this.radius = radius;   //чем вышем параметр, тем менее острые углы
-        this.color = color;
+        this.padding = padding; //отступ от квадратной клетки, которая могла быть нарисована с параметрами x, y, length
+        this.color;
     }
 
     draw(fillColor) {
         ctx.fillStyle = fillColor;
         this.color = fillColor;
+
+        ctx.clearRect(this.x, this.y, this.length, this.length);
 
         ctx.beginPath();
 
@@ -49,11 +25,11 @@ class Square {
         ctx.arc(this.x + this.radius, this.y + this.length - this.radius, this.radius - this.padding, Math.PI / 2, Math.PI);
         ctx.lineTo(this.x + this.padding, this.y + this.radius - this.padding);
         ctx.fill();
-        
+
         ctx.closePath();
     }
 
-    isInside(xPoint, yPoint, row, col) {
+    canRedraw(xPoint, yPoint, row, col) {
         //сам квадрат можно разбить на несколько фигур, которые пересекаются, но не выходят за пределы самого квадрата
         //так будет удобнее чтобы проверить входит ли в него какая-то точка или нет
         //фигуры: 4 окружности, 2 прямоугольника (вертикальный и горизонтальный)
@@ -91,7 +67,7 @@ class Square {
             x: insideWall.left + this.radius,
             y: insideWall.bottom - this.radius,
         };
-        
+
         let isInsideCircleOne = Math.sqrt(Math.pow(circleOne.x - xPoint, 2) + Math.pow(circleOne.y - yPoint, 2)) <= this.radius;        //по теореме пифагора для каждой окружности проверяем
         let isInsideCircleTwo = Math.sqrt(Math.pow(circleTwo.x - xPoint, 2) + Math.pow(circleTwo.y - yPoint, 2)) <= this.radius;        //лежит ли точки в самой окружности
         let isInsideCircleThree = Math.sqrt(Math.pow(circleThree.x - xPoint, 2) + Math.pow(circleThree.y - yPoint, 2)) <= this.radius;
@@ -100,8 +76,12 @@ class Square {
         let isInsideRec1 = (insideWall.left <= xPoint) && (xPoint <= insideWall.right) && (insideWall.top + this.radius <= yPoint) && (yPoint <= insideWall.bottom - this.radius); //лежит ли точка в первой прямоугольника 
         let isInsideRec2 = (insideWall.left + this.radius <= xPoint) && (xPoint <= insideWall.right - this.radius) && (insideWall.top <= yPoint) && (yPoint <= insideWall.bottom); //лежит ли точка во второгом прямоугольнике
 
+        // console.log(isInsideCircleOne);
+        // console.log(isInsideCircleTwo);
+        // console.log(isInsideCircleThree);
+        // console.log(isInsideCircleFour);
 
-        if (isInsideRec1 || isInsideRec2 || isInsideCircleOne || isInsideCircleTwo || isInsideCircleThree || isInsideCircleFour) {  
+        if (isInsideRec1 || isInsideRec2 || isInsideCircleOne || isInsideCircleTwo || isInsideCircleThree || isInsideCircleFour) {
             return true;    //достаточно, чтобы точка лежала в каком-либо тряугольника или в какой-либо окружности
         }
 
@@ -109,68 +89,204 @@ class Square {
             return false;
         }
     }
-
-    redraw(xPoint, yPoint, row, col){   //сырая функция, которая в таком виде не существовать
-        let defaultColor = '#66A6C2';
-        let possibleColor = '#DB30D6';  //цвет для примера
-
-        if (this.isInside(xPoint, yPoint, row, col)){
-
-            if (this.color == defaultColor){
-                this.color = possibleColor;
-                this.draw(possibleColor);
-            }
-
-            else {
-                this.color = defaultColor;
-                this.draw(defaultColor);
-            }
-             
-        }
-    }
 }
-
-function drawGrid(length) {
-    let row = canvas.height / length;
-    let col = canvas.width / length;
-    let padding = 10;
-    let radius = 30;
-    let color = '#66A6C2';
-
-    console.log(row);
-    console.log(col);
-
-    matrixSquare = new Array(row);
-
-    for (let i = 0; i < row; i++) {
-        matrixSquare[i] = new Array(col);
-
-        for (let j = 0; j < col; j++) {
-            let square = new Square(length * j, length * i, length, padding, radius, color);
-            matrixSquare[i][j] = square;
-            matrixSquare[i][j].draw(color);
-        }
-    }
-    console.log(matrixSquare);
-};
 
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
-canvas.width = 1200;    //ширина canvas
-canvas.height = 600;    //высота canvas
+const width = 1200;
+const height = 600;
 
-var matrixSquare;       //двумерный массив с квадратами, которые мы будем рисовать
-let length = 100;       //длина стороны этого квадрата
+canvas.width = width;
+canvas.height = height;
 
-drawGrid(length);       //нарисовали сетку, теперь в matrixSquare квадраты 
+// let defaultColor = '#8D9091';
+const colorWall = '#8D9091';
+const colorRoad = '#1891AC';
+let start = {
+    row: -1,
+    col: -1,
+    isInit: false,
+};
+let finish = {
+    col: -1,
+    row: -1,
+    isInit: false
+};
+let length = 100;       //длина стороны квадрата
+let matrixNumber;       //двумерный массив, на котором будет работать алгоритм
+let matrixSquare;       //двумерный массив, в котором будут хранится квадраты
+let rowCount = width / length;
+let colCount = width / length;
+let radius = 20;
+let padding = 2;
+let activeMode = 0;     //текущий режим
+//1 - лабиринт сгенерирован или не сгенерирован, кнопки не активированы
+//данный режим включается после:
+//генерации лабиринта
+//запуска алгоритма
+//паузы алгоритма
+//отмены алгоритма
+//выбора скорости 
+//выбора размера поля
+//2 - режим добавления стен
+//3 - режим удаления стен
+//4 - задать старт
+//5 - задать финиш
+//выбор размера карты и скорости не требует состояния, но после этих действий включается режим 0.
 
-canvas.addEventListener('click', (event) => {
-    const x = event.offsetX;    //координаты курсора по x на самом Canvas
-    const y = event.offsetY;    //координаты курсора по y на самом Canvas
 
-    let col = Math.trunc(x / length);   //чтобы понять попали ли мы в сам квадрат: надо понять в каком квадрате надо искать попадание
-    let row = Math.trunc(y / length);   //для найдем единственные возможные row и col для матрицы
+canvas.addEventListener('click', handler);
+generate.addEventListener('click', generateMaze);
+fillwall.addEventListener('click', fillWall);
+fillroad.addEventListener('click', fillRoad);
+addwall.addEventListener('click', addWall);
+addroad.addEventListener('click', addRoad);
+changestart.addEventListener('click', changeStart);
+changefinish.addEventListener('click', changeFinish);
+changesize50.addEventListener('click', changeSize50);
+changesize75.addEventListener('click', changeSize75);
+changesize100.addEventListener('click', changeSize100);
+changesize150.addEventListener('click', changeSize150);
 
-    matrixSquare[row][col].redraw(x, y, row, col);  //если все таки попали в сам квадрат, то перекрасим его
-})
+function handler(event) {
+    const currentX = event.offsetX;
+    const currentY = event.offsetY;
+
+    let currentCol = Math.trunc(currentX / length);   //чтобы понять попали ли мы в сам квадрат: надо понять в каком квадрате надо искать попадание
+    let currentRow = Math.trunc(currentY / length);   //для найдем единственные возможные row и col для матрицы
+    if (activeMode === 1) {
+        //затычка
+        //можно печатать текст с призывом пользователя к выбору чего-либо
+    }
+
+    if (activeMode === 2) {    //добавляем стену
+        if (matrixSquare[currentRow][currentCol].canRedraw(currentX, currentY, currentRow, currentCol)) {
+            matrixSquare[currentRow][currentCol].draw(colorWall);
+            //TO DO: прописать логику в матрице
+        }
+    }
+
+    else if (activeMode === 3) {    //добавляем дорогу
+        if (matrixSquare[currentRow][currentCol].canRedraw(currentX, currentY, currentRow, currentCol)) {
+            matrixSquare[currentRow][currentCol].draw(colorRoad);
+            //TO DO: прописать логику в матрице
+        }
+    }
+
+    else if (activeMode === 4) {    //выбираем стартовую клетку
+        if (matrixSquare[currentRow][currentCol].canRedraw(currentX, currentY, currentRow, currentCol)) {
+            //TO DO: прописать логику в матрице
+            matrixSquare[currentRow][currentCol].draw(colorRoad);
+
+            let font = length / 2 + 'px s';
+
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = 'black'
+            ctx.font = font;
+            ctx.fillText('S', currentCol * length + length / 2, currentRow * length + length / 2);
+
+            activeMode = 1;
+        }
+    }
+
+    else if (activeMode === 5) {    //выбираем финишную клетку
+        if (matrixSquare[currentRow][currentCol].canRedraw(currentX, currentY, currentRow, currentCol)) {
+            //TO DO: прописать логику в матрице
+            matrixSquare[currentRow][currentCol].draw(colorRoad);
+
+            let font = length / 2 + 'px s';
+
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = 'black'
+            ctx.font = font;
+            ctx.fillText('F', currentCol * length + length / 2, currentRow * length + length / 2);
+
+            activeMode = 1; //переключаем в стандартный режим
+        }
+
+    }
+}
+
+function generateMaze() {
+    console.log('Потом сделаю');
+    activeMode = 1;
+}
+
+function fillWall() {
+    matrixSquare = new Array(rowCount);
+    for (let i = 0; i < rowCount; i++) {
+        matrixSquare[i] = new Array(colCount);
+        for (let j = 0; j < colCount; j++) {
+            matrixSquare[i][j] = new Square(j * length, i * length, length, radius, padding);
+            matrixSquare[i][j].draw(colorWall);
+        }
+    }
+    activeMode = 1;
+}
+
+function fillRoad() {
+    matrixSquare = new Array(rowCount);
+    for (let i = 0; i < rowCount; i++) {
+        matrixSquare[i] = new Array(colCount);
+        for (let j = 0; j < colCount; j++) {
+            matrixSquare[i][j] = new Square(j * length, i * length, length, radius, padding);
+            matrixSquare[i][j].draw(colorRoad);
+        }
+    }
+    activeMode = 1;
+}
+
+function addWall() {
+    activeMode = 2;
+}
+
+function addRoad() {
+    activeMode = 3;
+}
+
+function changeStart() {
+    activeMode = 4;
+}
+
+function changeFinish() {
+    activeMode = 5;
+}
+
+function changeSize50(){
+    length = 50;
+    colCount = width / length;
+    rowCount = width / length;
+    radius = 10;
+    padding = 2.5;
+    ctx.clearRect(0, 0, width, height);
+}
+
+function changeSize75(){
+    length = 75;
+    colCount = width / length;
+    rowCount = width / length;
+    radius = 15;
+    padding = 3;
+    ctx.clearRect(0, 0, width, height);
+}
+
+function changeSize100(){
+    length = 100;
+    colCount = width / length;
+    rowCount = width / length;
+    radius = 20;
+    padding = 5;
+    ctx.clearRect(0, 0, width, height);
+}
+
+function changeSize150(){
+    length = 150;
+    colCount = width / length;
+    rowCount = width / length;
+    radius = 25;
+    padding = 5;
+    ctx.clearRect(0, 0, width, height);
+}
