@@ -91,6 +91,13 @@ class Square {
     }
 }
 
+class Cell {
+    constructor(row, col) {
+        this.row = row;
+        this.col = col;
+    }
+}
+
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -99,6 +106,10 @@ const height = 600;
 
 canvas.width = width;
 canvas.height = height;
+
+// ctx.beginPath();
+// ctx.fillRect(0, 0, 100, 100);
+// ctx.closePath();
 
 const colorWall = '#51585a';
 const colorRoad = '#bbc6ca';
@@ -119,6 +130,8 @@ let finish = {
 let length = 100;       //длина стороны квадрата
 let matrixNumber;       //двумерный массив, на котором будет работать алгоритм
 let matrixSquare;       //двумерный массив, в котором будут хранится квадраты
+let matrixIsVisited;
+let matrixDistanceFromStart;
 let ROW = height / length - 1;
 let COL = width / length - 1;
 let radius = 20;
@@ -137,6 +150,7 @@ changesize50.addEventListener('click', changeSize50);
 changesize75.addEventListener('click', changeSize75);
 changesize100.addEventListener('click', changeSize100);
 changesize150.addEventListener('click', changeSize150);
+launch.addEventListener('click', aStar);
 
 function handler(event) {
     const x = event.offsetX - length / 2;
@@ -179,21 +193,103 @@ function handler(event) {
     }
 }
 
+function findHeuristicDistance(cell) {
+    return Math.abs(finish.row - cell.row) + Math.abs(finish.col - cell.col);
+}
+
+function calculateF(cell) {
+    return findHeuristicDistance(cell) + matrixDistanceFromStart[cell.row][cell.col];
+}
+
+function getIndex(list) {
+    let index = -1;
+    let minF = Number.MAX_SAFE_INTEGER;
+
+    for (let i = 0; i < list.length; i++) {
+        if (calculateF(list[i]) < minF) {
+            minF = calculateF(list[i]);
+            index = i;
+        }
+    }
+
+    return index;
+}
+
+function isValidCell(cell) {
+    return (0 <= cell.row && cell.row < ROW && 0 <= cell.col && cell.col < COL) ? true : false;
+}
+
+function aStar() {
+    // alert('Ой, поиска нет...');
+    //рассчитываем, что старт и финиш инициализированы
+    //также в листе будут только дороги, не стены
+
+    let list = [new Cell(start.row, start.col)];
+    let isFinish = false;
+    // let counter = 0;
+    while (!isFinish && list.length > 0) {
+
+        let index = getIndex(list);
+        let currentCell = list[index];
+        list.splice(index, 1);
+
+        let neighbors = [new Cell(currentCell.row - 1, currentCell.col), new Cell(currentCell.row, currentCell.col + 1), new Cell(currentCell.row + 1, currentCell.col), new Cell(currentCell.row, currentCell.col - 1)];
+
+        for (let i = 0; i < 4; i++) {
+            if (neighbors[i].row == finish.row && neighbors[i].col == finish.col) {
+                matrixParents[neighbors[i].row][neighbors[i].col] = currentCell;
+                isFinish = true;
+            }
+
+            if (isValidCell(neighbors[i])) {
+                if (matrixNumber[neighbors[i].row][neighbors[i].col] == 0) {    //условие на проверку отсутствия стены
+                    if (!matrixIsVisited[neighbors[i].row][neighbors[i].col]) {
+                        matrixIsVisited[neighbors[i].row][neighbors[i].col] = true;
+                        matrixDistanceFromStart[neighbors[i].row][neighbors[i].col] = matrixDistanceFromStart[currentCell.row][currentCell.col] + 1;
+                        matrixParents[neighbors[i].row][neighbors[i].col] = currentCell;
+                        list.push(neighbors[i]);
+                    }
+                }
+            }
+        }
+    }
+
+    matrixSquare[finish.row][finish.col].draw(isFinish ? 'yellow' : 'black');
+
+}
+
 function generateMaze() {
     createNumberMaze();
     createMatrixSquare();
+    createSupportingMatrix();
     drawMatrixSquare();
+
     defineStart(0, 0);
     defineFinish(ROW - 1, COL - 1);
 
     activeMode = 1;
 }
 
-function createNumberMaze() {
-    //-1 - стена
-    // 0 - дорога
+function createSupportingMatrix() {
+    matrixDistanceFromStart = Array(ROW);
+    matrixIsVisited = new Array(ROW);
+    matrixParents = new Array(ROW);
 
-    matrixNumber = new Array(ROW);
+    for (let i = 0; i < ROW; i++) {
+        matrixDistanceFromStart[i] = Array(COL);
+        matrixIsVisited[i] = Array(COL);
+        matrixParents[i] = new Array(COL);
+
+        for (let j = 0; j < COL; j++) {
+            matrixDistanceFromStart[i][j] = 0;
+            matrixIsVisited[i][j] = false;
+            matrixParents[i] = new Cell(-1, -1);
+        }
+    }
+}
+
+function createNumberMaze() {
+    createMatrixNumber(-1);
 
     let result = (ROW + 1) * (COL + 1) / 4;
     let counter = 0;
@@ -201,13 +297,6 @@ function createNumberMaze() {
     rubber = {
         x: 0,
         y: 0,
-    }
-
-    for (let i = 0; i < ROW; i++) {
-        matrixNumber[i] = new Array(COL);
-        for (let j = 0; j < COL; j++) {
-            matrixNumber[i][j] = -1;
-        }
     }
 
     while (counter != result) {
@@ -274,7 +363,7 @@ function drawMatrixSquare() {
 }
 
 function drawLetter(row, col, letter) {
-    matrixSquare[row][col].draw(colorRoad);
+    // matrixSquare[row][col].draw(colorRoad);
 
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
