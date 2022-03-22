@@ -102,6 +102,7 @@ canvas.height = height;
 
 const colorWall = '#51585a';
 const colorRoad = '#bbc6ca';
+const colorBackground = 'aliceblue';
 
 let start = {
     row: -1,
@@ -182,6 +183,8 @@ function generateMaze() {
     createNumberMaze();
     createMatrixSquare();
     drawMatrixSquare();
+    defineStart(0, 0);
+    defineFinish(ROW - 1, COL - 1);
 
     activeMode = 1;
 }
@@ -227,9 +230,6 @@ function createNumberMaze() {
             counter++;
         }
     }
-
-    matrixNumber[0][0] = 1;
-    matrixNumber[ROW - 1][COL - 1] = 2;
 }
 
 function createMatrixNumber(value) {
@@ -261,20 +261,13 @@ function drawMatrixSquare() {
             if (matrixNumber[i][j] == -1) {
                 matrixSquare[i][j].draw(colorWall);
             }
+
             else if (matrixNumber[i][j] == 0) {
                 matrixSquare[i][j].draw(colorRoad);
             }
 
-            else if (matrixNumber[i][j] == 1) {
-                defineStart(i, j);
-            }
-
-            else if (matrixNumber[i][j] == 2) {
-                defineFinish(i, j);
-            }
-
             else {
-                console.log('GG WP, что-то идет не так, непонятно что\nПривет из drawMatrixSquare');
+                console.log('Ошибочка вышла, непонятное состояние клетки, это не стена и не дорога');
             }
         }
     }
@@ -290,6 +283,26 @@ function drawLetter(row, col, letter) {
     ctx.fillText(letter, (col + 1) * length, (row + 1) * length);
 }
 
+function drawStart() {
+    if (start.isInit) {
+        matrixSquare[start.row][start.col].draw(colorRoad);
+        drawLetter(start.row, start.col, 'S');
+    }
+    else {
+        console.log('Ошибка, старт не инициализирован, но ты хочешь его нарисовать');
+    }
+}
+
+function drawFinish() {
+    if (finish.isInit) {
+        matrixSquare[finish.row][finish.col].draw(colorRoad);
+        drawLetter(finish.row, finish.col, 'F');
+    }
+    else {
+        console.log('Ошибка, финиш не инициализирован, но ты хочешь его нарисовать');
+    }
+}
+
 function defineStart(row, col) {
     resetStart();
 
@@ -297,9 +310,7 @@ function defineStart(row, col) {
     start.col = col;
     start.isInit = true;
 
-    matrixNumber[start.row][start.col] = 1;
-    matrixSquare[start.row][start.col].draw(colorRoad);
-    drawLetter(row, col, 'S');
+    drawStart();
 }
 
 function defineFinish(row, col) {
@@ -309,28 +320,34 @@ function defineFinish(row, col) {
     finish.col = col;
     finish.isInit = true;
 
-    matrixNumber[finish.row][finish.col] = 2;
-    matrixSquare[finish.row][finish.col].draw(colorRoad);
-    drawLetter(row, col, 'F');
+    drawFinish();
 }
 
-function resetStart() {
-    if (start.isInit) {
-        matrixNumber[start.row][start.col] = 0;
-        matrixSquare[start.row][start.col].draw(colorRoad);
+function resetStart(isNewMap) {
+    if (isNewMap && start.isInit) {
+        matrixSquare[start.row][start.col].draw(colorBackground);
     }
-
+    else {
+        if (start.isInit) {
+            matrixNumber[start.row][start.col] = 0;
+            matrixSquare[start.row][start.col].draw(colorRoad);
+        }
+    }
     start.col = -1;
     start.row = -1;
     start.isInit = false;
 }
 
-function resetFinish() {
-    if (finish.isInit) {
-        matrixNumber[finish.row][finish.col] = 0;
-        matrixSquare[finish.row][finish.col].draw(colorRoad);
+function resetFinish(isNewMap) {
+    if (isNewMap && finish.isInit) {
+        matrixSquare[finish.row][finish.col].draw(colorBackground);
     }
-
+    else {
+        if (finish.isInit) {
+            matrixNumber[finish.row][finish.col] = 0;
+            matrixSquare[finish.row][finish.col].draw(colorRoad);
+        }
+    }
     finish.col = -1;
     finish.row = -1;
     finish.isInit = false;
@@ -341,8 +358,8 @@ function getDirection() {
 }
 
 function fillWall() {
-    resetStart();  
-    resetFinish();
+    resetStart(true);
+    resetFinish(true);
 
     createMatrixNumber(-1);
     createMatrixSquare();
@@ -353,8 +370,8 @@ function fillWall() {
 }
 
 function fillRoad() {
-    resetStart();
-    resetFinish();
+    resetStart(true);
+    resetFinish(true);
 
     createMatrixNumber(0);
     createMatrixSquare();
