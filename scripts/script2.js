@@ -128,5 +128,3 @@ but2.onclick = function() {
     window.location.reload();
     //перезапуск страницы
 }
-
-document.body.appendChild(btn);
