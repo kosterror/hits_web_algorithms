@@ -24,23 +24,6 @@ canvas {
     background-color: #0b5c8b3a;
 }
 
-
-/* #elem1 {
-    position: relative;
-    left: 25%;
-    width: 9%;
-    height: 60px;
-    background-color: rgb(136, 193, 231);
-}
-
-#elem2 {
-    position: relative;
-    left: 80%;
-    width: 9%;
-    height: 60px;
-    background-color: rgb(136, 193, 231);
-} */
-
 #startAlg {
     position: relative;
     background-color: #b8ced3;
@@ -55,11 +38,4 @@ canvas {
     left: 40%;
     width: 15%;
     height: 50px;
-}
-
-p {
-    position: absolute;
-    left: 2%;
-    font-size: 150%;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
