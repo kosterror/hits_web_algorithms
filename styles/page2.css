@@ -5,6 +5,13 @@ body {
     border: 0;
 }
 
+h1 {
+    text-align: center;
+    line-height: 150%;
+    font-size: 200%;
+    font-family: Georgia, "Times New Roman", Times, serif;
+}
+
 canvas {
     padding-left: 0;
     padding-right: 0;
@@ -12,31 +19,23 @@ canvas {
     margin-left: auto;
     margin-right: auto;
     display: block;
-    width: 90%;
-    height: 50%;
+    width: 1400px;
+    height: 580px;
     background-color: #0b5c8b3a;
 }
 
-#elem {
+#startAlg {
     position: relative;
-    left: 10%;
-    width: 80%;
-    height: 100px;
-    background-color: rgb(49, 196, 196);
+    background-color: #b8ced3;
+    left: 25%;
+    width: 15%;
+    height: 50px;
 }
 
-#elem1 {
-    position: absolute;
-    left: 17%;
-    width: 10px;
-    height: 100px;
-    background-color: rgb(11, 155, 155);
-}
-
-p1 {
-    position: absolute;
-    top: 20%;
-    left: 2%;
-    font-size: 150%;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+#restartAlg {
+    position: relative;
+    background-color: #b8ced3;
+    left: 40%;
+    width: 15%;
+    height: 50px;
 }

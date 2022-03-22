@@ -1,5 +1,9 @@
+//разработка canvas для создания точек пользователем на плоскости
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
+
+canvas.width = 1400;
+canvas.height = 580;
 
 function animation(obj) {
     const { clear, update, render } = obj;
@@ -31,6 +35,8 @@ const mouse = {
     pLeft: false,
     right: false,
     pRight: false,
+    over: false,
+    draw: false
 }
 
 function mouseTick() {
@@ -61,18 +67,20 @@ function mouseleaveHandler(event) {
 function mousedownHandler(event) {
     if (event.buttons === 1) {
         mouse.left = true;
+    } else if (event.buttons === 2) {
+        mouse.right = true;
     }
 
-    console.log(event);
+    //console.log(event);
 }
 
 function mouseupHandler(event) {
     if (event.button === 0) {
         mouse.left = false;
+    } else if (event.button === 2) {
+        mouse.right = false;
     }
 }
-
-let draw = false;
 
 animation({
     clear() {
@@ -84,22 +92,39 @@ animation({
 
     update() {
         if (mouse.left && !mouse.pLeft) {
-            draw = true;
+            mouse.draw = true;
         }
 
         mouseTick();
     },
 
     render() {
-        if (draw) {
+        if (mouse.draw) {
             context.beginPath();
-            context.arc(mouse.x, mouse.y, 10, 0, Math.PI * 2, false);
+            context.arc(mouse.x, mouse.y, 4, 0, Math.PI * 2, false);
             context.closePath();
-            context.fillStyle = "yellow";
+            context.fillStyle = "black";
             context.fill();
 
-            draw = false;
-            console.log("НИХУЯ");
+            mouse.draw = false;
         }
     }
 })
+
+//сам алгоритм кластеризации
+
+
+
+//кнопки
+var but1 = document.getElementById("startAlg");
+var but2 = document.getElementById("restartAlg");
+
+but1.onclick = function() {
+    alert("We're clicking this button");
+    //запуск алгоритма
+}
+
+but2.onclick = function() {
+    window.location.reload();
+    //перезапуск страницы
+}
