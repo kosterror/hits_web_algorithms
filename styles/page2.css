@@ -5,6 +5,13 @@ body {
     border: 0;
 }
 
+h1 {
+    text-align: center;
+    line-height: 150%;
+    font-size: 200%;
+    font-family: Georgia, "Times New Roman", Times, serif;
+}
+
 canvas {
     padding-left: 0;
     padding-right: 0;
@@ -12,8 +19,8 @@ canvas {
     margin-left: auto;
     margin-right: auto;
     display: block;
-    width: 90%;
-    height: 50%;
+    width: 1400px;
+    height: 580px;
     background-color: #0b5c8b3a;
 }
 
@@ -22,7 +29,7 @@ canvas {
     left: 10%;
     width: 80%;
     height: 100px;
-    background-color: rgb(49, 196, 196);
+    background-color: rgb(136, 193, 231);
 }
 
 #elem1 {
@@ -30,12 +37,11 @@ canvas {
     left: 17%;
     width: 10px;
     height: 100px;
-    background-color: rgb(11, 155, 155);
+    background-color: rgb(55, 78, 92);
 }
 
-p1 {
+p {
     position: absolute;
-    top: 20%;
     left: 2%;
     font-size: 150%;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
