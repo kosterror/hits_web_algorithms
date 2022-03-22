@@ -1,3 +1,4 @@
+//разработка canvas для создания точек пользователем на плоскости
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
 
@@ -109,3 +110,23 @@ animation({
         }
     }
 })
+
+//сам алгоритм кластеризации
+
+
+
+//кнопки
+var but1 = document.getElementById("startAlg");
+var but2 = document.getElementById("restartAlg");
+
+but1.onclick = function() {
+    alert("We're clicking this button");
+    //запуск алгоритма
+}
+
+but2.onclick = function() {
+    window.location.reload();
+    //перезапуск страницы
+}
+
+document.body.appendChild(btn);
