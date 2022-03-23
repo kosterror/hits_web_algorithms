@@ -107,10 +107,6 @@ const height = 600;
 canvas.width = width;
 canvas.height = height;
 
-// ctx.beginPath();
-// ctx.fillRect(0, 0, 100, 100);
-// ctx.closePath();
-
 const colorWall = '#51585a';
 const colorRoad = '#bbc6ca';
 const colorBackground = 'aliceblue';
@@ -130,12 +126,12 @@ let finish = {
 let length = 100;       //длина стороны квадрата
 let matrixNumber;       //двумерный массив, на котором будет работать алгоритм
 let matrixSquare;       //двумерный массив, в котором будут хранится квадраты
-let matrixIsVisited;
-let matrixDistanceFromStart;
+let matrixIsVisited;    //при поиске будем помечать посещенные вершины
+let matrixDistanceFromStart;    //растояние до конкретной ячейки от старта
 let ROW = height / length - 1;
 let COL = width / length - 1;
-let radius = 20;
-let padding = 2;
+let radius = 20;        
+let padding = 2;        
 let activeMode = 0;     //текущий режим
 
 canvas.addEventListener('click', handler);
@@ -150,7 +146,7 @@ changesize50.addEventListener('click', changeSize50);
 changesize75.addEventListener('click', changeSize75);
 changesize100.addEventListener('click', changeSize100);
 changesize150.addEventListener('click', changeSize150);
-launch.addEventListener('click', aStar);
+// launch.addEventListener('click', aStar);
 
 function handler(event) {
     const x = event.offsetX - length / 2;
@@ -219,16 +215,12 @@ function isValidCell(cell) {
     return (0 <= cell.row && cell.row < ROW && 0 <= cell.col && cell.col < COL) ? true : false;
 }
 
+//ЭТО НЕ РАБОТАЕТ!
 function aStar() {
-    // alert('Ой, поиска нет...');
-    //рассчитываем, что старт и финиш инициализированы
-    //также в листе будут только дороги, не стены
-
     let list = [new Cell(start.row, start.col)];
     let isFinish = false;
-    // let counter = 0;
-    while (!isFinish && list.length > 0) {
 
+    while (!isFinish && list.length > 0) {
         let index = getIndex(list);
         let currentCell = list[index];
         list.splice(index, 1);
@@ -237,7 +229,7 @@ function aStar() {
 
         for (let i = 0; i < 4; i++) {
             if (neighbors[i].row == finish.row && neighbors[i].col == finish.col) {
-                matrixParents[neighbors[i].row][neighbors[i].col] = currentCell;
+                matrixParents[finish.row][finish.col] = currentCell;
                 isFinish = true;
             }
 
@@ -254,11 +246,35 @@ function aStar() {
         }
     }
 
+    if (isFinish) {
+        let path = [];
+        let currentCell = new Cell(finish.row, finish.col);
+        path.push(currentCell);
+
+        while (currentCell.row != start.row && currentCell.col != start.col) {
+            currentCell = matrixParents[currentCell.row][currentCell.col];
+            path.push(currentCell);
+        }
+        console.log(path);
+        for (let i = 0; i < path.length; i++) {
+            matrixSquare[path[i].row][path[i].col].draw('yellow');
+        }
+
+
+    }
+
+    else {
+        //пути нет
+    }
+
     matrixSquare[finish.row][finish.col].draw(isFinish ? 'yellow' : 'black');
 
 }
 
+
+
 function generateMaze() {
+    //Алгоритм Олдоса-Бродера
     createNumberMaze();
     createMatrixSquare();
     createSupportingMatrix();
@@ -363,8 +379,6 @@ function drawMatrixSquare() {
 }
 
 function drawLetter(row, col, letter) {
-    // matrixSquare[row][col].draw(colorRoad);
-
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = 'black'
