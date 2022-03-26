@@ -215,10 +215,13 @@ function isValidCell(cell) {
     return (0 <= cell.row && cell.row < ROW && 0 <= cell.col && cell.col < COL) ? true : false;
 }
 
+//появился баг с отсутствием финишной клетки при генерации лабиринта
+
 //ЭТО НЕ РАБОТАЕТ!
 function aStar() {
     let list = [new Cell(start.row, start.col)];
     let isFinish = false;
+    matrixIsVisited[start.row][start.col] = true;
 
     while (!isFinish && list.length > 0) {
         let index = getIndex(list);
