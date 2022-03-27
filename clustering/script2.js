@@ -158,6 +158,8 @@ function klasterization() {
     while (isChange) {
         let mas_centroids = findCentroids(); //вычисляем кластерный центроид для каждого К
 
+        console.log(mas_centroids);
+
         isChange = changeKlastersPoints(mas_centroids); //переопределяем у точек кластеры
     }
 
@@ -209,23 +211,43 @@ function findCentroids() {
 }
 
 function changeKlastersPoints(centoroids) {
-    const MAX_DISTANCE = 350; //максимальная дистанция между точками одного кластера
+    //const MAX_DISTANCE = 350; //максимальная дистанция между точками одного кластера
     flag = false;
+    const porog = 1;
 
-    for (let i = 0; i < centoroids.length; i++) {
-        let dist = []; //массив для хранения расстояния от каждой точки до центроиды
-        for (let j = 0; j < data_points.length; j++) {
-            dist[dist.length] = Distance(centoroids[i], data_points[j]);
+    // for (let i = 0; i < centoroids.length; i++) {
+    //     let dist = []; //массив для хранения расстояния от каждой точки до центроиды
+    //     for (let j = 0; j < data_points.length; j++) {
+    //         dist[dist.length] = Distance(centoroids[i], data_points[j]);
+    //     }
+
+    //     for (let n = 0; n < dist.length; n++) {
+    //         // console.log(dist[n]);
+    //         if (dist[n] <= MAX_DISTANCE) {
+    //             data_points[n].klaster = i + 1;
+    //             data_points[n].draw();
+
+    //             flag = true;
+    //         }
+    //     }
+    // }
+
+    for (let i = 0; i < data_points.length; i++) {
+        let min_dist = Infinity;
+        let num_klast;
+        for (let j = 0; j < centoroids.length; j++) {
+            tmp = Distance(data_points[i], centoroids[j]);
+            if (min_dist > tmp) {
+                min_dist = tmp;
+                num_klast = j + 1;
+            }
         }
 
-        for (let n = 0; n < dist.length; n++) {
-            // console.log(dist[n]);
-            if (dist[n] <= MAX_DISTANCE) {
-                data_points[n].klaster = i + 1;
-                data_points[n].draw();
+        if (min_dist > porog && data_points[i].klaster != num_klast) {
+            data_points[i].klaster = num_klast;
+            data_points[i].draw();
 
-                flag = true;
-            }
+            flag = true;
         }
     }
 
