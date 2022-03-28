@@ -27,9 +27,16 @@ canvas {
 #startAlg {
     position: relative;
     background-color: #b8ced3;
-    left: 25%;
+    left: 30%;
     width: 15%;
     height: 50px;
+}
+
+#klasters {
+    position: absolute;
+    left: 16%;
+    width: 14%;
+    height: 43px;
 }
 
 #restartAlg {
