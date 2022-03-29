@@ -70,6 +70,8 @@ table {
     width: 600px;
     height: 600px;
     border-collapse: collapse;
+    font-size: 20px;
+    text-align: center;;
 }
 /* 
 #table_div {
