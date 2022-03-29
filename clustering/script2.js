@@ -2,9 +2,12 @@
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
 
-canvas.width = 1400;
-canvas.height = 580;
+const WIDTH = 1400;
+const HEIGHT = 580;
 const POINT_RADIUS = 6;
+
+canvas.width = WIDTH;
+canvas.height = HEIGHT;
 
 function animation(obj) {
     const { update, render } = obj;
@@ -128,19 +131,25 @@ animation({
 var but1 = document.getElementById("startAlg");
 var but2 = document.getElementById("restartAlg");
 let count_clasters;
+let mas_centroids = [];
 
 but1.onclick = function() { //запуск алгоритма
     count_clasters = document.getElementById("klasters").value;
 
-    if (data_points.length < count_clasters) {
-        alert("Вы ввели кол-во групп больше, чем точек. Добавьте точки или измените кол-во кластеров")
+    if ((count_clasters > 10) && (count_clasters === 0)) {
+        alert("Вы ввели недопустимое кол-во кластеров")
+    } else {
+        if (data_points.length < count_clasters) {
+            alert("Вы ввели кол-во групп больше, чем точек. Добавьте точки или измените кол-во кластеров")
+        } else {
+
+            // for (let i = 0; i < data_points.length; i++) {
+            //     console.log(data_points[i].x, data_points[i].y, data_points[i].klastrers);
+            // }
+
+            klasterization();
+        }
     }
-
-    // for (let i = 0; i < data_points.length; i++) {
-    //     console.log(data_points[i].x, data_points[i].y, data_points[i].klastrers);
-    // }
-
-    klasterization();
 }
 
 but2.onclick = function() { //перезапуск страницы
@@ -149,88 +158,93 @@ but2.onclick = function() { //перезапуск страницы
 
 
 // сам алгоритм кластеризации
-
 function klasterization() {
-    randomDrawPoints(); // раскрасили и распределили по кластерам произвольным образом точки
+    mas_centroids = firstCentroids() // определить первоначальные центроиды
 
     isChange = true; // флажок, отслеживающий изменился ли хотя бы один кластер
+    isChange = changeKlastersPoints(mas_centroids);
 
-    while (isChange) {
-        let mas_centroids = findCentroids(); //вычисляем кластерный центроид для каждого К
+    // while (isChange) {
+    //     isChange = changeKlastersPoints(mas_centroids); //переопределяем у точек кластеры
+    //     sleep(1000);
+    //     mas_centroids = findCentroids(mas_centroids); //вычисляем новый кластерный центроид для каждого К
+    //     sleep(1000);
+    // }
 
-        console.log(mas_centroids);
-
-        isChange = changeKlastersPoints(mas_centroids); //переопределяем у точек кластеры
-    }
-
-    if (!isChange) {
-        alert('АЛГОРИТМ ЗАКОНЧИЛ РАБОТУ');
-    }
+    // if (!isChange) {
+    //     for (let i = 0; i < mas_centroids.length; i++) {
+    //         console.log(mas_centroids[i].x, mas_centroids[i].y);
+    //     }
+    //     debugger;
+    //     alert('АЛГОРИТМ ЗАКОНЧИЛ РАБОТУ');
+    // }
 }
 
-function randomDrawPoints() {
-    let i = 0,
-        j = 1;
-    while (i < data_points.length) {
+function firstCentroids() {
+    let centroids = [],
+        cur_centr;
 
-        data_points[i].klaster = j;
-        data_points[i].draw();
-        i++;
-        j++;
+    centroids[0] = new Point(data_points[0].x + 1, data_points[0].y + 1, 1)
 
-        if (j - 1 == count_clasters) {
-            j = 1;
-        }
-    }
-}
+    for (let i = 1; i < count_clasters; i++) {
+        max_distance = 0;
+        let index_point;
 
-function findCentroids() {
-    let sumX = 0,
-        sumY = 0,
-        count = 0,
-        centroids = [],
-        num_klas = 1;
-
-    while (num_klas <= count_clasters) {
-        for (let i = 0; i < data_points.length; i++) {
-            if (data_points[i].klaster == num_klas) {
-                sumX = data_points[i].x;
-                sumY = data_points[i].y;
-                count++;
-
+        for (let j = 0; j < data_points.length; j++) {
+            let tmp = Distance(centroids[i - 1], data_points[j]);
+            if (tmp > max_distance) {
+                max_distance = tmp;
+                index_point = j;
             }
         }
 
-        centroids[centroids.length] = new Point(sumX / count, sumY / count, num_klas);
-        num_klas++;
+        if (isCanCentroids(centroids, data_points[index_point].x, data_points[index_point].y)) {
+            centroids[centroids.length] = new Point(data_points[index_point].x + 1, data_points[index_point].y + 1, i + 1);
+        } else {
+            i--;
+        }
     }
 
-    console.log(centroids.length);
+    return centroids;
+}
+
+function isCanCentroids(centroids, x, y) {
+    for (let i = 0; i < centroids.length; i++) {
+        if (centroids[i].x == x & centroids[i].y == y) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function findCentroids(centroids) {
+    let sumX = 0,
+        sumY = 0,
+        count = 0;
+
+    for (let i = 0; i < centroids.length; i++) {
+        for (let j = 0; j < data_points; j++) {
+            if (data_points[j].klaster == centroids[i].klaster) {
+                sumX = data_points[j].x;
+                sumY = data_points[j].y;
+                count++;
+            }
+        }
+
+        let tmp = new Point(sumX / count, sumY / count, centroids[i].klaster);
+
+        if (centroids[i] != tmp) {
+            centroids[i] = tmp;
+        }
+    }
 
     return centroids;
 }
 
 function changeKlastersPoints(centoroids) {
-    //const MAX_DISTANCE = 350; //максимальная дистанция между точками одного кластера
     flag = false;
-    const porog = 1;
-
-    // for (let i = 0; i < centoroids.length; i++) {
-    //     let dist = []; //массив для хранения расстояния от каждой точки до центроиды
-    //     for (let j = 0; j < data_points.length; j++) {
-    //         dist[dist.length] = Distance(centoroids[i], data_points[j]);
-    //     }
-
-    //     for (let n = 0; n < dist.length; n++) {
-    //         // console.log(dist[n]);
-    //         if (dist[n] <= MAX_DISTANCE) {
-    //             data_points[n].klaster = i + 1;
-    //             data_points[n].draw();
-
-    //             flag = true;
-    //         }
-    //     }
-    // }
+    const porog = 0;
 
     for (let i = 0; i < data_points.length; i++) {
         let min_dist = Infinity;
@@ -260,3 +274,55 @@ function Distance(point1, point2) {
 
     return (Math.sqrt(Math.pow(difX, 2) + Math.pow(difY, 2)));
 }
+
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+        currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+}
+
+//promise sleep
+
+// function randomDrawPoints() {
+//     let i = 0,
+//         j = 1;
+//     while (i < data_points.length) {
+
+//         data_points[i].klaster = j;
+//         data_points[i].draw();
+//         i++;
+//         j++;
+
+//         if (j - 1 == count_clasters) {
+//             j = 1;
+//         }
+//     }
+// }
+
+// function findCentroids() {
+//     let sumX = 0,
+//         sumY = 0,
+//         count = 0,
+//         centroids = [],
+//         num_klas = 1;
+
+//     while (num_klas <= count_clasters) {
+//         for (let i = 0; i < data_points.length; i++) {
+//             if (data_points[i].klaster == num_klas) {
+//                 sumX = data_points[i].x;
+//                 sumY = data_points[i].y;
+//                 count++;
+
+//             }
+//         }
+
+//         centroids[centroids.length] = new Point(sumX / count, sumY / count, num_klas);
+//         num_klas++;
+//     }
+
+//     console.log(centroids.length);
+
+//     return centroids;
+// }
