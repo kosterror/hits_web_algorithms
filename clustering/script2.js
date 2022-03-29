@@ -49,7 +49,7 @@ canvas.addEventListener('mousedown', mousedownHandler);
 canvas.addEventListener('mouseup', mouseupHandler);
 
 
-function mousemoveHandler(even) {
+function mousemoveHandler(event) {
     const rect = canvas.getBoundingClientRect();
     mouse.x = event.clientX - rect.left;
     mouse.y = event.clientY - rect.top;
