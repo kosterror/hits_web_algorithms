@@ -13,18 +13,27 @@
     <h1>A star</h1>
     <div class="wrapper" id="wrapper">
         <div class="toolbar">
-            <div>
-                <input type="number" class="input" id="change_size_input" min="5" max="100" step="1" value="15">
-                <input type="button" class="OK" id="change_size" value="OK">
+            <div class="div-two-cell">
+                <input type="number" class="two-cell" id="change_size_input" min="5" max="100" step="2" value="15">
+                <input type="button" class="two-cell" id="change_size" value="Изменить">
             </div>
-            <input type="button" class="button" id="generate_maze" value="Generate maze">
-            <input type="button" class="button" id="generate_empty_maze" value="Generate empty maze">
-            <input type="button" class="button" id="add_wall" value="Add wall">
-            <input type="button" class="button" id="delete_wall" value="Delete wall">
-            <input type="button" class="button" id="change_start" value="Change start">
-            <input type="button" class="button" id="change_finish" value="Change finish">
-            <input type="button" class="button" id="start" value="Start">
-            <input type="button" class="button" id="break" value="Break">
+            <input type="button" class="button" id="generate_maze" value="Сгенерировать лабиринт">
+            <input type="button" class="button" id="generate_empty_maze" value="Создать пустой лабиринт">
+            <input type="button" class="button" id="add_wall" value="Добавить стену">
+            <input type="button" class="button" id="delete_wall" value="Убрать стену">
+            <input type="button" class="button" id="change_start" value="Выбрать старт">
+            <input type="button" class="button" id="change_finish" value="Выбрать финиш">
+            <input type="button" class="button" id="launch" value="Запустить алгоритм">
+            
+            <div class="div-five-cell">
+                <input type="button" class="five-cell" id="speed_1" value="1">
+                <input type="button" class="five-cell" id="speed_2" value="2">
+                <input type="button" class="five-cell" id="speed_3" value="3">
+                <input type="button" class="five-cell" id="speed_4" value="4">
+                <input type="button" class="five-cell" id="speed_5" value="5">
+            </div>
+            
+            <input type="button" class="button" id="break" value="Сбросить все">
         </div>
         <table id="table">
 

@@ -10,11 +10,9 @@ class Cell {
 
 
 let TABLE_IS_INIT = false;
-let SIZE = 15;
+let SIZE = Number(document.getElementById('change_size_input').value);
 let matrix;
 let table;
-let tableID;
-let tableHTML;
 const COLOR_WALL = '#51585a';
 const COLOR_ROAD = '#bbc6ca';
 const COLOR_START = 'yellow';
@@ -24,7 +22,9 @@ const COLOR_CURRENT_CELL = '#66ff33';
 const COLOR_CONSIDER_CELL = '#ff99cc';
 const COLOR_CONSIDERED_CELL = '#6dc2df';
 const TIME_SLEEP_PATH = 50;
-const TIME_SLEEP_RENDER = 50;
+let TIME_SLEEP_RENDER;
+const ACTIVE_BUTTON = '#666969';
+const INACTIVE_BUTTON = '#8D9091';
 
 let activeMode = 0;
 
@@ -41,22 +41,73 @@ let finish = {
 };
 
 
-change_size.addEventListener('click', changeSize);
-generate_maze.addEventListener('click', generateMaze);
-generate_empty_maze.addEventListener('click', generateEmptyMaze);
-add_wall.addEventListener('click', () => { activeMode = 1 });
-delete_wall.addEventListener('click', () => { activeMode = 2 });
-change_start.addEventListener('click', () => { activeMode = 3 });
-change_finish.addEventListener('click', () => { activeMode = 4 });
-document.getElementById('start').addEventListener('click', aStarSearch);
-document.getElementById('break').addEventListener('click', () => { location.href = location.href });
+changeSpeed5();
+generateMaze();
 
+document.getElementById('change_size').addEventListener('click', changeSize);
+document.getElementById('generate_maze').addEventListener('click', generateMaze);
+document.getElementById('generate_empty_maze').addEventListener('click', generateEmptyMaze);
+document.getElementById('add_wall').addEventListener('click', changeModAddWall);
+document.getElementById('delete_wall').addEventListener('click', changeModDeleteWall);
+document.getElementById('change_start').addEventListener('click', changeModStart);
+document.getElementById('change_finish').addEventListener('click', changeModFinsih);
+document.getElementById('launch').addEventListener('click', aStarSearch);
+document.getElementById('speed_1').addEventListener('click', changeSpeed1);
+document.getElementById('speed_2').addEventListener('click', changeSpeed2);
+document.getElementById('speed_3').addEventListener('click', changeSpeed3);
+document.getElementById('speed_4').addEventListener('click', changeSpeed4);
+document.getElementById('speed_5').addEventListener('click', changeSpeed5);
+document.getElementById('break').addEventListener('click', () => { location.href = location.href });
 document.getElementById('table').addEventListener('click', actionsTable);
 
 
+function actionsTable() {
+    if (event.path[0].tagName == 'TD' && event.path[1].tagName == 'TR') {
+        let x = event.path[0].id;
+        let y = event.path[1].id;
+
+        if (activeMode == 1) {      //добавляем стену
+            matrix[y][x] = -1;
+            table[y][x].style.backgroundColor = COLOR_WALL;
+        }
+
+        else if (activeMode == 2) { //удаляем стену
+            matrix[y][x] = 0;
+            table[y][x].style.backgroundColor = COLOR_ROAD;
+        }
+
+        else if (activeMode == 3) { //изменяем старт
+            if (start.isInit) {
+                resetStart();
+            }
+
+            start.x = x;
+            start.y = y;
+            matrix[y][x] = 1;
+            table[y][x].style.backgroundColor = COLOR_START;
+            start.isInit = true;
+        }
+
+        else if (activeMode == 4) { //изменяем финиш
+            if (finish.isInit) {
+                resetFinish();
+            }
+
+            finish.x = x;
+            finish.y = y;
+            matrix[y][x] = 2;
+            table[y][x].style.backgroundColor = COLOR_FINISH;
+            finish.isInit = true;
+
+        }
+    }
+}
+
 async function aStarSearch() {
     if (TABLE_IS_INIT && start.isInit && finish.isInit) {
-        let = queue = new Array();      //очередь
+        document.getElementById('launch').style.backgroundColor = ACTIVE_BUTTON;
+
+        let = queue = new Array();          //очередь
         let isVisited = new Array(SIZE);    //здесь будем отмечать, где мы были
         let parents = new Array(SIZE);      //здесь будем указывать родителей
         let isEnd = false;
@@ -80,7 +131,7 @@ async function aStarSearch() {
             queue.splice(index, 1);
 
             renderCell(currentCell.y, currentCell.x, COLOR_CURRENT_CELL, false);
-            await sleep(TIME_SLEEP_RENDER*2);
+            await sleep(TIME_SLEEP_RENDER);
 
             let neighbors = [new Cell(currentCell.x, currentCell.y - 1, currentCell.cost + 1), new Cell(currentCell.x + 1, currentCell.y, currentCell.cost + 1), new Cell(currentCell.x, currentCell.y + 1, currentCell.cost + 1), new Cell(currentCell.x - 1, currentCell.y, currentCell.cost + 1)];
 
@@ -111,7 +162,7 @@ async function aStarSearch() {
                 }
             }
             renderCell(currentCell.y, currentCell.x, COLOR_CONSIDERED_CELL, false);
-            await sleep(TIME_SLEEP_RENDER*2);
+            await sleep(TIME_SLEEP_RENDER);
         }
 
         if (isEnd) {
@@ -122,7 +173,28 @@ async function aStarSearch() {
         else {
             alert('Не существует маршрута');
         }
+
+        document.getElementById('launch').style.backgroundColor = INACTIVE_BUTTON;
     }
+}
+
+function getIndex(queue) {
+    let minF = -1;
+    let index = -1;
+
+    for (let i = 0; i < queue.length; i++) {
+        if (minF == -1) {
+            minF = queue[i].f;
+            index = i;
+        }
+
+        else if (queue[i].f < minF) {
+            minF = queue[i].f;
+            index = i;
+        }
+    }
+
+    return index;
 }
 
 function getPath(parents) {
@@ -165,77 +237,27 @@ function renderCell(row, col, color, renderSF) {
     }
 }
 
-function actionsTable() {
-    if (event.path[0].tagName == 'TD' && event.path[1].tagName == 'TR') {
-        let x = event.path[0].id;
-        let y = event.path[1].id;
-
-        if (activeMode == 0) {
-            alert('Выберите режим взаимодействия с таблицей!');
-        }
-
-        else if (activeMode == 1) { //add wall
-            matrix[y][x] = -1;
-            table[y][x].style.backgroundColor = COLOR_WALL;
-        }
-
-        else if (activeMode == 2) { //delete wall
-            matrix[y][x] = 0;
-            table[y][x].style.backgroundColor = COLOR_ROAD;
-        }
-
-        else if (activeMode == 3) { //change start
-            if (start.isInit) {
-                table[start.y][start.x].style.backgroundColor = matrix[start.y][start.x] == -1 ? COLOR_WALL : COLOR_ROAD;
-                start.x = x;
-                start.y = y;
-                table[y][x].style.backgroundColor = COLOR_START;
-            }
-
-            else {
-                start.isInit = true;
-                start.x = x;
-                start.y = y;
-                table[y][x].style.backgroundColor = COLOR_START;
-            }
-        }
-
-        else if (activeMode == 4) { //change finish
-            if (finish.isInit) {
-                table[finish.y][finish.x].style.backgroundColor = matrix[finish.y][finish.x] == -1 ? COLOR_WALL : COLOR_ROAD;
-                finish.x = x;
-                finish.y = y;
-                table[y][x].style.backgroundColor = COLOR_FINISH;
-            }
-
-            else {
-                finish.isInit = true;
-                finish.x = x;
-                finish.y = y;
-                table[y][x].style.backgroundColor = COLOR_FINISH;
-            }
-        }
-    }
-}
-
 function changeSize() {
-    //временная затычка, пусть хотя бы так работает
-    let inputSize = prompt('Это временная затычка (наверное)!\nEnter the size of the map');
+    let size = Number(document.getElementById('change_size_input').value);
 
     deleteTable();
 
-    if (inputSize < 5 || inputSize > 100) {
-        alert('Try again. The size should be in the range from 5 to 100');
-        changeSize();
+    if (size < 5 || size > 100) {
+        alert('Размер лабиринта не может быть меньше 5 и больше 100');
     }
 
     else {
-        SIZE = Number(inputSize);
+        SIZE = size;
         TABLE_IS_INIT = false;
     }
+
+    generateMaze();
 }
 
 function generateMaze() {
+    resetStart();   //лишним не будет
+    resetFinish();
+
     createMatrix(-1);
 
     let result = (SIZE % 2 == 0 ? SIZE * SIZE : (SIZE + 1) * (SIZE + 1)) / 4;
@@ -252,16 +274,15 @@ function generateMaze() {
         }
     }
 
-    resetStart();   //лишним не будет
-    resetFinish();
-
     start.isInit = true;
     start.y = 0;
     start.x = 0;
+    matrix[start.y][start.x] = 1;
 
     finish.isInit = true;
     finish.y = SIZE - 1;
     finish.x = SIZE - 1;
+    matrix[finish.y][finish.x] = 2;
 
     createTable();
 }
@@ -314,6 +335,7 @@ function moveRubber(rubber) {
 
     return false;
 }
+
 
 function generateEmptyMaze() {
     resetStart();
@@ -376,24 +398,7 @@ function createMatrix(value) {
     }
 }
 
-function getIndex(queue) {
-    let minF = -1;
-    let index = -1;
 
-    for (let i = 0; i < queue.length; i++) {
-        if (minF == -1) {
-            minF = queue[i].f;
-            index = i;
-        }
-
-        else if (queue[i].f < minF) {
-            minF = queue[i].f;
-            index = i;
-        }
-    }
-
-    return index;
-}
 
 function calculetaHeuristicsDistance(x1, y1, x2, y2) { return Math.abs((x1 - x2) + (y1 - y2)); };
 
@@ -401,6 +406,82 @@ function isValidCell(cell) { return 0 <= cell.y && cell.y < SIZE && 0 <= cell.x 
 
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
-function resetStart() { start.isInit = false; start.x = -1; start.y = -1; };
+function resetStart() {
+    if (start.isInit) {
+        table[start.y][start.x].style.backgroundColor = matrix[start.y][start.x] == -1 ? COLOR_WALL : COLOR_ROAD;
+    }
 
-function resetFinish() { finish.isInit = false, finish.x = -1; finish.y = -1; };
+    start.isInit = false;
+    start.x = -1;
+    start.y = -1;
+};
+
+function resetFinish() {
+    if (finish.isInit) {
+        table[finish.y][finish.x].style.backgroundColor = matrix[finish.y][finish.x] == -1 ? COLOR_WALL : COLOR_ROAD;
+    }
+
+    finish.isInit = false;
+    finish.x = -1;
+    finish.y = -1;
+};
+
+function changeModAddWall() {
+    activeMode = 1;
+    coloriseButtons1(1);
+}
+
+function changeModDeleteWall() {
+    activeMode = 2;
+    coloriseButtons1(2);
+}
+
+function changeModStart() {
+    activeMode = 3;
+    coloriseButtons1(3);
+}
+
+function changeModFinsih() {
+    activeMode = 4;
+    coloriseButtons1(4);
+}
+
+function changeSpeed1() {
+    TIME_SLEEP_RENDER = 500;
+    coloriseButtons2(1);
+}
+
+function changeSpeed2() {
+    TIME_SLEEP_RENDER = 250;
+    coloriseButtons2(2);
+}
+
+function changeSpeed3() {
+    TIME_SLEEP_RENDER = 100;
+    coloriseButtons2(3);
+}
+
+function changeSpeed4() {
+    TIME_SLEEP_RENDER = 50;
+    coloriseButtons2(4);
+}
+
+function changeSpeed5() {
+    TIME_SLEEP_RENDER = 25;
+    coloriseButtons2(5);
+}
+
+function coloriseButtons1(number) {
+    document.getElementById('add_wall').style.backgroundColor = number == 1 ? ACTIVE_BUTTON : INACTIVE_BUTTON;
+    document.getElementById('delete_wall').style.backgroundColor = number == 2 ? ACTIVE_BUTTON : INACTIVE_BUTTON;
+    document.getElementById('change_start').style.backgroundColor = number == 3 ? ACTIVE_BUTTON : INACTIVE_BUTTON;
+    document.getElementById('change_finish').style.backgroundColor = number == 4 ? ACTIVE_BUTTON : INACTIVE_BUTTON;
+}
+
+function coloriseButtons2(number) {
+    document.getElementById('speed_1').style.backgroundColor = number == 1 ? ACTIVE_BUTTON : INACTIVE_BUTTON;
+    document.getElementById('speed_2').style.backgroundColor = number == 2 ? ACTIVE_BUTTON : INACTIVE_BUTTON;
+    document.getElementById('speed_3').style.backgroundColor = number == 3 ? ACTIVE_BUTTON : INACTIVE_BUTTON;
+    document.getElementById('speed_4').style.backgroundColor = number == 4 ? ACTIVE_BUTTON : INACTIVE_BUTTON;
+    document.getElementById('speed_5').style.backgroundColor = number == 5 ? ACTIVE_BUTTON : INACTIVE_BUTTON;
+}
