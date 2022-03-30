@@ -107,6 +107,8 @@ async function aStarSearch() {
     if (TABLE_IS_INIT && start.isInit && finish.isInit) {
         document.getElementById('launch').style.backgroundColor = ACTIVE_BUTTON;
 
+        createTable();
+
         let = queue = new Array();          //очередь
         let isVisited = new Array(SIZE);    //здесь будем отмечать, где мы были
         let parents = new Array(SIZE);      //здесь будем указывать родителей
