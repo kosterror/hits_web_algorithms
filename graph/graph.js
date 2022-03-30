@@ -19,11 +19,6 @@ let vertexList = [];    //массив вершин
 let adjMatrix = [];     //матрица смежности
 let activeMode = 0;     //режим для взаимодействия с canvas
 
-//баг: если пользователь выберет режим добавления ребра, потом выберет 1 вершину
-//а после сразу сменит режим, то эта вершина останется выделенной, но при следующем добавлении ребра
-//взаимодействия с этой вершиной не будет, короче она просто цвет поменяла
-
-
 document.getElementById('canvas').addEventListener('click', handler);
 document.getElementById('add_vertex').addEventListener('click', event => { activeMode = 1 });
 document.getElementById('add_edje').addEventListener('click', event => { addEdjeCounter = 0, first = -1, second = -1, activeMode = 2 });
@@ -108,15 +103,17 @@ function handler(event) {
         }
 
         else if (addEdjeCounter == 1) {
-            if (index != -1) {
+            if (index != -1 && adjMatrix[first][index] == -1) {
                 addEdjeCounter++;
                 second = index;
                 addEdge(first, second);
-
-                activeMode = 0;
+            } 
+            else {
+                console.log('ERROR');
+                vertexList[first].redraw(DEFAULT_FILL_COLOR);
             }
-        }
-
+        } 
+        
         else {
             console.log('ERROR');
         }
@@ -207,11 +204,11 @@ function expandAdjMatrix() {
 
     else {
         let newROW = new Array(adjMatrix.length);
-        newROW.fill(0);
+        newROW.fill(-1);
         adjMatrix.push(newROW);
 
         for (let i = 0; i < adjMatrix.length; i++) {
-            adjMatrix[i].push(0);
+            adjMatrix[i].push(-1);
         }
     }
 }
