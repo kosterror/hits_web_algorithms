@@ -96,9 +96,7 @@ function handler(event) {
         let index = getIndexHitVertex(x, y);
 
         if (index != -1){
-            vertexList[index].remove();
-            vertexList.splice(index, 1);
-            renumberVertices();
+            removeVertex(index);
         }
     }
 }
@@ -179,6 +177,12 @@ function renumberVertices() {
         vertexList[i].number = i;
         vertexList[i].draw(); 
     }
+}
+
+function removeVertex(index){
+    vertexList[index].remove();
+    vertexList.splice(index, 1);
+    renumberVertices();
 }
 
 function calculateDistance(x1, y1, x2, y2) { return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)); }
