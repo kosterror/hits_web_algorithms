@@ -1,6 +1,6 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-const SIZE_WIDTH = 600;
+const SIZE_WIDTH = 1200;
 const SIZE_HEIGHT = 600;
 canvas.width = SIZE_WIDTH;
 canvas.height = SIZE_HEIGHT;
@@ -11,17 +11,13 @@ const STROKE_WIDTH = 2;
 const STROKE_COLOR = 'black';
 const DEFAULT_FILL_COLOR = 'yellow'; //стандартный цвет, в который окрашивается вершина при создании, можно поменять
 const EDGE_COLOR = 'blue';
-const EDGE_WIDTH = 5;
+const EDGE_WIDTH = 3;
 
-let addEdjeCounter, first, second;   //эти штуки нужны для добавления ребра
+let addEdjeCounter, first, second; //эти штуки нужны для добавления ребра
 
-let vertexList = [];    //массив вершин
-let adjMatrix = [];     //матрица смежности
-let activeMode = 0;     //режим для взаимодействия с canvas
-
-//баг: если пользователь выберет режим добавления ребра, потом выберет 1 вершину
-//а после сразу сменит режим, то эта вершина останется выделенной, но при следующем добавлении ребра
-//взаимодействия с этой вершиной не будет, короче она просто цвет поменяла
+let vertexList = []; //массив вершин
+let adjMatrix = []; //матрица смежности
+let activeMode = 0; //режим для взаимодействия с canvas
 
 
 document.getElementById('canvas').addEventListener('click', handler);
@@ -83,20 +79,13 @@ function handler(event) {
     let x = event.offsetX;
     let y = event.offsetY;
 
-    if (activeMode == 0) {
-        //сюда попадаем, если пользователя не выбрал ни один режим на тулбаре и тыкает по canvas
-        //вроде как это можно убрать и ничего не изменится (наверное)
-    }
-
-    else if (activeMode == 1) {   //режим добавления вершин
+    if (activeMode == 1) { //режим добавления вершин
         if (isCanAddVertex(x, y)) {
             vertexList.push(new Vertex(x, y, vertexList.length, vertexList.length));
             vertexList[vertexList.length - 1].draw();
             expandAdjMatrix();
         }
-    }
-
-    else if (activeMode == 2) { //режим добавления ребра 
+    } else if (activeMode == 2) { //режим добавления ребра 
         let index = getIndexHitVertex(x, y);
 
         if (addEdjeCounter == 0) {
@@ -105,19 +94,17 @@ function handler(event) {
                 first = index;
                 vertexList[index].redraw('grey');
             }
-        }
-
-        else if (addEdjeCounter == 1) {
-            if (index != -1) {
+        } else if (addEdjeCounter == 1) {
+            if (index != -1 && adjMatrix[first][index] == -1) {
                 addEdjeCounter++;
                 second = index;
                 addEdge(first, second);
 
-                activeMode = 0;
+            } else {
+                console.log('ERROR');
+                vertexList[first].redraw(DEFAULT_FILL_COLOR);
             }
-        }
-
-        else {
+        } else {
             console.log('ERROR');
         }
     }
@@ -135,8 +122,23 @@ function addEdge(indexVertex1, indexVertex2) {
     vertexList[indexVertex1].draw();
     vertexList[indexVertex2].draw();
 
-    adjMatrix[vertexList[indexVertex1].number][vertexList[indexVertex2].number] = 1;
-    adjMatrix[vertexList[indexVertex2].number][vertexList[indexVertex1].number] = 1;
+    let weight_edge = calculateDistance(vertexList[indexVertex1].x, vertexList[indexVertex1].y,
+        vertexList[indexVertex2].x, vertexList[indexVertex2].y);
+
+    adjMatrix[vertexList[indexVertex1].number][vertexList[indexVertex2].number] = weight_edge;
+    adjMatrix[vertexList[indexVertex2].number][vertexList[indexVertex1].number] = weight_edge;
+
+    //далее рисуем вес ребра на ребре
+
+    let x = vertexList[indexVertex1].x + ((weight_edge / 2 * (vertexList[indexVertex2].x - vertexList[indexVertex1].x)) / weight_edge);
+    let y = vertexList[indexVertex1].y + ((weight_edge / 2 * (vertexList[indexVertex2].y - vertexList[indexVertex1].y)) / weight_edge);
+
+    weight_edge = Math.round(weight_edge);
+
+    ctx.beginPath();
+    ctx.fillStyle = 'red';
+    ctx.fillText(weight_edge, x, y);
+    ctx.closePath();
 }
 
 function isCanAddVertex(x, y) {
@@ -145,9 +147,7 @@ function isCanAddVertex(x, y) {
 
         if (index == -1) {
             return true;
-        }
-
-        else if (calculateDistance(vertexList[index].x, vertexList[index].y, x, y) > 2 * VERTEX_RADIUS) {
+        } else if (calculateDistance(vertexList[index].x, vertexList[index].y, x, y) > 2 * VERTEX_RADIUS) {
             return true;
         }
     }
@@ -159,16 +159,12 @@ function getIndexHitVertex(x, y) {
 
     if (index != -1) {
         if (calculateDistance(vertexList[index].x, vertexList[index].y, x, y) < VERTEX_RADIUS) {
-            return index;   //попали по вершине
+            return index; //попали по вершине
+        } else {
+            return -1; //не попали по вершине
         }
-        else {
-            return -1;      //не попали по вершине
-        }
-    }
-
-    else {
-        //эта ситуация должна появиться тогда и только тогда, когда пользователь не добавил ни одной вершины,
-        //но он пытается что-то выбрать (наверное)
+    } else {
+        // пользователь не добавил ни одной вершины, но пытается что-то выбрать (наверное)
         return index;
     }
 }
@@ -183,9 +179,7 @@ function getNearestVertexIndex(x, y) {
         if (minDistance == -1) {
             index = i;
             minDistance = distance;
-        }
-
-        else if (distance < minDistance) {
+        } else if (distance < minDistance) {
             index = i;
             minDistance = distance;
         }
@@ -202,16 +196,14 @@ function expandAdjMatrix() {
     //добавить вершину
 
     if (adjMatrix.length == 0) { //первая вершина
-        adjMatrix.push([0]);
-    }
-
-    else {
+        adjMatrix.push([-1]);
+    } else {
         let newROW = new Array(adjMatrix.length);
         newROW.fill(0);
         adjMatrix.push(newROW);
 
         for (let i = 0; i < adjMatrix.length; i++) {
-            adjMatrix[i].push(0);
+            adjMatrix[i].push(-1);
         }
     }
 }
