@@ -96,7 +96,7 @@ function handler(event) {
     }
 }
 
-function ant_algorithm(){
+function ant_algorithm() {
     //как-нибудь потом сделаю
 }
 
@@ -162,12 +162,17 @@ function expandAdjMatrix() {
 
     else {
         let newROW = new Array(adjMatrix.length + 1);
-        newROW.fill(1);
-        newROW[newROW.length - 1] = 0;
+
+        newROW.fill(0);
+
+        for (let i = 0; i < vertexList.length - 1; i++) {
+            newROW[i] = calculateDistance(vertexList[vertexList.length - 1].x, vertexList[vertexList.length - 1].y, vertexList[i].x, vertexList[i].y);
+        }
+
         adjMatrix.push(newROW);
 
         for (let i = 0; i < adjMatrix.length - 1; i++) {
-            adjMatrix[i].push(1);
+            adjMatrix[i].push(newROW[i]);
         }
     }
 }
