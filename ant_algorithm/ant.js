@@ -47,10 +47,9 @@ class Vertex {
         ctx.closePath();
     }
 
-    remove (){
+    remove() {
         ctx.fillStyle = 'aliceblue';
 
-        
         ctx.beginPath();
         ctx.arc(this.x, this.y, VERTEX_RADIUS + VERTEX_RADIUS * 0.5, 0, 2 * Math.PI);   //стирает на 0.5 радиуса больше, чем надо
         ctx.fill();
@@ -89,13 +88,14 @@ function handler(event) {
         if (canAddVertex(x, y)) {
             vertexList.push(new Vertex(x, y, vertexList.length));
             vertexList[vertexList.length - 1].draw();
+            expandAdjMatrix();
         }
     }
 
     else if (activeMode == 2) {
         let index = getIndexHitVertex(x, y);
 
-        if (index != -1){
+        if (index != -1) {
             removeVertex(index);
         }
     }
@@ -162,26 +162,33 @@ function expandAdjMatrix() {
     }
 
     else {
-        let newROW = new Array(adjMatrix.length);
-        newROW.fill(0);
+        let newROW = new Array(adjMatrix.length + 1);
+        newROW.fill(1);
+        newROW[newROW.length - 1] = 0;
         adjMatrix.push(newROW);
 
-        for (let i = 0; i < adjMatrix.length; i++) {
-            adjMatrix[i].push(0);
+        for (let i = 0; i < adjMatrix.length - 1; i++) {
+            adjMatrix[i].push(1);
         }
     }
 }
 
 function renumberVertices() {
-    for (let i = 0; i < vertexList.length; i++){
+    for (let i = 0; i < vertexList.length; i++) {
         vertexList[i].number = i;
-        vertexList[i].draw(); 
+        vertexList[i].draw();
     }
 }
 
-function removeVertex(index){
+function removeVertex(index) {
     vertexList[index].remove();
     vertexList.splice(index, 1);
+    adjMatrix.splice(index, 1);
+
+    for (let i = 0; i < adjMatrix.length; i++) {
+        adjMatrix[i].splice(index, 1);
+    }
+
     renumberVertices();
 }
 
