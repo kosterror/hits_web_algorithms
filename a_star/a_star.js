@@ -338,7 +338,6 @@ function moveRubber(rubber) {
     return false;
 }
 
-
 function generateEmptyMaze() {
     resetStart();
     resetFinish();
@@ -399,8 +398,6 @@ function createMatrix(value) {
         }
     }
 }
-
-
 
 function calculetaHeuristicsDistance(x1, y1, x2, y2) { return Math.abs((x1 - x2) + (y1 - y2)); };
 
