@@ -70,7 +70,7 @@ const STROKE_COLOR = 'black';   //цвет линии, которой рисуе
 const DEFAULT_FILL_COLOR = 'yellow'; //цвет заливки вершины
 const EDGE_COLOR = 'blue';          //цвет ребра
 const EDGE_WIDTH = 5;               //толщина ребра
-let DISTANCE_BETWEEN_VERTEX = 2;    //как много вершин могло бы поместиться между двумя ближайшими
+let DISTANCE_BETWEEN_VERTEX = 1;    //как много вершин могло бы поместиться между двумя ближайшими
 
 let vertexList = [];
 let adjMatrix = [];
@@ -78,27 +78,26 @@ let activeMode = 0;
 
 document.getElementById('canvas').addEventListener('click', handler);
 document.getElementById('add_vertex').addEventListener('click', () => { activeMode = 1 });
-document.getElementById('delete_vertex').addEventListener('click', () => { activeMode = 2 });
+document.getElementById('remove_vertex').addEventListener('click', () => { activeMode = 2 });
+document.getElementById('launch_algorithm').addEventListener('click', ant_algorithm);
 
 function handler(event) {
     let x = event.offsetX;
     let y = event.offsetY;
 
-    if (activeMode == 1) {
-        if (canAddVertex(x, y)) {
-            vertexList.push(new Vertex(x, y, vertexList.length));
-            vertexList[vertexList.length - 1].draw();
-            expandAdjMatrix();
-        }
+    let index = getIndexHitVertex(x, y);
+
+    if (activeMode == 1 && canAddVertex(x, y)) {
+        addVertex(x, y);
     }
 
-    else if (activeMode == 2) {
-        let index = getIndexHitVertex(x, y);
-
-        if (index != -1) {
-            removeVertex(index);
-        }
+    else if (activeMode == 2 && index != -1) {
+        removeVertex(index);
     }
+}
+
+function ant_algorithm(){
+    //как-нибудь потом сделаю
 }
 
 function getIndexHitVertex(x, y) {
@@ -178,6 +177,12 @@ function renumberVertices() {
         vertexList[i].number = i;
         vertexList[i].draw();
     }
+}
+
+function addVertex(x, y) {
+    vertexList.push(new Vertex(x, y, vertexList.length));
+    vertexList[vertexList.length - 1].draw();
+    expandAdjMatrix();
 }
 
 function removeVertex(index) {
