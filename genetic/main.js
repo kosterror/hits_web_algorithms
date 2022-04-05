@@ -10,10 +10,10 @@ import { InitialPopulationGeneration } from "./algorithm.js";
 import { algorithmsStart } from "./algorithm.js";
 
 
-export const SIZE_WIDTH = 1300,
-    SIZE_HEIGHT = 700;
+export const SIZE_WIDTH = 1000,
+    SIZE_HEIGHT = 670;
 
-export const VERTEX_RADIUS = 20,
+export const VERTEX_RADIUS = 15,
     STROKE_WIDTH = 2,
     STROKE_COLOR = 'black',
     DEFAULT_FILL_COLOR = 'rgb(131, 118, 46)',
@@ -29,6 +29,8 @@ let activeMode = 0; //режим для взаимодействия с canvas
 
 export let population = [], //массив хромосом
     POPULATION_SIZE;
+
+let time = performance.now();;
 
 
 const canvas = document.querySelector('canvas');
@@ -71,26 +73,30 @@ function startAlgorithm(event) {
         counter_stop = 0; //счетчик для остановки программы
 
     let id = setInterval(function() {
-        if (count > COUNT_GENERATIONS || counter_stop == 500) {
+        if (count > COUNT_GENERATIONS || counter_stop == 300) {
             deleteEdge();
             drawEdgeAnswer('green');
+            console.log(count);
             console.log("END");
 
             clearInterval(id);
         }
 
-        let fit1 = population[0].fitness,
-            chrom1 = population[0].chromosome; //запоминаем лучшую хромосому
+        let fit1 = population[0].fitness; //запоминаем лучшую хромосому
 
         algorithmsStart();
 
-        let fit2 = population[0].fitness,
-            chrom2 = population[0].chromosome; // запоминаем в измененной популяции лучшую хромосому
+        let fit2 = population[0].fitness; // запоминаем в измененной популяции лучшую хромосому
 
-        if (fit2 !== fit1 || chrom2 !== chrom1) { // проверка на новую хромосому
+        if (fit2 !== fit1) { // проверка на новую хромосому
             counter_stop = 0;
             deleteEdge();
             drawEdgeAnswer('black');
+        }
+
+        if (count % 100 === 0) {
+            time = performance.now() - time;
+            console.log('Время выполнения = ', time);
         }
 
         count++;

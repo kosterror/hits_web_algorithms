@@ -4,10 +4,9 @@ import { adjMatrix } from "./main.js";
 export { createDescendant, findFitness, getRandomInt, mutation };
 
 
-function createDescendant(parent1, parent2) {
+function createDescendant(parent1, parent2, point_break) {
     let arr = [];
     let used_gene = [];
-    let point_break = getRandomInt(1, vertexList.length);
 
     for (let i = 0; i < vertexList.length; i++) {
         used_gene[i] = false;

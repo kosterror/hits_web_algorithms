@@ -60,13 +60,25 @@ function CrossingAlgorithm() {
             chrom2 = population[getRandomInt(0, population.length)].chromosome.slice(0, population[0].chromosome.length);
         }
 
-        let descendant1 = createDescendant(chrom1, chrom2).slice(0, population[0].length) //формируем 1 потомка
-        let descendant2 = createDescendant(chrom2, chrom1).slice(0, population[0].length) //формируем 2 потомка
+        let point_break = getRandomInt(1, vertexList.length);
+        let descendant1 = createDescendant(chrom1, chrom2, point_break).slice(0, population[0].length) //формируем 1 потомка
+        let descendant2 = createDescendant(chrom2, chrom1, point_break).slice(0, population[0].length) //формируем 2 потомка
 
         MutationAlgorithm(descendant1.slice(), descendant2.slice());
 
         i++;
     }
+
+    population.sort((a, b) => a.fitness - b.fitness);
+
+    // let k = 0,
+    //     t = population.length - POPULATION_SIZE;
+    // while (k < t) {
+    //     population.pop();
+    //     k++;
+    // }
+
+    population.splice(POPULATION_SIZE, population.length);
 }
 
 function MutationAlgorithm(descendant1, descendant2) {
@@ -88,14 +100,5 @@ function AddDescendantsToPopulation(descendant1, descendant2) {
 
     for (let i = 0; i < population.length; i++) {
         population[i].fitness = findFitness(population[i].chromosome.slice());
-    }
-
-    population.sort((a, b) => a.fitness - b.fitness);
-
-    let k = 0,
-        t = population.length - POPULATION_SIZE;
-    while (k < t) {
-        population.pop();
-        k++;
     }
 }
