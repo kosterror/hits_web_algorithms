@@ -4,7 +4,10 @@ import { STROKE_WIDTH } from "./main.js";
 import { VERTEX_RADIUS } from "./main.js";
 import { ctx } from "./main.js";
 
-export { Vertex, Chromosome };
+export {
+    Vertex,
+    Chromosome
+};
 
 
 class Vertex {

@@ -1,7 +1,12 @@
 import { vertexList } from "./main.js";
 import { adjMatrix } from "./main.js";
 
-export { createDescendant, findFitness, getRandomInt, mutation };
+export {
+    createDescendant,
+    findFitness,
+    getRandomInt,
+    mutation
+};
 
 
 function createDescendant(parent1, parent2, point_break) {

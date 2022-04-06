@@ -5,15 +5,17 @@ import { isCanAddVertex } from "./func_for_canvas.js";
 import { drawEdgesWithWeight } from "./func_for_canvas.js";
 import { deleteEdge } from "./func_for_canvas.js";
 import { drawEdgeAnswer } from "./func_for_canvas.js";
+import { disableButtons } from "./func_for_canvas.js";
+import { enableButtons } from "./func_for_canvas.js";
 
 import { InitialPopulationGeneration } from "./algorithm.js";
 import { algorithmsStart } from "./algorithm.js";
 
 
 export const SIZE_WIDTH = 1000,
-    SIZE_HEIGHT = 670;
-
-export const VERTEX_RADIUS = 15,
+    SIZE_HEIGHT = 650;
+const LIMIT_NUMBER_VERTEX = 46;
+export const VERTEX_RADIUS = 20,
     STROKE_WIDTH = 2,
     STROKE_COLOR = 'black',
     DEFAULT_FILL_COLOR = 'rgb(131, 118, 46)',
@@ -56,7 +58,11 @@ function handler(event) {
     let index = getIndexHitVertex(x, y);
 
     if (activeMode == 1 && isCanAddVertex(x, y)) { //режим добавления вершин
-        addVertex(x, y);
+        if (vertexList.length + 1 > LIMIT_NUMBER_VERTEX) {
+            alert("Превышен лимит количества вершин")
+        } else {
+            addVertex(x, y);
+        }
 
     } else if (activeMode == 2 && index != -1) { //режим удаления вершины
         removeVertex(index);
@@ -64,6 +70,13 @@ function handler(event) {
 }
 
 function startAlgorithm(event) {
+    if (vertexList.length === 0) {
+        alert("Сначала нарисуйте вершины на плоскости")
+    }
+
+    activeMode = 0;
+    disableButtons();
+
     POPULATION_SIZE = Math.pow(vertexList.length, 2);
     population = []; //при добавлении новых вершин обнуляем популяцию
 
@@ -73,12 +86,11 @@ function startAlgorithm(event) {
         counter_stop = 0; //счетчик для остановки программы
 
     let id = setInterval(function() {
-        if (count > COUNT_GENERATIONS || counter_stop == 300) {
+        if (count > COUNT_GENERATIONS || counter_stop == 250) {
             deleteEdge();
             drawEdgeAnswer('green');
-            console.log(count);
-            console.log("END");
 
+            enableButtons();
             clearInterval(id);
         }
 
@@ -92,11 +104,6 @@ function startAlgorithm(event) {
             counter_stop = 0;
             deleteEdge();
             drawEdgeAnswer('black');
-        }
-
-        if (count % 100 === 0) {
-            time = performance.now() - time;
-            console.log('Время выполнения = ', time);
         }
 
         count++;

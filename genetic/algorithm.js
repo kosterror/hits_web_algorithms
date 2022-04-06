@@ -10,7 +10,10 @@ import { population } from "./main.js";
 import { vertexList } from "./main.js";
 import { MUTATION_PERCENTAGE } from "./main.js";
 
-export { InitialPopulationGeneration, algorithmsStart }
+export {
+    InitialPopulationGeneration,
+    algorithmsStart
+}
 
 
 function InitialPopulationGeneration() {

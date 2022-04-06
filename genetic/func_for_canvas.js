@@ -9,7 +9,17 @@ import { EDGE_WIDTH } from "./main.js";
 import { VERTEX_RADIUS } from "./main.js";
 import { ctx } from "./main.js";
 
-export { addVertex, removeVertex, drawEdgesWithWeight, deleteEdge, drawEdgeAnswer, isCanAddVertex, getIndexHitVertex };
+export {
+    addVertex,
+    removeVertex,
+    drawEdgesWithWeight,
+    deleteEdge,
+    drawEdgeAnswer,
+    isCanAddVertex,
+    getIndexHitVertex,
+    disableButtons,
+    enableButtons
+};
 
 
 function addVertex(x, y) {
@@ -184,4 +194,18 @@ function expandAdjMatrix() {
             adjMatrix[i].push(newROW[i]);
         }
     }
+}
+
+function disableButtons() {
+    document.getElementById('add_vertex').disabled = true;
+    document.getElementById('draw_edjes').disabled = true;
+    document.getElementById('remove_vertex').disabled = true;
+    document.getElementById('start_algo').disabled = true;
+}
+
+function enableButtons() {
+    document.getElementById('add_vertex').disabled = false;
+    document.getElementById('draw_edjes').disabled = false;
+    document.getElementById('remove_vertex').disabled = false;
+    document.getElementById('start_algo').disabled = false;
 }
