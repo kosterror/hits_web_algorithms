@@ -1,11 +1,18 @@
 import { COLOR_WALL, COLOR_ROAD } from './temp.js';
+import { SpecialCell } from './classes.js'
 
-let SIZE;
-let matrix;
-let table;
+export let matrix;
+export let table;
+export let start;
+export let finish;
+
 let isInitTable = false;
+let SIZE;
 
 export function createMaze(type) {
+    start = new SpecialCell('start');
+    finish = new SpecialCell('finish');
+
     //type = -1 //лабиринт со стенами
     //type = 0  //пустой лабиринт
 
@@ -59,13 +66,20 @@ function createMatrix(type) {
     }
 }
 
-function drawTable() {
+export function drawTable() {
     if (isInitTable) {  //доп защита, пока не понятно необходима ли она
         for (let i = 0; i < SIZE; i++) {
             for (let j = 0; j < SIZE; j++) {
                 table[i][j].style.backgroundColor = matrix[i][j] == 0 ? COLOR_ROAD : COLOR_WALL;
             }
         }
+        if (start.isInit) {
+            start.draw();
+        }
+        if (finish.isInit) {
+            finish.draw();
+        }
+
     }
 }
 
