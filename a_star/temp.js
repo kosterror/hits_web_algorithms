@@ -16,6 +16,7 @@ export const COLOR_PATH = '#6ddf8f';
 export const COLOR_CURRENT_CELL = '#66ff33';
 export const COLOR_CONSIDER_CELL = '#ff99cc';
 export const COLOR_CONSIDERED_CELL = '#6dc2df';
+export let TIME_SLEEP = 50; 
 
 export let idSpeedButtons = ['speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5'];
 export let currentSpeed = [0, 0, 0, 0, 0];

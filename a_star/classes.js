@@ -1,17 +1,17 @@
 import { COLOR_START, COLOR_FINISH } from './temp.js';
-import { table } from './generate_and_draw_maze.js';
+import { table, start, finish } from './generate_and_draw_maze.js';
 
 export class SpecialCell {
     constructor(type) {
-        this.row = -1;
-        this.col = -1;
+        this.x = -1;
+        this.y = -1;
         this.isInit = false;
         this.type = type;
     }
 
     draw() {
         if (this.isInit) {
-            table[this.row][this.col].style.backgroundColor = this.type == 'start' ? COLOR_START : COLOR_FINISH;
+            table[this.y][this.x].style.backgroundColor = this.type == 'start' ? COLOR_START : COLOR_FINISH;
         }
 
         else {
@@ -19,13 +19,23 @@ export class SpecialCell {
         }
     }
 
-    define(row, col) {
-        this.row = row;
-        this.col = col;
+    define(x, y) {
+        this.x = x;
+        this.y = y;
         this.isInit = true;
     }
 
     reset() {
         this.isInit = false;
+    }
+}
+
+export class Cell{
+    constructor(x, y, cost){
+        this.x = Number(x);
+        this.y = Number(y);
+        this.heuristics = Math.abs(Number(finish.x) - Number(this.x)) + Math.abs(Number(finish.y) - Number(this.y));
+        this.cost = Number(cost);
+        this.f = Number(this.heuristics) + Number(this.cost);
     }
 }

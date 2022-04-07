@@ -6,15 +6,11 @@ export let table;
 export let start;
 export let finish;
 
-let isInitTable = false;
-let SIZE;
+export let isInitTable = false;
+export let SIZE;
 
-export function createMaze(type) {
-    start = new SpecialCell('start');
-    finish = new SpecialCell('finish');
-
-    //type = -1 //лабиринт со стенами
-    //type = 0  //пустой лабиринт
+export function createMaze(type) {  
+    resetStartAndFinish();
 
     //TO DO: добавить проверку SIZE
 
@@ -142,4 +138,10 @@ function moveRubber(rubber) {
     }
 
     return false;
+}
+
+function resetStartAndFinish(){
+    //тут надо добавить доп проверки туда-сюда
+    start = new SpecialCell('start');
+    finish = new SpecialCell('finish');
 }

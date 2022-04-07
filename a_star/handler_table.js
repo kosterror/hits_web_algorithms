@@ -23,13 +23,13 @@ export function tableHandler(e) {
 
         if (currentActiveMode == 2) {
             //выбираем старт
-            start.define(row, col);
+            start.define(col, row);
             drawTable();
         }
 
         if (currentActiveMode == 3) {
             //выбираем финиш
-            finish.define(row, col);
+            finish.define(col, row);
             drawTable();
         }
 
