@@ -1,6 +1,6 @@
-import { matrix, table, start, finish, isInitTable, SIZE } from './generate_and_draw_maze.js';
+import { drawTable, matrix, table, start, finish, isInitTable, SIZE } from './generate_and_draw_maze.js';
 import { Cell } from './classes.js';
-import { COLOR_CURRENT_CELL, COLOR_CONSIDER_CELL, COLOR_CONSIDERED_CELL, COLOR_PATH, TIME_SLEEP } from './temp.js';
+import { COLOR_CURRENT_CELL, COLOR_CONSIDER_CELL, COLOR_CONSIDERED_CELL, COLOR_PATH, delay } from './vatiables.js';
 import { activeButtonsHandler } from './handler_buttons.js';
 
 let queue;
@@ -9,18 +9,13 @@ let parents;
 let isEnd;
 
 export async function aStarWrapper() {
-    //должен быть создан лабиринт, матрица, выбран старт, финиш
-
-
-
     if (check()) {
-        console.log('Все существует');
+        drawTable();
         await aStarSearch();
         activeButtonsHandler(-1);
     }
 
     else {
-        console.log('Ты пытаешь запустить алгоритм, но не существует чего-то из: старт, финиш, таблица');
         activeButtonsHandler(-1);
     }
 }
@@ -38,7 +33,7 @@ async function aStarSearch() {
         queue.splice(index, 1);
 
         renderCell(currentCell.y, currentCell.x, COLOR_CURRENT_CELL, false);
-        await sleep(TIME_SLEEP);
+        await sleep(delay.value);
 
         let neighbors = [new Cell(currentCell.x, currentCell.y - 1, currentCell.cost + 1), new Cell(currentCell.x + 1, currentCell.y, currentCell.cost + 1), new Cell(currentCell.x, currentCell.y + 1, currentCell.cost + 1), new Cell(currentCell.x - 1, currentCell.y, currentCell.cost + 1)];
 
@@ -63,14 +58,14 @@ async function aStarSearch() {
                         parents[neighbors[i].y][neighbors[i].x].x = currentCell.x;
 
                         renderCell(neighbors[i].y, neighbors[i].x, COLOR_CONSIDER_CELL, false);
-                        await sleep(TIME_SLEEP);
+                        await sleep(delay.value);
                     }
                 }
             }
         }
 
         renderCell(currentCell.y, currentCell.x, COLOR_CONSIDERED_CELL, false);
-        await sleep(TIME_SLEEP);
+        await sleep(delay.value);
     }
 
     if (isEnd) {
@@ -79,7 +74,7 @@ async function aStarSearch() {
     }
 
     else {
-        alert('Видно не судьба');
+        alert('Не нашёл(');
     }
 }
 
@@ -172,7 +167,7 @@ function getPath(parents) {
 async function renderPath(path) {
     for (let i = 0; i < path.length; i++) {
         renderCell(path[i].y, path[i].x, COLOR_PATH, true);
-        await sleep(50);
+        await sleep(20);
     }
 }
 

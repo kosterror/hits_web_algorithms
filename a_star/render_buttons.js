@@ -1,4 +1,4 @@
-import { activeMode, currentSpeed, idIntrectionButtons, idSpeedButtons, idButtons, COLOR_ACTIVE_BTN, COLOR_INACTIVE_BTN } from "./temp.js";
+import { activeMode, currentSpeed, idIntrectionButtons, idSpeedButtons, idButtons, COLOR_ACTIVE_BTN, COLOR_INACTIVE_BTN } from "./vatiables.js";
 
 export function buttonsRenderClick() {
     //изменяем цвет при клике нужных кнопок
@@ -12,11 +12,12 @@ export function buttonsRenderClick() {
 }
 
 export function buttonsRenderMouseMove(e) {
-    //изменяем цвет при наведении на нужные кнопки
+    //изменяем цвет при наведении/отведении на/от кнопки
     document.getElementById(e.target.id).style.backgroundColor = e.type == 'mouseover' ? COLOR_ACTIVE_BTN : COLOR_INACTIVE_BTN;
     
     if (e.type == 'mouseout'){
         buttonsRenderClick();
     }
+    
     return 0;
 }

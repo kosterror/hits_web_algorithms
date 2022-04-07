@@ -1,11 +1,10 @@
-import { activeMode } from "./temp.js";
+import { activeMode } from "./vatiables.js";
 import { matrix, drawTable, start, finish } from "./generate_and_draw_maze.js";
 
 export function tableHandler(e) {
     if (e.target.tagName == 'TD') {
         let row = e.target.parentNode.id;
         let col = e.target.id;
-        // console.log(row + ' ' + col);
 
         let currentActiveMode = calculateActiveMode();
 
@@ -31,10 +30,6 @@ export function tableHandler(e) {
             //выбираем финиш
             finish.define(col, row);
             drawTable();
-        }
-
-        if (currentActiveMode == 4) {
-            //тут надо подумать что следует делать, скорее всего ничего...
         }
     }
 }

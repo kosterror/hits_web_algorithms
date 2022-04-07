@@ -1,4 +1,4 @@
-import { COLOR_WALL, COLOR_ROAD } from './temp.js';
+import { COLOR_WALL, COLOR_ROAD } from './vatiables.js';
 import { SpecialCell } from './classes.js'
 
 export let matrix;
@@ -9,21 +9,27 @@ export let finish;
 export let isInitTable = false;
 export let SIZE;
 
-export function createMaze(type) {  
-    resetStartAndFinish();
-
-    //TO DO: добавить проверку SIZE
-
+export function createMaze(type) {
     SIZE = Number(document.getElementById('change_size_input').value);
 
-    createTable();
-    createMatrix(type);
-
-    if (type == -1) {
-        generateMaze();
+    if (SIZE < 5 || SIZE > 100) {
+        alert('Размер лабиринта должен быть не меньше 5 и не больше 100');
     }
 
-    drawTable();
+    else {
+        resetStartAndFinish();
+        createTable();
+        createMatrix(type);
+
+        if (type == -1) {
+            generateMaze();
+        }
+
+        start.define(0, 0);
+        finish.define(SIZE - 1, SIZE - 1);
+
+        drawTable();
+    }
 }
 
 function createTable() {
@@ -140,8 +146,7 @@ function moveRubber(rubber) {
     return false;
 }
 
-function resetStartAndFinish(){
-    //тут надо добавить доп проверки туда-сюда
+function resetStartAndFinish() {
     start = new SpecialCell('start');
     finish = new SpecialCell('finish');
 }
