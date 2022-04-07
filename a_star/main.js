@@ -1,9 +1,15 @@
-import { activeButtonsHandler, speedButtonsHandler, generateMazeButtonsHandler } from './handler_buttons.js';
+import {
+    activeButtonsHandler,
+    speedButtonsHandler,
+    generateMazeButtonsHandler
+} from './handler_buttons.js';
+
 import { buttonsRenderMouseMove } from './render_buttons.js';
-import { idButtons } from './vatiables.js';
+import { idButtons } from './variables.js';
 import { tableHandler } from './handler_table.js';
 
 speedButtonsHandler(3);
+generateMazeButtonsHandler(-1);
 
 document.getElementById('table_container').addEventListener('click', (e) => { tableHandler(e) });
 

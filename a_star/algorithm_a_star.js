@@ -1,6 +1,20 @@
-import { drawTable, matrix, table, start, finish, isInitTable, SIZE } from './generate_and_draw_maze.js';
+import {
+    drawTable,
+    matrix,
+    table,
+    start,
+    finish,
+    isInitTable,
+    SIZE
+} from './generate_and_draw_maze.js';
+import {
+    COLOR_CURRENT_CELL,
+    COLOR_CONSIDER_CELL,
+    COLOR_CONSIDERED_CELL,
+    COLOR_PATH,
+    delay
+} from './variables.js';
 import { Cell } from './classes.js';
-import { COLOR_CURRENT_CELL, COLOR_CONSIDER_CELL, COLOR_CONSIDERED_CELL, COLOR_PATH, delay } from './vatiables.js';
 import { activeButtonsHandler } from './handler_buttons.js';
 
 let queue;

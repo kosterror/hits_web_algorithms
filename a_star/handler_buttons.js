@@ -1,4 +1,8 @@
-import { activeMode, currentSpeed, delay } from "./vatiables.js";
+import {
+    activeMode,
+    currentSpeed,
+    delay
+} from "./variables.js";
 import { buttonsRenderClick } from "./render_buttons.js";
 import { createMaze } from "./generate_and_draw_maze.js";
 import { aStarWrapper } from "./algorithm_a_star.js";

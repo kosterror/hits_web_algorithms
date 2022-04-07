@@ -1,4 +1,7 @@
-import { COLOR_WALL, COLOR_ROAD } from './vatiables.js';
+import {
+    COLOR_WALL,
+    COLOR_ROAD
+} from './variables.js';
 import { SpecialCell } from './classes.js'
 
 export let matrix;

@@ -1,5 +1,10 @@
-import { activeMode } from "./vatiables.js";
-import { matrix, drawTable, start, finish } from "./generate_and_draw_maze.js";
+import { activeMode } from "./variables.js";
+import {
+    matrix,
+    drawTable,
+    start,
+    finish
+} from "./generate_and_draw_maze.js";
 
 export function tableHandler(e) {
     if (e.target.tagName == 'TD') {

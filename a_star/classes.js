@@ -1,5 +1,12 @@
-import { COLOR_START, COLOR_FINISH } from './vatiables.js';
-import { table, finish, matrix } from './generate_and_draw_maze.js';
+import {
+    COLOR_START,
+    COLOR_FINISH
+} from './variables.js';
+import {
+    table,
+    finish,
+    matrix
+} from './generate_and_draw_maze.js';
 
 export class SpecialCell {
     constructor(type) {
