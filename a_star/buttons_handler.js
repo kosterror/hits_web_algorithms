@@ -1,4 +1,12 @@
-import { activeMode } from "./temp.js";
+import { activeMode, currentSpeed } from "./temp.js";
+
+export function activeButtonsHandler(id) {
+    changeActiveMode(id);
+}
+
+export function speedButtonsHandler(id){
+    changeCurrentSpeed(id);
+}
 
 export function changeActiveMode(id) {
     //сбрасываем все кнопки, активируем текущую
@@ -8,6 +16,12 @@ export function changeActiveMode(id) {
     activeMode[id] = 1;
 }
 
-export function buttonsHandler(id) {
-    changeActiveMode(id);
+function changeCurrentSpeed(id){
+    for (let i = 0; i < currentSpeed.length; i++){
+        currentSpeed[i] = 0;
+    }
+    currentSpeed[id] = 1;
 }
+
+
+
