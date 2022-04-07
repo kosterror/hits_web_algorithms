@@ -109,7 +109,7 @@ async function aStarSearch() {
 
         createTable();
 
-        let = queue = new Array();          //очередь
+        let queue = new Array();          //очередь
         let isVisited = new Array(SIZE);    //здесь будем отмечать, где мы были
         let parents = new Array(SIZE);      //здесь будем указывать родителей
         let isEnd = false;
