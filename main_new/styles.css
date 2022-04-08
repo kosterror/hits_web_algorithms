@@ -1,0 +1,95 @@
+* {
+    margin: 0;
+    font-family: 'Montserrat';
+    text-align: center;
+}
+
+header {
+    height: 100px;
+    background-color: #247ABF;
+}
+
+.flex-wrapper {
+    display: flex;
+}
+
+.flex-wrapper>.reference {
+    height: 40px;
+    margin-top: auto;
+    margin-bottom: auto;
+    flex-grow: 1;
+}
+
+header > div p {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+}
+
+.active {
+    background-color: #155080;
+}
+
+.grid-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.content > .grid-wrapper > .first-column > .photo-wrapper{
+    margin-top: 25%;
+    font-size: 30px;
+}
+
+.content > .grid-wrapper > .second-column > .photo-wrapper{
+    margin-top: 15%;
+    font-size: 30px;
+}
+
+.content > .grid-wrapper > .third-column > .photo-wrapper{
+    margin-top: 5%;
+    font-size: 30px;
+}
+
+.content > .grid-wrapper > .third-column > .photo-wrapper{
+    margin-top: 5%;
+    font-size: 30px;
+}
+
+.content > .grid-wrapper > .third-column > .photo-wrapper > p{
+    margin-top: -60px;
+}
+
+.title{
+    margin-top: 10%;
+    font-size: 45px;
+}
+
+.logo {
+    width: 78px;
+    margin-top: 4px;
+}
+
+#left_logo {
+    margin-left: 28px;
+}
+
+#right_logo {
+    margin-right: 28px;
+}
+
+.photo{
+    width: 80%;
+}
+
+#coronavirus {
+    width: 10%;
+    position: absolute;
+    right: 17%;
+    bottom: 20px;
+}
+
+a, a:visited, a:hover {
+    text-decoration: none;
+    color: #fff;
+}
