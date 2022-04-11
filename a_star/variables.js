@@ -6,8 +6,8 @@ export let idButtons = ['change_size', 'generate_maze', 'generate_empty_maze', '
 export let idIntrectionButtons = ['add_wall', 'delete_wall', 'change_start', 'change_finish', 'launch'];
 export let idSpeedButtons = ['speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5'];
 
-export const COLOR_ACTIVE_BTN = '#666969';
-export const COLOR_INACTIVE_BTN = '#8D9091';
+export const COLOR_ACTIVE_BTN = '#7AB0DC';
+export const COLOR_INACTIVE_BTN = '#247ABF';
 
 export const COLOR_WALL = '#51585a';
 export const COLOR_ROAD = '#bbc6ca';
