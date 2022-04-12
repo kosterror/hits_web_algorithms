@@ -5,23 +5,47 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/ant_algorithm/styles.css">
-    <title>Тест</title>
+    <title>Муравьиный алгоритм</title>
 
 </head>
 
 <body>
-    <div class="wrapper" id="wrapper">
-        <div class="toolbar">
-            <input type="button" class="button" id="add_vertex" value="Добавить вершину">
-            <input type="button" class="button" id="remove_vertex" value="Удалить вершину">
-            <input type="button" class="button" id="launch_algorithm" value="Запустить алгоритм">
-            <input type="button" class="button" id="reload" value="Сбросить все">
-            
-        </div>
-        <canvas id="canvas"></canvas>
+<header>
+    <div class="flex-wrapper">
+        <div id="left_logo"><img class="logo" src="/main_new/images/logo_tsu.png"></div>
+        <div class="reference"><p><a href="/a_star/a_star.html">A-звездочка</a></p></div>
+        <div class="reference"><p><a href="/clustering/page3.html">Кластеризация</a></p></div>
+        <div class="reference"><p><a href="/genetic/main.html">Генетический<br>алгоритм</a></p></div>
+        <div class="reference"><p><a href="/main_new/index.html">Домой</a></p></div>
+        <div class="reference"><p class="active"><a href="/ant_algorithm/ant_algorithm.html">Муравьиный<br>алгоритм</a>
+        </p></div>
+        <div class="reference"><p><a>Дерево<br>решений</a></p></div>
+        <div class="reference"><p><a href="/NN/myhtml.html">Нейронная<br>сеть</a></p></div>
+        <div id="right_logo"><img class="logo" src="/main_new/images/logo_hits.png"></div>
     </div>
-    <script type="module" src="/ant_algorithm/main.js"></script>
+</header>
+
+<div class="wrapper" id="wrapper">
+    <div class="toolbar">
+        <div class="button-wrapper">
+        <input type="button" class="button" id="add_vertex" value="Добавить вершину">
+        <input type="button" class="button" id="remove_vertex" value="Удалить вершину">
+        <input type="button" class="button" id="launch_algorithm" value="Запустить алгоритм">
+        <input type="button" class="button" id="reload" value="Сбросить все">
+        </div>
+    </div>
+    <canvas id="canvas"></canvas>
+</div>
+<script type="module" src="/ant_algorithm/main.js"></script>
+<script type="module" src="/ant_algorithm/ant_algorithm.js"></script>
+<script type="module" src="/ant_algorithm/buttons_handler.js"></script>
+<script type="module" src="/ant_algorithm/buttons_render.js"></script>
+<script type="module" src="/ant_algorithm/canvas_handler.js"></script>
+<script type="module" src="/ant_algorithm/class_vertex.js"></script>
+<script type="module" src="/ant_algorithm/render.js"></script>
 </body>
 
 </html>

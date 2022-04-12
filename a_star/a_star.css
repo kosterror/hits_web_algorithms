@@ -4,7 +4,6 @@
     text-align: center;
     outline: none;
 }
-
 header {
     height: 100px;
     background-color: #247ABF;
@@ -50,8 +49,9 @@ a, a:visited, a:hover {
     color: #fff;
 }
 
+
 .content {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .wrapper {
@@ -72,15 +72,12 @@ input {
     background: #247ABF;
     color: #fff;
     font-size: 16px;
-
     margin: 5px auto 5px auto;
-
     text-align: center;
 }
 
 .button {
     display: block;
-
     width: 300px;
     height: 50px;
 }
@@ -114,7 +111,17 @@ input {
     margin: 0;
 }
 
+#table_container{
+    display: block;
+    width: 600px;
+    height: 600px;
+    background-color: black;
+    border: 5px solid black;
+    margin: 0 auto 0 auto;
+}
+
 table {
+    padding: 0;
     margin: auto;
     width: 600px;
     height: 600px;

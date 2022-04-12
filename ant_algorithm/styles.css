@@ -1,18 +1,65 @@
 * {
-    background-color: #447F99;
+    font-family: 'Montserrat';
+    text-align: center;
+    outline: none;
     margin: 0;
-    padding: 0;
-    border: 0;
+}
+
+header {
+    height: 100px;
+    background-color: #247ABF;
+}
+
+.flex-wrapper {
+    display: flex;
+}
+
+.flex-wrapper > .reference {
+    height: 40px;
+    margin-top: auto;
+    margin-bottom: auto;
+    flex-grow: 1;
+}
+
+header > div p {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+}
+
+.active {
+    background-color: #155080;
+}
+
+.logo {
+    width: 78px;
+    margin-top: 4px;
+}
+
+#left_logo {
+    margin-left: 28px;
+}
+
+#right_logo {
+    margin-right: 28px;
+}
+
+a, a:visited, a:hover {
+    text-decoration: none;
+    color: #fff;
 }
 
 #canvas {
-    background-color: aliceblue;
+    background-color: #ffffff;
     display: block;
     margin: 0 auto 0 auto;
+    padding: 0;
+    border: 5px solid black;
 }
 
 .wrapper {
-    margin-top: 100px;
+    margin-top: 10px;
     display: grid;
     grid-template-columns: 2fr 5fr;
 }
@@ -23,25 +70,22 @@
     margin-right: auto;
 }
 
-
-
-/* кнопочки */
 .button {
     appearance: none;
     border: 0;
     border-radius: 10px;
-    background: #8D9091;
+    background: #247ABF;
     color: #fff;
     font-size: 16px;
-
-    margin: 5px auto 5px auto;
-
+    margin: 20px auto 20px auto;
     text-align: center;
-
     display: block;
+    width: 300px;
+    height: 50px;
+}
 
-    width: 250px;
-    height: 40px;
+.button-wrapper{
+    margin-top: 180px;
 }
 
 input:focus {

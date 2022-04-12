@@ -1,9 +1,9 @@
 import {ctx} from './main.js';
 
-const VERTEX_RADIUS = 20;
+import {VERTEX_RADIUS} from "./main.js";
 const VERTEX_BORDER = 2;
 const STROKE_COLOR = 'black';
-const FILL_COLOR = 'yellow';
+const FILL_COLOR = '#908E4A';
 
 export default class Vertex {
     constructor(x, y, number) {
@@ -25,7 +25,6 @@ export default class Vertex {
         this.context.beginPath();
         this.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
         this.context.fill();
-        this.context.stroke();
         this.context.closePath();
 
         this.drawNumber();

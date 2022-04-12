@@ -43,7 +43,7 @@ async function antAlgorithm() {
 
             while (counter != verticesList.length) {
                 tabuMatrix[antNumber][counter] = currentVertex;
-                currentVertex = getIndeNextVertex(currentVertex, antNumber);
+                currentVertex = getIndexNextVertex(currentVertex, antNumber);
                 counter++;
             }
             pathLengths[antNumber] = calcluatePathLenght(antNumber);
@@ -56,10 +56,11 @@ async function antAlgorithm() {
         if (minLengthPath == -1 || pathLengths[indexMinLength] < minLengthPath) {
             minLengthPath = pathLengths[indexMinLength];
             minPath = getPath(tabuMatrix[indexMinLength]);
-            updateRendering(verticesList, minPath);
+            updateRendering(verticesList, minPath, false);
             await sleep(100);
         }
     }
+    updateRendering(verticesList, minPath, true);
 }
 
 function calculateDistance(ver1, ver2) {
@@ -136,7 +137,7 @@ function evaporationPheromones() {
     }
 }
 
-function getIndeNextVertex(currentVertex, antNumber) {
+function getIndexNextVertex(currentVertex, antNumber) {
     let possibleNextVertices = [];
 
     for (let i = 1; i < verticesList.length; i++) {
@@ -155,7 +156,7 @@ function getIndeNextVertex(currentVertex, antNumber) {
 
         let nextVertex = possibleNextVertices[k];
         let f = Math.pow(pheromonesMatrix[currentVertex][nextVertex], ALPHA);    //чисто воспользовался 
-        let l = Math.pow(1 / (adjMatrix[currentVertex][nextVertex]), BETA);      //формулой из с википедии
+        let l = Math.pow(1 / (adjMatrix[currentVertex][nextVertex]), BETA);   //формулой с википедии
 
         numerator[k] = f * l;
         denominator += f * l;
