@@ -1,0 +1,99 @@
+* {
+    font-family: 'Montserrat';
+    text-align: center;
+    margin: 0;
+}
+
+*:focus{
+    outline:none;
+}
+
+header {
+    height: 100px;
+    background-color: #247ABF;
+}
+
+.flex-wrapper {
+    display: flex;
+}
+
+.flex-wrapper > .reference {
+    height: 40px;
+    margin-top: auto;
+    margin-bottom: auto;
+    flex-grow: 1;
+}
+
+header > div p {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+}
+
+.active {
+    background-color: #155080;
+}
+
+.logo {
+    width: 78px;
+    margin-top: 4px;
+}
+
+#left_logo {
+    margin-left: 28px;
+}
+
+#right_logo {
+    margin-right: 28px;
+}
+
+a, a:visited, a:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+    margin-top: 30px;
+}
+
+.toolbar {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input {
+    appearance: none;
+    border: 0;
+    border-radius: 10px;
+    background: #247ABF;
+    color: #fff;
+    font-size: 16px;
+    margin: 5px auto 5px auto;
+    text-align: center;
+}
+
+.button {
+    display: block;
+    width: 300px;
+    height: 50px;
+}
+
+.button:hover {
+    background: #7AB0DC;
+}
+
+.button:focus {
+    outline: none;
+}
+
+canvas {
+    background-color: rgb(255, 255, 255);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 5px solid black;
+}

@@ -2,6 +2,8 @@ const CANVAS = document.querySelector('canvas');
 const ANSWER_TEXT = document.getElementById('p1');
 const ctx = CANVAS.getContext('2d');
 const CANVAS_SIZE = 560;
+CANVAS.width = CANVAS_SIZE;
+CANVAS.height = CANVAS_SIZE;
 const PIXEL_PER_SIDE = 56;
 const PEN_WIDTH = 4;
 const ERASER_WIDTH = 3;
@@ -45,7 +47,7 @@ function handler(event) {
             draw(x, y, color, PEN_WIDTH, pixelSize, activeMode);
         }
         if(activeMode == ERASER_MODE) { 
-            var color = "aliceblue";
+            var color = "white";
             draw(x, y, color, ERASER_WIDTH, pixelSize, activeMode);
         }
     }
@@ -71,7 +73,7 @@ function inMatrix(x, y, pix) {
 }
 
 function flush() {
-    ctx.fillStyle = "aliceblue";
+    ctx.fillStyle = "white";
     ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
     for(var i = 0; i<PIXEL_PER_SIDE; i++) {
         for(var j = 0; j<PIXEL_PER_SIDE; j++) {

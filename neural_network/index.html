@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/neural_network/styles.css">
+    <title>Нейронная сеть</title>
+
+</head>
+
+<body>
+    <header>
+        <div class="flex-wrapper">
+            <div id="left_logo"> <img class="logo" src="/main_new/images/logo_tsu.png"></div>
+            <div class="reference">
+                <p><a href="/a_star/a_star.html">A-звездочка</a></p>
+            </div>
+            <div class="reference">
+                <p><a href="/clustering/page3.html">Кластеризация</a></p>
+            </div>
+            <div class="reference">
+                <p><a href="/genetic/main.html">Генетический<br>алгоритмa</a></p>
+            </div>
+            <div class="reference">
+                <p><a href="/main_new/index_new.html">Домой</a></p>
+            </div>
+            <div class="reference">
+                <p><a href="/ant_algorithm/ant_algorithm.html">Муравьиный<br>алгоритм</a></p>
+            </div>
+            <div class="reference">
+                <p><a>Дерево<br>решений</a></p>
+            </div>
+            <div class="reference">
+                <p class="active"><a href="/neural_network/index.html">Нейронная<br>сеть</a></p>
+            </div>
+            <div id="right_logo"> <img class="logo" src="/main_new/images/logo_hits.png"></div>
+        </div>
+    </header>
+
+    <div class="wrapper" id="wrapper">
+        <div clas="toolbar">
+            <p id="p1">Your number is</p>
+            <input type="button" class="button" id="flushScreen_button" value="Стереть все">
+            <input type="button" class="button" id="drawPixel_button" value="Ручка">
+            <input type="button" class="button" id="flushPixel_button" value="Ластик">
+        </div>
+        <canvas id="canvas">
+    </div>
+
+    <!-- <div class="wrapper">
+        <div class = "pallete">
+                <p id="p1">Your number is</p>
+                <input type = "button" class = "button" id = "flushScreen_button" value = "Стереть все">
+                <input type = "button" class = "button" id = "drawPixel_button" value = "Ручка">
+                <input type = "button" class = "button" id = "flushPixel_button" value = "Ластик">
+        </div>
+        
+        <div class = "canvas">
+            <canvas id = "myCanvas" height="560" width="560"></canvas>
+        </div>
+    </div> -->
+    <script src="../neural_network/interface.js"></script>
+    <script src="../neural_network/data_weight.js"></script>
+    <script src="../neural_network/logic.js"></script>
+</body>
+
+</html>
