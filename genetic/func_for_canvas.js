@@ -18,32 +18,37 @@ export {
     isCanAddVertex,
     getIndexHitVertex,
     disableButtons,
-    enableButtons
+    enableButtons,
 };
 
 
 function addVertex(x, y) {
     vertexList.push(new Vertex(x, y, vertexList.length));
     vertexList[vertexList.length - 1].draw();
+
     expandAdjMatrix();
 }
 
 function removeVertex(index) {
     vertexList[index].remove();
     vertexList.splice(index, 1);
-    adjMatrix.splice(index, 1);
-
-    for (let i = 0; i < adjMatrix.length; i++) {
-        adjMatrix[i].splice(index, 1);
-    }
 
     renumberVertices();
+}
+
+function renumberVertices() {
+    for (let i = 0; i < vertexList.length; i++) {
+        vertexList[i].number = i;
+        vertexList[i].draw();
+    }
 }
 
 function drawEdgesWithWeight() {
     for (let i = 0; i < vertexList.length; i++) {
         for (let j = i + 1; j < vertexList.length; j++) {
             if (i != j) {
+                console.log(adjMatrix);
+
                 let weight_edge = adjMatrix[vertexList[i].number][vertexList[j].number];
 
                 ctx.lineWidth = EDGE_WIDTH;
@@ -53,19 +58,12 @@ function drawEdgesWithWeight() {
                 ctx.lineTo(vertexList[j].x, vertexList[j].y);
                 ctx.stroke();
                 ctx.closePath();
-
-                vertexList[i].draw();
-                vertexList[j].draw();
-
-                let x = vertexList[i].x + ((weight_edge / 2 * (vertexList[j].x - vertexList[i].x)) / weight_edge);
-                let y = vertexList[i].y + ((weight_edge / 2 * (vertexList[j].y - vertexList[i].y)) / weight_edge);
-
-                ctx.beginPath();
-                ctx.fillStyle = 'red';
-                ctx.fillText(Math.round(weight_edge), x, y);
-                ctx.closePath();
             }
         }
+    }
+
+    for (let i = 0; i < vertexList.length; i++) {
+        vertexList[i].draw();
     }
 }
 
@@ -167,13 +165,6 @@ function getNearestVertexIndex(x, y) {
 
 function calculateDistance(x1, y1, x2, y2) {
     return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-}
-
-function renumberVertices() {
-    for (let i = 0; i < vertexList.length; i++) {
-        vertexList[i].number = i;
-        vertexList[i].draw();
-    }
 }
 
 function expandAdjMatrix() {
