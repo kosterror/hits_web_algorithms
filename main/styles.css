@@ -27,8 +27,8 @@ header > div p {
     width: max-content;
 }
 
-.active {
-    background-color: #155080;
+header > .flex-wrapper > .reference > .active > a {
+    color: black;
 }
 
 .grid-wrapper{
@@ -92,4 +92,11 @@ header > div p {
 a, a:visited, a:hover {
     text-decoration: none;
     color: #fff;
+}
+
+.ne_class{
+    width: 900px;
+    text-align: justify;
+    margin-left: auto;
+    margin-right: auto;
 }

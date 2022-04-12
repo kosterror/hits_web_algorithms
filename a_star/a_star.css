@@ -27,10 +27,6 @@ header > div p {
     width: max-content;
 }
 
-.active {
-    background-color: #155080;
-}
-
 .logo {
     width: 78px;
     margin-top: 4px;
@@ -49,6 +45,9 @@ a, a:visited, a:hover {
     color: #fff;
 }
 
+header > .flex-wrapper > .reference > .active > a {
+    color: black;
+}
 
 .content {
     margin-top: 20px;
@@ -69,6 +68,7 @@ input {
     appearance: none;
     border: 0;
     border-radius: 10px;
+    font-weight: lighter;
     background: #247ABF;
     color: #fff;
     font-size: 16px;

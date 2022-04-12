@@ -4,7 +4,7 @@ import {buttonsRenderEvent} from './buttons_render.js';
 
 const canvas = document.getElementById('canvas');
 export const ctx = canvas.getContext('2d');
-export const WIDTH = 600;
+export const WIDTH = 1000;
 export const HEIGHT = 600;
 export const VERTEX_RADIUS = 20;
 export const doc = document;
