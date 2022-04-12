@@ -78,6 +78,8 @@ input {
 
 .tree {
     overflow: scroll;
+    width: 1000px;
+    height: 600px;
     background-color: rgb(255, 255, 255);
     display: block;
     margin-left: auto;
@@ -103,6 +105,7 @@ input {
 
 
 .tree ul {
+    display: flex;
 	padding-top: 20px; 
     position: relative;
 }
