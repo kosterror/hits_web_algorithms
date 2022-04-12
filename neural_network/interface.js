@@ -1,5 +1,5 @@
 const CANVAS = document.querySelector('canvas');
-const ANSWER_TEXT = document.getElementById('p1');
+const ANSWER_TEXT = document.getElementById('answer');
 const TOOL_TEXT = document.getElementById("changeTool_button");
 const ctx = CANVAS.getContext('2d');
 const CANVAS_SIZE = 560;
@@ -9,9 +9,9 @@ const PIXEL_PER_SIDE = 56;
 const PEN_WIDTH = 4;
 const ERASER_WIDTH = 3;
 
-const VIEW_MODE = 0;
+const VIEW_MODE = 2;
 const PEN_MODE = 1;
-const ERASER_MODE = 2;
+const ERASER_MODE = 0;
 let activeMode = VIEW_MODE;
 
 let inputMatrix = new Array(PIXEL_PER_SIDE);
@@ -82,6 +82,7 @@ function flush() {
     }
     activeMode = VIEW_MODE;
     TOOL_TEXT.value = "Взять ручку";
+    ANSWER_TEXT.value = "Здесь будет ответ"
 }
 
 function changeTool() {
