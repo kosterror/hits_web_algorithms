@@ -1,5 +1,5 @@
 const CANVAS = document.querySelector('canvas');
-const ANSWER_TEXT = document.getElementById('p1');
+const ANSWER_TEXT = document.getElementById('answer');
 const TOOL_TEXT = document.getElementById("changeTool_button");
 const ctx = CANVAS.getContext('2d');
 const CANVAS_SIZE = 560;
@@ -82,6 +82,7 @@ function flush() {
     }
     activeMode = VIEW_MODE;
     TOOL_TEXT.value = "Взять ручку";
+    ANSWER_TEXT.value = "Здесь будет ответ"
 }
 
 function changeTool() {
