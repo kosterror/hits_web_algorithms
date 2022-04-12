@@ -12,8 +12,11 @@ import { InitialPopulationGeneration } from "./algorithm.js";
 import { algorithmsStart } from "./algorithm.js";
 
 
+const canvas = document.querySelector('canvas');
+export const ctx = canvas.getContext('2d');
+
 export const SIZE_WIDTH = 1000,
-    SIZE_HEIGHT = 650;
+    SIZE_HEIGHT = 600;
 const LIMIT_NUMBER_VERTEX = 46;
 export const VERTEX_RADIUS = 20,
     STROKE_WIDTH = 2,
@@ -33,10 +36,6 @@ export let population = [], //массив хромосом
     POPULATION_SIZE;
 
 let time = performance.now();;
-
-
-const canvas = document.querySelector('canvas');
-export const ctx = canvas.getContext('2d');
 
 canvas.width = SIZE_WIDTH;
 canvas.height = SIZE_HEIGHT;
@@ -100,7 +99,7 @@ function startAlgorithm(event) {
 
         let fit2 = population[0].fitness; // запоминаем в измененной популяции лучшую хромосому
 
-        if (fit2 !== fit1) { // проверка на новую хромосому
+        if (fit2 != fit1) { // проверка на новую хромосому
             counter_stop = 0;
             deleteEdge();
             drawEdgeAnswer('black');
@@ -111,3 +110,5 @@ function startAlgorithm(event) {
 
     }, 0);
 }
+
+//добавить изменение цвета при наведении и нажатии

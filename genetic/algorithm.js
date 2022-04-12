@@ -74,13 +74,6 @@ function CrossingAlgorithm() {
 
     population.sort((a, b) => a.fitness - b.fitness);
 
-    // let k = 0,
-    //     t = population.length - POPULATION_SIZE;
-    // while (k < t) {
-    //     population.pop();
-    //     k++;
-    // }
-
     population.splice(POPULATION_SIZE, population.length);
 }
 

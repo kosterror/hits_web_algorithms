@@ -1,27 +1,72 @@
 * {
-    background-color: #1891AC;
     margin: 0;
-    padding: 0;
+    font-family: 'Montserrat';
+    text-align: center;
 }
 
-h1 {
-    font-weight: lighter;
-    text-align: center;
-    padding: 2%;
-    font-size: 35px;
-    margin-top: 15px;
+header {
+    height: 100px;
+    background-color: #247ABF;
+}
+
+.flex-wrapper {
+    display: flex;
+}
+
+.flex-wrapper>.reference {
+    height: 40px;
+    margin-top: auto;
+    margin-bottom: auto;
+    flex-grow: 1;
+}
+
+header>div p {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+}
+
+a,
+a:visited,
+a:hover {
+    text-decoration: none;
+    color: #ffff;
+}
+
+header>.flex-wrapper>.reference>.active>a {
+    color: black;
+}
+
+.grid-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.logo {
+    width: 78px;
+    margin-top: 4px;
+}
+
+#left_logo {
+    margin-left: 28px;
+}
+
+#right_logo {
+    margin-right: 28px;
 }
 
 #canvas {
-    background-color: aliceblue;
+    background-color: white;
     display: block;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
+    border: 5px solid black;
 }
 
 .wrapper {
-    margin-top: 2px;
+    margin-top: 1%;
     display: grid;
     grid-template-columns: 2fr 5fr;
 }
@@ -35,10 +80,10 @@ h1 {
 
 .button {
     appearance: none;
+    color: white;
     border: 0;
     border-radius: 10px;
-    background: #9ab7c0;
-    color: rgb(24, 22, 22);
+    background: #247ABF;
     font-size: 16px;
     font-weight: lighter;
     margin: 7px auto 5px auto;
@@ -48,29 +93,10 @@ h1 {
     height: 40px;
 }
 
-.toolbar2 {
-    display: inline-block;
-    margin-left: 20px;
-    margin-top: 23px;
-}
 
-.button2 {
-    appearance: none;
-    border: 0;
-    border-radius: 10px;
-    background: #9ab7c0;
-    color: rgb(24, 22, 22);
-    font-size: 13px;
-    font-weight: lighter;
-    text-align: center;
-    margin-right: 4px;
-    width: 95px;
-    height: 30px;
-}
-
-input:hover {
+/* input:hover {
     background: #666969;
-}
+} */
 
 input:focus {
     outline: none;

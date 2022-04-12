@@ -5,29 +5,56 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/genetic/style.css" />
     <title>GeneticAlgo</title>
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="toolbar2">
-            <input type="button" class="button2" id="lastPage" onclick="document.location='/clustering/page3.html'" value="Last Algorithm">
-            <input type="button" class="button2" id="home" onclick="document.location='/main/index.html'" value="Go home">
-            <input type="button" class="button2" id="nextPage" onclick="document.location='/ant_algorithm/ant_algorithm.html'" value="Next Algorithm">
+    <header>
+        <div class="flex-wrapper">
+            <div id="left_logo"> <img class="logo" src="/main/images/logo_tsu.png"></div>
+
+            <div class="reference">
+                <p><a href="/a_star/a_star.html">A-звездочка</a></p>
+            </div>
+
+            <div class="reference">
+                <p><a href="/clustering/page3.html">Кластеризация</a></p>
+            </div>
+
+            <div class="reference">
+                <p class="active"><a href="/genetic/main.html">Генетический<br>алгоритм</a></p>
+            </div>
+
+            <div class="reference">
+                <p><a href="/main/index.html">Домой</a></p>
+            </div>
+
+            <div class="reference">
+                <p><a href="/ant_algorithm/ant_algorithm.html">Муравьиный<br>алгоритм</a></p>
+            </div>
+
+            <div class="reference">
+                <p><a>Дерево<br>решений</a></p>
+            </div>
+
+            <div class="reference">
+                <p><a href="/Neuron/page5.html">Нейронная<br>сеть</a></p>
+            </div>
+
+            <div id="right_logo"> <img class="logo" src="/main/images/logo_hits.png"></div>
         </div>
+    </header>
 
-
-        <h1>Генетический алгоритм</h1>
-    </div>
     <div class="wrapper" id="wrapper">
         <div class="toolbar">
-            <input type="button" class="button" id="add_vertex" value="Add vertex">
-            <input type="button" class="button" id="draw_edjes" value="Draw edges">
-            <input type="button" class="button" id="remove_vertex" value="Remove vertex">
-            <input type="button" class="button" id="clear" value="Clear">
+            <input type="button" class="button" id="add_vertex" value="Добавить вершину">
+            <input type="button" class="button" id="draw_edjes" value="Нарисовать ребра">
+            <input type="button" class="button" id="remove_vertex" value="Удалить вершину">
+            <input type="button" class="button" id="clear" value="Стереть всё">
             <br>
-            <input type="button" class="button" id="start_algo" value="Start genetic algorithm">
+            <input type="button" class="button" id="start_algo" value="Запуск алгоритма">
         </div>
         <canvas id="canvas"></canvas>
         <script type='module' src="/genetic/main.js"></script>
