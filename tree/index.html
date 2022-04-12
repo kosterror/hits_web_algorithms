@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/neural_network/styles.css">
-    <title>Нейронная сеть</title>
-
+    <link rel="stylesheet" href="/tree/style.css">
+    <title>У лукомоья дуб зеленый</title>
+    
 </head>
 
 <body>
@@ -21,8 +19,8 @@
             <div class="reference"><p><a href="/genetic/main.html">Генетический<br>алгоритм</a></p></div>
             <div class="reference"><p><a href="/main/index.html">Домой</a></p></div>
             <div class="reference"><p><a href="/ant_algorithm/ant_algorithm.html">Муравьиный<br>алгоритм</a></p></div>
-            <div class="reference"><p><a href="/tree/index.html">Дерево<br>решений</a></p></div>
-            <div class="reference"><p class="active"><a href="/neural_network/index.html">Нейронная<br>сеть</a></p></div>
+            <div class="reference"><p class="active"><a href="/tree/index.html">Дерево<br>решений</a></p></div>
+            <div class="reference"><p><a href="/neural_network/index.html">Нейронная<br>сеть</a></p></div>
             <div id="right_logo"> <img class="logo" src="/main/images/logo_hits.png"></div>
         </div>
     </header>
@@ -30,16 +28,21 @@
     <div class="wrapper" id="wrapper">
         <div class="toolbar">
             <div class="button-wrapper">
-                <input type="button" class="button" id="changeTool_button" value="Взять ручку">
-                <input type="button" class="button" id="flushScreen_button" value="Стереть все">
-                <input type="button" class="button" id="answer" value="Здесь будет ответ">
+                <input type="">
             </div>
         </div>
-        <canvas id="canvas">
+        <div class="canvas">
+            <div class="tree">
+                <ul id="root">
+                    
+                </ul>
+            </div>
+        </div>
     </div>
-    <script src="../neural_network/interface.js"></script>
-    <script src="../neural_network/data_weight.js"></script>
-    <script src="../neural_network/logic.js"></script>
+    
+    <script src="ParserCSV.js"></script>
+    <script src="./DesicionTree.js"></script>
+    <script src="./interface.js"></script>
+    <p></p>
 </body>
-
 </html>

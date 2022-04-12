@@ -46,6 +46,7 @@ data = [
     ["Пасмурно",        "Умеренно",     "Высокая",      "Да",       "Не играть" ]
 ];
 
+
 buildTree(data);
 var treeRoot = document.getElementById("root");
 
@@ -53,8 +54,18 @@ function drawTree(currentNode, treeElement) {
     let li = document.createElement("li");
     let a = document.createElement("a");
     a.href = "#";
-    nodeName = currentNode.nodeName;
-    a.textContent = nodeName + "," + currentNode.atribute;
+    let nodeName = currentNode.nodeName;
+    let atr = "Ответ"
+    if(currentNode.atribute !== undefined) {
+        atr = currentNode.atribute
+    }
+    if(nodeName === "root") {
+        a.textContent = nodeName;
+    }
+    else {
+        a.textContent = atr + " = " + nodeName;
+    }
+    
     li.appendChild(a);
     treeElement.appendChild(li);
     if(currentNode.isLeaf()){
