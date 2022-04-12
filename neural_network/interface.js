@@ -24,18 +24,26 @@ for(var i = 0; i<PIXEL_PER_SIDE; i++) {
 
 CANVAS.addEventListener('mousedown', startDrawing);
 CANVAS.addEventListener('mouseup', stopDrawing);
-CANVAS.addEventListener('mouseleave', stopDrawing);
+CANVAS.addEventListener('mouseleave', mouseLeave);
+CANVAS.addEventListener('click', handler);
 flushScreen_button.addEventListener('click', flush);
 changeTool_button.addEventListener('click', changeTool);
 
+// on and off drawing
 function startDrawing() {
     CANVAS.addEventListener('mousemove', handler);
 }
 function stopDrawing() {
     CANVAS.removeEventListener('mousemove', handler);
+    //ANSWER_TEXT.value = 'Ответ: ' + makeGuess(inputMatrix);
 }
+function mouseLeave() {
+    CANVAS.removeEventListener('mousemove', handler);
+}
+
+// functions that drawing on canvas and put your drawing to matrix
 function handler(event) {
-    document.getElementById('answer').value = 'Ответ: ' + makeGuess(inputMatrix);
+    //ANSWER_TEXT.value = 'Ответ: ' + makeGuess(inputMatrix);
     if(activeMode != VIEW_MODE){
         var pixelSize = CANVAS_SIZE/PIXEL_PER_SIDE;
         let x = event.offsetX;
@@ -67,11 +75,14 @@ function draw(x, y, color, width, pixelSize, mode) {
 function inMatrix(x, y, pix) {
     if((0 <= x && x < CANVAS_SIZE)
      &&(0 <= y && y < CANVAS_SIZE)) {
+        
         return true;
     }
+    console.log(x, y);
     return false;
 }
 
+// event that clear canvas where you can draw numbers
 function flush() {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
@@ -85,6 +96,7 @@ function flush() {
     ANSWER_TEXT.value = "Здесь будет ответ"
 }
 
+// event that change your tool
 function changeTool() {
     if(activeMode === PEN_MODE) {
         activeMode = ERASER_MODE;
