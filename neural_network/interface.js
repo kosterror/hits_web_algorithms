@@ -35,7 +35,7 @@ function stopDrawing() {
     CANVAS.removeEventListener('mousemove', handler);
 }
 function handler(event) {
-    ANSWER_TEXT.innerText = "Your number is " + makeGuess(inputMatrix);
+    document.getElementById('answer').value = 'Ответ: ' + makeGuess(inputMatrix);
     if(activeMode != VIEW_MODE){
         var pixelSize = CANVAS_SIZE/PIXEL_PER_SIDE;
         let x = event.offsetX;
