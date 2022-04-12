@@ -1,7 +1,10 @@
 const CANVAS = document.querySelector('canvas');
 const ANSWER_TEXT = document.getElementById('p1');
+const TOOL_TEXT = document.getElementById("changeTool_button");
 const ctx = CANVAS.getContext('2d');
 const CANVAS_SIZE = 560;
+CANVAS.width = CANVAS_SIZE;
+CANVAS.height = CANVAS_SIZE;
 const PIXEL_PER_SIDE = 56;
 const PEN_WIDTH = 4;
 const ERASER_WIDTH = 3;
@@ -23,8 +26,7 @@ CANVAS.addEventListener('mousedown', startDrawing);
 CANVAS.addEventListener('mouseup', stopDrawing);
 CANVAS.addEventListener('mouseleave', stopDrawing);
 flushScreen_button.addEventListener('click', flush);
-drawPixel_button.addEventListener('click', getPen);
-flushPixel_button.addEventListener('click', getEraser);
+changeTool_button.addEventListener('click', changeTool);
 
 function startDrawing() {
     CANVAS.addEventListener('mousemove', handler);
@@ -33,7 +35,7 @@ function stopDrawing() {
     CANVAS.removeEventListener('mousemove', handler);
 }
 function handler(event) {
-    ANSWER_TEXT.innerText = "Your number is " + makeGuess(inputMatrix);
+    document.getElementById('answer').value = 'Ответ: ' + makeGuess(inputMatrix);
     if(activeMode != VIEW_MODE){
         var pixelSize = CANVAS_SIZE/PIXEL_PER_SIDE;
         let x = event.offsetX;
@@ -45,7 +47,7 @@ function handler(event) {
             draw(x, y, color, PEN_WIDTH, pixelSize, activeMode);
         }
         if(activeMode == ERASER_MODE) { 
-            var color = "aliceblue";
+            var color = "white";
             draw(x, y, color, ERASER_WIDTH, pixelSize, activeMode);
         }
     }
@@ -71,7 +73,7 @@ function inMatrix(x, y, pix) {
 }
 
 function flush() {
-    ctx.fillStyle = "aliceblue";
+    ctx.fillStyle = "white";
     ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
     for(var i = 0; i<PIXEL_PER_SIDE; i++) {
         for(var j = 0; j<PIXEL_PER_SIDE; j++) {
@@ -79,12 +81,16 @@ function flush() {
         }
     }
     activeMode = VIEW_MODE;
+    TOOL_TEXT.value = "Взять ручку";
 }
 
-function getPen() {
-    activeMode = PEN_MODE;
-}
-
-function getEraser() {
-    activeMode = ERASER_MODE;
+function changeTool() {
+    if(activeMode === PEN_MODE) {
+        activeMode = ERASER_MODE;
+        TOOL_TEXT.value = "Взять ручку";
+    }
+    else {
+        activeMode = PEN_MODE;
+        TOOL_TEXT.value = "Взять ластик";
+    }
 }
