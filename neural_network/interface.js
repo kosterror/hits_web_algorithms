@@ -1,5 +1,6 @@
 const CANVAS = document.querySelector('canvas');
 const ANSWER_TEXT = document.getElementById('p1');
+const TOOL_TEXT = document.getElementById("changeTool_button");
 const ctx = CANVAS.getContext('2d');
 const CANVAS_SIZE = 560;
 CANVAS.width = CANVAS_SIZE;
@@ -25,8 +26,7 @@ CANVAS.addEventListener('mousedown', startDrawing);
 CANVAS.addEventListener('mouseup', stopDrawing);
 CANVAS.addEventListener('mouseleave', stopDrawing);
 flushScreen_button.addEventListener('click', flush);
-drawPixel_button.addEventListener('click', getPen);
-flushPixel_button.addEventListener('click', getEraser);
+changeTool_button.addEventListener('click', changeTool);
 
 function startDrawing() {
     CANVAS.addEventListener('mousemove', handler);
@@ -81,12 +81,16 @@ function flush() {
         }
     }
     activeMode = VIEW_MODE;
+    TOOL_TEXT.value = "Взять ручку";
 }
 
-function getPen() {
-    activeMode = PEN_MODE;
-}
-
-function getEraser() {
-    activeMode = ERASER_MODE;
+function changeTool() {
+    if(activeMode === PEN_MODE) {
+        activeMode = ERASER_MODE;
+        TOOL_TEXT.value = "Взять ручку";
+    }
+    else {
+        activeMode = PEN_MODE;
+        TOOL_TEXT.value = "Взять ластик";
+    }
 }
