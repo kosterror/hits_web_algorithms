@@ -4,7 +4,7 @@
     text-align: center;
 }
 
-*:focus{
+*:focus {
     outline: none;
 }
 
@@ -15,23 +15,18 @@ header {
 
 .flex-wrapper {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.flex-wrapper>.reference {
-    height: 40px;
-    margin-top: auto;
-    margin-bottom: auto;
-    flex-grow: 1;
-}
-
-header > div p {
+header>div p {
     display: block;
     margin-left: auto;
     margin-right: auto;
     width: max-content;
 }
 
-header > .flex-wrapper > .reference > .active > a {
+header>.flex-wrapper>.reference>.active>a {
     color: black;
 }
 
@@ -48,28 +43,30 @@ header > .flex-wrapper > .reference > .active > a {
     margin-right: 28px;
 }
 
-a, a:visited, a:hover {
+a,
+a:visited,
+a:hover {
     text-decoration: none;
     color: #fff;
 }
 
-.container{
+.container {
     width: 1000px;
     background-color: rgb(206, 204, 204);
     margin: 0 auto 0 auto;
     height: min-content;
 }
 
-.text{
+.text {
     width: 900px;
     padding: 0 50px 50px 50px;
     font-weight: lighter;
 }
 
-.text > p {
+.text>p {
     text-align: justify;
 }
 
-.text > h2{
+.text>h2 {
     text-align: left;
 }
