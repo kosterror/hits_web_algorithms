@@ -12,7 +12,7 @@ import { ctx } from "./main.js";
 export {
     addVertex,
     removeVertex,
-    drawEdgesWithWeight,
+    drawEdges,
     deleteEdge,
     drawEdgeAnswer,
     isCanAddVertex,
@@ -43,17 +43,15 @@ function renumberVertices() {
     }
 }
 
-function drawEdgesWithWeight() {
+function drawEdges() {
+    deleteEdge();
     for (let i = 0; i < vertexList.length; i++) {
         for (let j = i + 1; j < vertexList.length; j++) {
             if (i != j) {
-                console.log(adjMatrix);
-
-                let weight_edge = adjMatrix[vertexList[i].number][vertexList[j].number];
-
                 ctx.lineWidth = EDGE_WIDTH;
 
                 ctx.beginPath();
+                ctx.strokeStyle = "gray";
                 ctx.moveTo(vertexList[i].x, vertexList[i].y);
                 ctx.lineTo(vertexList[j].x, vertexList[j].y);
                 ctx.stroke();
