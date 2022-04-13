@@ -27,7 +27,7 @@ function canAddVertex(x, y) {
             return true;
         }
 
-        else if (calculateDistance(verticesList[index].x, verticesList[index].y, x, y) > (4 * VERTEX_RADIUS)) {
+        else if (calculateDistance(verticesList[index].x, verticesList[index].y, x, y) > (3 * VERTEX_RADIUS)) {
             return true;
         }
     }
