@@ -20,7 +20,7 @@
             </div>
 
             <div class="reference">
-                <p class="active"><a href="/clustering/page3.html">Кластеризация</a></p>
+                <p class="active"><a href="/clustering/main.html">Кластеризация</a></p>
             </div>
 
             <div class="reference">
@@ -36,11 +36,11 @@
             </div>
 
             <div class="reference">
-                <p><a>Дерево<br>решений</a></p>
+                <p><a href="/tree/index.html">Дерево<br>решений</a></p>
             </div>
 
             <div class="reference">
-                <p><a href="/Neuron/page5.html">Нейронная<br>сеть</a></p>
+                <p><a href="/neural_network//index.html">Нейронная<br>сеть</a></p>
             </div>
 
             <div id="right_logo"> <img class="logo" src="/main/images/logo_hits.png"></div>
@@ -54,14 +54,12 @@
             <input type="button" class="button" id="clear" value="Стереть всё">
             <br><br>
 
-            <div class="div-two-cell">
-                <input type="number" class="two-cell1" id="getClusters" min="1" max="10" step="1" value="3">
-                <input type="button" class="two-cell2" id="kMeans" value="Запуск алгоритма k-means">
-            </div>
+            <input type="number" class="button2" id="getClusters" min="1" max="10" step="1" value="3">
+            <input type="button" class="button3" id="kMeans" value="Запуск алгоритма k-means">
 
-            <div class="div-two-cell"><input type="button" class="two-cell2" id="DBSCAN" value="Запуск алгоритма DBSCAN"></div>
+            <input type="button" class="button" id="DBSCAN" value="Запуск алгоритма DBSCAN">
 
-            <div class="div-two-cell"><input type="button" class="two-cell2" id="Graph" value="Запуск графического алгоритма"></div>
+            <input type="button" class="button" id="Graph" value="Запуск графического алгоритма">
         </div>
 
         <canvas id="canvas"></canvas>

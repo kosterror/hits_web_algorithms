@@ -1,124 +1,126 @@
-    * {
-        margin: 0;
-        font-family: 'Montserrat';
-        text-align: center;
-    }
-    
-    header {
-        height: 100px;
-        background-color: #247ABF;
-    }
-    
-    .flex-wrapper {
-        display: flex;
-    }
-    
-    .flex-wrapper>.reference {
-        height: 40px;
-        margin-top: auto;
-        margin-bottom: auto;
-        flex-grow: 1;
-    }
-    
-    header>div p {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: max-content;
-    }
-    
-    a,
-    a:visited,
-    a:hover {
-        text-decoration: none;
-        color: #ffff;
-    }
-    
-    header>.flex-wrapper>.reference>.active>a {
-        color: black;
-    }
-    
-    .grid-wrapper {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-    
-    .logo {
-        width: 78px;
-        margin-top: 4px;
-    }
-    
-    #left_logo {
-        margin-left: 28px;
-    }
-    
-    #right_logo {
-        margin-right: 28px;
-    }
-    
-    #canvas {
-        background-color: white;
-        display: block;
-        margin-top: 20px;
-        margin-left: auto;
-        margin-right: auto;
-        border: 5px solid black;
-    }
-    
-    .wrapper {
-        margin-top: 1%;
-        display: grid;
-        grid-template-columns: 2fr 5fr;
-    }
-    
-    .toolbar {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        margin: 50px;
-    }
-    
-    .div-two-cell {
-        display: block;
-        height: 50px;
-        margin: 0 auto 10px auto;
-    }
-    
-    .two-cell1 {
-        width: 35px;
-        height: 40px;
-        text-align: center;
-    }
-    
-    .two-cell2 {
-        width: 250px;
-        height: 40px;
-        background: #247ABF;
-        color: white;
-        border: 0;
-        border-radius: 10px;
-    }
-    
-    .button {
-        appearance: none;
-        border: 0;
-        border-radius: 10px;
-        background: #247ABF;
-        color: white;
-        font-size: 16px;
-        font-weight: lighter;
-        margin: 5px auto 5px auto;
-        text-align: center;
-        display: block;
-        width: 300px;
-        height: 40px;
-    }
-    
-    input:hover {
-        background: #7AB0DC;
-    }
-    
-    input:focus {
-        outline: none;
-        box-shadow: 0 0 0 2px #cbd6ee;
-    }
+* {
+    margin: 0;
+    font-family: 'Montserrat';
+    text-align: center;
+}
+
+header {
+    height: 100px;
+    background-color: #247ABF;
+}
+
+.flex-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header>div p {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+}
+
+a,
+a:visited,
+a:hover {
+    text-decoration: none;
+    color: #ffff;
+}
+
+header>.flex-wrapper>.reference>.active>a {
+    color: black;
+}
+
+.grid-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.logo {
+    width: 78px;
+    margin-top: 4px;
+}
+
+#left_logo {
+    margin-left: 28px;
+}
+
+#right_logo {
+    margin-right: 28px;
+}
+
+#canvas {
+    background-color: white;
+    display: block;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 5px solid black;
+}
+
+.wrapper {
+    margin-top: 1%;
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+}
+
+.toolbar {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin: 50px;
+}
+
+.button {
+    appearance: none;
+    border: 0;
+    border-radius: 10px;
+    background: #247ABF;
+    color: white;
+    font-size: 16px;
+    font-weight: lighter;
+    margin: 5px auto 5px auto;
+    text-align: center;
+    display: block;
+    width: 300px;
+    height: 50px;
+}
+
+.button2 {
+    appearance: none;
+    border: 0;
+    border-radius: 10px;
+    background: #247ABF;
+    color: white;
+    font-size: 16px;
+    font-weight: lighter;
+    margin: 5px auto 5px auto;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+}
+
+.button3 {
+    appearance: none;
+    border: 0;
+    border-radius: 10px;
+    background: #247ABF;
+    color: white;
+    font-size: 16px;
+    font-weight: lighter;
+    margin: 5px auto 5px auto;
+    text-align: center;
+    width: 240px;
+    height: 50px;
+}
+
+input:hover {
+    background: #7AB0DC;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #cbd6ee;
+}
