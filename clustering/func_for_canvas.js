@@ -1,8 +1,8 @@
 import { POINT_RADIUS } from "./main.js";
 import { SIZE_HEIGHT } from "./main.js";
 import { SIZE_WIDTH } from "./main.js";
-import { data_points } from "./main.js";
 import { ctx } from "./main.js";
+import { data_points } from "./main.js"
 
 import { Point } from "./Objects.js";
 
@@ -29,7 +29,7 @@ function removePoint(x, y) {
         ctx.beginPath();
         ctx.arc(data_points[index].x, data_points[index].y, POINT_RADIUS + 1, 0, Math.PI * 2);
         ctx.closePath();
-        ctx.fillStyle = 'aliceblue';
+        ctx.fillStyle = 'white';
         ctx.fill();
 
         data_points.splice(index, 1);
@@ -42,7 +42,7 @@ function isCanAddPoint(x, y) {
 
         if (index == -1) {
             return true;
-        } else if (Math.sqrt(calculateDistance(data_points[index].x, data_points[index].y, x, y)) > 2 * POINT_RADIUS) {
+        } else if (calculateDistance(data_points[index].x, data_points[index].y, x, y) > 2 * POINT_RADIUS) {
             return true;
         }
     }
@@ -53,7 +53,7 @@ function getIndexPoint(x, y) {
     let index = getNearestPointIndex(x, y);
 
     if (index != -1) {
-        if (calculateDistance(data_points[index].x, data_points[index].y, x, y) < POINT_RADIUS) {
+        if (Math.pow(calculateDistance(data_points[index].x, data_points[index].y, x, y), 2) < POINT_RADIUS) {
             return index; //попали по вершине
         } else {
             return -1; //не попали по вершине
@@ -64,13 +64,12 @@ function getIndexPoint(x, y) {
     }
 }
 
-
 function getNearestPointIndex(x, y) {
     let minDistance = -1;
     let index = -1;
 
     for (let i = 0; i < data_points.length; i++) {
-        let distance = Math.sqrt(calculateDistance(data_points[i].x, data_points[i].y, x, y));
+        let distance = calculateDistance(data_points[i].x, data_points[i].y, x, y);
 
         if (minDistance == -1) {
             index = i;
@@ -86,7 +85,7 @@ function getNearestPointIndex(x, y) {
 }
 
 function calculateDistance(x1, y1, x2, y2) {
-    return Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2);
+    return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 }
 
 function disableButtons() {

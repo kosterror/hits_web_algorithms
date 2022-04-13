@@ -3,25 +3,70 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/clustering/style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/genetic/style.css" />
     <title>Кластеризация</title>
 </head>
 
 <body>
-    <h1>Алгоритм кластеризации</h1>
+    <header>
+        <div class="flex-wrapper">
+            <div id="left_logo"> <img class="logo" src="/main/images/logo_tsu.png"></div>
+
+            <div class="reference">
+                <p><a href="/a_star/a_star.html">A-звездочка</a></p>
+            </div>
+
+            <div class="reference">
+                <p class="active"><a href="/clustering/page3.html">Кластеризация</a></p>
+            </div>
+
+            <div class="reference">
+                <p><a href="/genetic/main.html">Генетический<br>алгоритм</a></p>
+            </div>
+
+            <div class="reference">
+                <p><a href="/main/index.html">Домой</a></p>
+            </div>
+
+            <div class="reference">
+                <p><a href="/ant_algorithm/ant_algorithm.html">Муравьиный<br>алгоритм</a></p>
+            </div>
+
+            <div class="reference">
+                <p><a>Дерево<br>решений</a></p>
+            </div>
+
+            <div class="reference">
+                <p><a href="/Neuron/page5.html">Нейронная<br>сеть</a></p>
+            </div>
+
+            <div id="right_logo"> <img class="logo" src="/main/images/logo_hits.png"></div>
+        </div>
+    </header>
+
     <div class="wrapper" id="wrapper">
         <div class="toolbar">
-            <input type="button" class="button" id="add_point" value="Add point">
-            <input type="button" class="button" id="remove_point" value="Remove point">
-            <div class="div-two-cell">
-                <input type="text" class="two-cell" id="getClusters" min="1" max="10" step="1" value="3" placeholder="Input count of clasters (max 10)">
-                <input type="button" class="two-cell" id="kMeans" value="Start k-means++">
-            </div>
+            <input type="button" class="button" id="add_point" value="Добавить точки">
+            <input type="button" class="button" id="remove_point" value="Удалить точки">
+            <input type="button" class="button" id="clear" value="Стереть всё">
             <br>
-            <input type="button" class="button" id="clear" value="Clear all">
+
+            <div class="div-two-cell"><input type="button" class="two-cell2" id="DBSCAN" value="Запуск алгоритма DBSCAN"></div> <br>
+
+            <div class="div-two-cell">
+                <input type="number" class="two-cell1" id="getClusters" min="1" max="10" step="1" value="3">
+                <input type="button" class="two-cell2" id="kMeans" value="Запуск алгоритма k-means">
+            </div><br>
+
+            <div class="div-two-cell"><input type="button" class="two-cell2" id="Graph" value="Запуск графического алгоритма"></div>
         </div>
+
         <canvas id="canvas"></canvas>
-        <script type='module' src="/clustering/main.js"></script>
+    </div>
+    <script type='module' src="/clustering/main.js "></script>
     </div>
 </body>
 

@@ -4,17 +4,65 @@
     padding: 0;
 }
 
-h1 {
-    text-align: center;
-    line-height: 240%;
-    font-size: 200%;
-    font-family: Georgia, "Times New Roman", Times, serif;
+header {
+    height: 100px;
+    background-color: #247ABF;
+}
+
+.flex-wrapper {
+    display: flex;
+}
+
+.flex-wrapper>.reference {
+    height: 40px;
+    margin-top: auto;
+    margin-bottom: auto;
+    flex-grow: 1;
+}
+
+header>div p {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+}
+
+a,
+a:visited,
+a:hover {
+    text-decoration: none;
+    color: #ffff;
+}
+
+header>.flex-wrapper>.reference>.active>a {
+    color: black;
+}
+
+.grid-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.logo {
+    width: 78px;
+    margin-top: 4px;
+}
+
+#left_logo {
+    margin-left: 28px;
+}
+
+#right_logo {
+    margin-right: 28px;
 }
 
 #canvas {
-    background-color: aliceblue;
+    background-color: white;
     display: block;
-    margin: 0 auto 0 auto;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 5px solid black;
 }
 
 .wrapper {
@@ -31,36 +79,41 @@ h1 {
 
 .div-two-cell {
     display: block;
-    height: 45px;
-    margin: 5px auto 5px auto;
+    height: 50px;
+    margin: 0 auto 10px auto;
 }
 
-.two-cell {
-    width: 123px;
+.two-cell1 {
+    width: 35px;
     height: 40px;
+    text-align: center;
 }
 
-.text {
-    text-align: center;
+.two-cell2 {
+    width: 250px;
+    height: 40px;
+    background: #247ABF;
+    border: 0;
+    border-radius: 10px;
 }
 
 .button {
     appearance: none;
     border: 0;
     border-radius: 10px;
-    background: #9ab7c0;
+    background: #247ABF;
     color: rgb(24, 22, 22);
     font-size: 16px;
     font-weight: lighter;
     margin: 5px auto 5px auto;
     text-align: center;
     display: block;
-    width: 250px;
+    width: 300px;
     height: 40px;
 }
 
 input:hover {
-    background: #666969;
+    background: #7AB0DC;
 }
 
 input:focus {

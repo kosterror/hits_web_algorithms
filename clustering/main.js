@@ -6,7 +6,13 @@ import {
     enableButtons
 } from "./func_for_canvas.js";
 
-import { kMeansPlusPlus } from "./kMeans.js";
+import { kMeans } from "./kMeans.js";
+import { DBSCAN } from "./DBSCAN.js";
+
+import {
+    checkingOnError,
+    deepCopy
+} from "./func_for_algos.js";
 
 export {
     canvas,
@@ -14,36 +20,40 @@ export {
     SIZE_HEIGHT,
     SIZE_WIDTH,
     POINT_RADIUS,
-    data_points,
-    centroids,
-    count_clusters
+    LIMIT_COUNT_KLUSTERS,
+    RADIUS_CHANGE,
+    COUNT_NEIGHBOURS_POINTS,
+    count_clusters,
+    data_points
 };
 
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
 const SIZE_WIDTH = 1000,
-    SIZE_HEIGHT = 580,
-    POINT_RADIUS = 10,
-    LIMIT_COUNT_KLUSTERS = 10;
+    SIZE_HEIGHT = 600,
+    POINT_RADIUS = 10;
+
+const LIMIT_COUNT_KLUSTERS = 10;
+
+const RADIUS_CHANGE = 30,
+    COUNT_NEIGHBOURS_POINTS = 4;
 
 let activeMode = 0;
 
 let data_points = [],
-    centroids = [],
-    count_clusters,
-    points;
+    count_clusters;
 
 canvas.width = SIZE_WIDTH;
 canvas.height = SIZE_HEIGHT;
 
 document.getElementById('canvas').addEventListener('click', handler);
-// document.getElementById('canvas').addEventListener('click', (e) => { console.log(e.offsetX + ' ' + console.log(e.offsetY)); });
 document.getElementById('add_point').addEventListener('click', () => { activeMode = 1 });
 document.getElementById('remove_point').addEventListener('click', () => { activeMode = 2 });
-document.getElementById('kMeans').addEventListener('click', startAlgorithm);
+document.getElementById('kMeans').addEventListener('click', startkMeans);
+document.getElementById('DBSCAN').addEventListener('click', startDBSCAN);
+// document.getElementById('Graph').addEventListener('click', startGraph);
 document.getElementById('clear').addEventListener('click', () => { window.location.reload() });
-count_clusters = Number(document.getElementById('getClusters').value);
 
 
 function handler(event) {
@@ -58,29 +68,26 @@ function handler(event) {
     }
 }
 
-function startAlgorithm() {
+function startkMeans() {
     activeMode = 0;
     disableButtons();
-    debugger;
-    if (checking()) {
-        debugger;
-        points = data_points.slice();
 
-        kMeansPlusPlus(points.slice(), centroids.slice());
+    if (!checkingOnError()) {
+        count_clusters = Number(document.getElementById('getClusters').value);
+
+        kMeans(deepCopy(data_points));
 
         enableButtons();
-        console.log(data_points);
     }
 }
 
-function checking() {
-    if ((count_clusters > LIMIT_COUNT_KLUSTERS) || (count_clusters === 0) || (count_clusters == NaN)) {
-        alert("Превышен лимит кластеров (максимум 10)");
-        return false;
-    } else if (data_points.length < count_clusters) {
-        alert("Вы ввели кол-во групп больше, чем точек. Добавьте точки или измените кол-во кластеров");
-        return false;
-    } else {
-        return true;
+function startDBSCAN() {
+    activeMode = 0;
+    disableButtons();
+    debugger;
+    if (!checkingOnError()) {
+        DBSCAN(deepCopy(data_points));
+
+        enableButtons();
     }
 }

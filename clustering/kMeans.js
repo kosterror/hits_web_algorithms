@@ -2,17 +2,20 @@ import { count_clusters } from "./main.js";
 
 import { calculateDistance } from "./func_for_canvas.js";
 
-export { kMeansPlusPlus };
+import { getRandomInt } from "./func_for_algos.js";
+
+export { kMeans };
 
 
-function kMeansPlusPlus(points, centroids) {
+function kMeans(points) {
+    let centroids = [];
     points = findFirstCentroids(points.slice(), centroids) //create array the first centroids
 
     let counter = 0;
     while (counter < 50) {
         let points_new = assignPointsToCluster(points.slice(), centroids.slice());
 
-        if (points === points_new) {
+        if (points == points_new) {
             break;
         }
         points = points_new.slice();
@@ -20,8 +23,6 @@ function kMeansPlusPlus(points, centroids) {
         centroids = calculateNewPositionClusters(points.slice(), centroids.slice());
         counter++;
     }
-
-    console.log("END");
 }
 
 function findFirstCentroids(points, centroids) {
@@ -36,7 +37,7 @@ function findFirstCentroids(points, centroids) {
             let max_dist = 0;
 
             for (let j = 0; j < points.length; j++) {
-                let d = Math.sqrt(calculateDistance(centroids[i].x, centroids[i].y, points[j].x, points[j].y));
+                let d = calculateDistance(centroids[i].x, centroids[i].y, points[j].x, points[j].y);
 
                 if (d > max_dist && isCanCentroids(points[j], centroids)) {
                     max_dist = d;
@@ -53,7 +54,7 @@ function findFirstCentroids(points, centroids) {
             for (let j = 0; j < points.length; j++) {
                 let s = 0;
                 for (let k = 0; k < centroids.length; k++) {
-                    let d = Math.sqrt(calculateDistance(centroids[k].x, centroids[k].y, points[j].x, points[j].y));
+                    let d = calculateDistance(centroids[k].x, centroids[k].y, points[j].x, points[j].y);
                     s += d;
                 }
 
@@ -71,52 +72,6 @@ function findFirstCentroids(points, centroids) {
     }
 
     return points;
-
-    //create just K-means
-
-    // let index = getRandomInt();
-    // points[0].klaster = 1;
-    // centroids[0] = points[0]; //выбрали первый центроид
-    // centroids[0].draw();
-
-    // for (let i = 0; i < count_clusters - 1; i++) {
-    //     let SumDx = 0;
-    //     for (let j = 0; j < points.length; j++) {
-    //         distance[j] = calculateDistance(points[j], centroids[i]);
-    //         SumDx += distance[j];
-    //     }
-
-    //     let k = findIndexNextCentroid(distance, SumDx);
-    //     let flag = false; //флажок для отслеживания изменения массива центроидов
-
-    //     while (!flag) {
-    //         if (isCanCentroids(points[k], centroids.slice())) {
-    //             points[k].klaster = i + 2;
-    //             centroids[centroids.length] = points[k];
-    //             centroids[centroids.length - 1].draw();
-    //             flag = true;
-    //             console.log(flag);
-
-    //         } else {
-    //             k = findIndexNextCentroid(distance, SumDx);
-    //         }
-    //     }
-    // }
-
-    // return points;
-
-    // let distance = [];
-
-    // for (let i = 0; i < count_clusters;) {
-    //     let index = getRandomInt(0, points.length);
-    //     if (isCanCentroids(points[index], centroids.slice())) {
-    //         points[index].cluster = i + 1;
-    //         centroids[i] = points[index]; //chose the first centroids
-    //         i++;
-    //     }
-    // }
-
-    // return points;
 }
 
 function assignPointsToCluster(points, centroids) {
@@ -124,7 +79,7 @@ function assignPointsToCluster(points, centroids) {
         let min_dist = Infinity;
         let num_klast;
         for (let j = 0; j < centroids.length; j++) {
-            let tmp = Math.sqrt(calculateDistance(points[i].x, points[i].y, centroids[j].x, centroids[j].y));
+            let tmp = calculateDistance(points[i].x, points[i].y, centroids[j].x, centroids[j].y);
             if (min_dist > tmp) {
                 min_dist = tmp;
                 num_klast = centroids[j].cluster;
@@ -147,9 +102,9 @@ function calculateNewPositionClusters(points, centroids) {
         count = [];
 
     for (let i = 0; i < count_clusters; i++) {
-        SumX[i] = 0;
-        SumY[i] = 0;
-        count[i] = 0;
+        SumX.push(0);
+        SumY.push(0);
+        count.push(0);
     }
 
     for (let i = 0; i < points.length; i++) {
@@ -166,19 +121,6 @@ function calculateNewPositionClusters(points, centroids) {
     return centroids_new;
 }
 
-function findIndexNextCentroid(points_lenght, distance, SumDx) {
-    let rand = Math.random(0.0, 1.0) * SumDx;
-
-    SumDx = 0;
-    let ind = 0;
-    while (SumDx <= rand && ind < points_lenght - 1) {
-        SumDx += distance[ind];
-        ind++;
-    }
-
-    return ind;
-}
-
 function isCanCentroids(point, centroids) {
     for (let i = 0; i < centroids.length; i++) {
         if (centroids[i].x == point.x & centroids[i].y == point.y) {
@@ -188,15 +130,3 @@ function isCanCentroids(point, centroids) {
 
     return true;
 }
-
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
-}
-
-//K-means YEP
-
-//graph 
-
-//DBSCAN

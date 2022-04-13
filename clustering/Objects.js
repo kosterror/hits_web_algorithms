@@ -12,6 +12,7 @@ class Point {
         this.x = x;
         this.y = y;
         this.cluster = cluster;
+        this.core = false;
     }
 
     draw() {
@@ -21,6 +22,7 @@ class Point {
         ctx.fillStyle = colors[this.cluster];
         ctx.fill();
     }
+
     redraw(color) {
         ctx.beginPath();
         ctx.arc(this.x, this.y, POINT_RADIUS, 0, Math.PI * 2);
@@ -41,5 +43,5 @@ const colors = {
     7: 'gray',
     8: 'purple',
     9: 'pink',
-    10: 'black'
+    10: 'violet'
 }
