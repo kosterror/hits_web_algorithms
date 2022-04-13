@@ -1,6 +1,6 @@
 function parseCSVtoMatrix(strCSV) {
     var buff = parseCSV(strCSV);
-    return transformToMatrix(buff);
+    return transformArrayToMatrix(buff);
 }
 
 function parseCSVtoArray(strCSV) {
@@ -34,10 +34,10 @@ function parseCSVtoArray(strCSV) {
     }
 
     data[data.length] = size;
-    return data;
+    return data; // data = [yourData,yourData,yourData,yourData..., rowSize]
 }
 
-function transformToMatrix(array) {
+function transformArrayToMatrix(array) {
     var matrix = []
     var count = 0;
     for (var i = 0; i < (array.length - 1) / array[array.length - 1]; i++) {

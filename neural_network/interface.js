@@ -14,6 +14,8 @@ const PEN_MODE = 1;
 const ERASER_MODE = 0;
 let activeMode = VIEW_MODE;
 
+let isMouseDown;
+
 let inputMatrix = new Array(PIXEL_PER_SIDE);
 for(var i = 0; i<PIXEL_PER_SIDE; i++) {
     inputMatrix[i] = new Array(PIXEL_PER_SIDE);
@@ -24,28 +26,29 @@ for(var i = 0; i<PIXEL_PER_SIDE; i++) {
 
 CANVAS.addEventListener('mousedown', startDrawing);
 CANVAS.addEventListener('mouseup', stopDrawing);
-CANVAS.addEventListener('mouseleave', mouseLeave);
+CANVAS.addEventListener('mouseleave', stopDrawing);
 CANVAS.addEventListener('click', handler);
 flushScreen_button.addEventListener('click', flush);
 changeTool_button.addEventListener('click', changeTool);
 
 // on and off drawing
 function startDrawing() {
+    isMouseDown = true;
     CANVAS.addEventListener('mousemove', handler);
 }
 function stopDrawing() {
     CANVAS.removeEventListener('mousemove', handler);
-    //ANSWER_TEXT.value = 'Ответ: ' + makeGuess(inputMatrix);
-}
-function mouseLeave() {
-    CANVAS.removeEventListener('mousemove', handler);
+    if((isMouseDown)&&(activeMode!==VIEW_MODE)) {
+        ANSWER_TEXT.value = 'Ответ: ' + makeGuess(inputMatrix);
+        isMouseDown = false;
+    }
 }
 
 // functions that drawing on canvas and put your drawing to matrix
 function handler(event) {
     //ANSWER_TEXT.value = 'Ответ: ' + makeGuess(inputMatrix);
     if(activeMode != VIEW_MODE){
-        var pixelSize = CANVAS_SIZE/PIXEL_PER_SIDE;
+        var pixelSize = Math.ceil(CANVAS_SIZE/PIXEL_PER_SIDE);
         let x = event.offsetX;
         let y = event.offsetY;
         x = x - (x % pixelSize);
@@ -70,15 +73,13 @@ function draw(x, y, color, width, pixelSize, mode) {
             }
         }
     }
-    //inputMatrix[parseInt(x/pixelSize) - 1][parseInt(y/pixelSize) - 1] = 0;
 }
-function inMatrix(x, y, pix) {
+function inMatrix(x, y, pixel) {
     if((0 <= x && x < CANVAS_SIZE)
      &&(0 <= y && y < CANVAS_SIZE)) {
         
         return true;
     }
-    console.log(x, y);
     return false;
 }
 

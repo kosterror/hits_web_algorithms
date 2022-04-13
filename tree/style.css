@@ -96,8 +96,18 @@ input {
     width: 1000px;
     height: 600px;
 
-    border: 1px solid black;
+    border: 5px solid black;
     margin: 0 auto 0 auto;
+}
+
+.button-wrapper{
+    margin-top: 180px;
+}
+.input_test {
+    
+    display: block;
+    width: 300px;
+    height: 50px;
 }
 
 
@@ -106,6 +116,7 @@ input {
 
 .tree ul {
     display: flex;
+    white-space: nowrap;
 	padding-top: 20px; 
     position: relative;
 }
@@ -164,11 +175,11 @@ input {
 .tree li a{
     background: whitesmoke;
 	border: 1px solid #ccc;
-	padding: 10px 20px;
+	padding: 15px 30px;
 	text-decoration: none;
 	color: #000;
 	font-family: arial, verdana, tahoma;
-	font-size: 11px;
+	font-size: 14px;
 	display: inline-block;
 	border-radius: 5px;
 }
