@@ -5,14 +5,15 @@ let adjMatrix;
 let pheromonesMatrix;
 let tabuMatrix;
 
-let antsCount = 100;
-let iterationsCount = 1000;
-let pheromonesInitValue = 0.2;
-let ALPHA = 1;
-let BETA = 1;
-let RHO = 0.64;
-let Q = 1;
+let antsCount = 100;            //количество муравьев
+let iterationsCount = 500;      //количество итераций
+let pheromonesInitValue = 0.2;  //начальное значение феромонов на ребрах
+let ALPHA = 1;  //коэффициент стадности муравьев
+let BETA = 1;   //коэффициент жадности муравьев
+let RHO = 0.64; //столько феромонов будет оставаться после испарение
+let Q = 1;      //коэффициент, регулирующий, силу феромонов при распылении
 
+//обертка для алгоритма
 async function antAlgorithmWrapper() {
     if (verticesList.length < 2) {
         alert('Необходимо добавить хотя бы две вершины');
@@ -25,6 +26,7 @@ async function antAlgorithmWrapper() {
     }
 }
 
+//алгоритм
 async function antAlgorithm() {
     createAdjMatrix();
     createPheromonesMatrix();
@@ -33,8 +35,8 @@ async function antAlgorithm() {
 
     for (let i = 0; i < iterationsCount; i++) {
         createTabuMatrix();
-        let minLength;
-        let path;
+        // let minLength;
+        // let path;
         let pathLengths = new Array(antsCount);
 
         for (let antNumber = 0; antNumber < antsCount; antNumber++) {
@@ -63,10 +65,12 @@ async function antAlgorithm() {
     updateRendering(verticesList, minPath, true);
 }
 
+//расстояние по пифагору
 function calculateDistance(ver1, ver2) {
     return Math.sqrt(Math.pow(ver1.x - ver2.x, 2) + Math.pow(ver1.y - ver2.y, 2));
 }
 
+//считаем длину пути муравья antNumber, используем для этого матрицу запретов
 function calcluatePathLenght(antNumber) {
     let length = 0;
 
@@ -84,6 +88,7 @@ function calcluatePathLenght(antNumber) {
     return length;
 }
 
+//матрциа смежности, используем при каждом запуске алгоритма
 function createAdjMatrix() {
     adjMatrix = new Array(verticesList.length);
 
@@ -96,7 +101,8 @@ function createAdjMatrix() {
     }
 }
 
-function calculateDeltaPheromones(pathLengths) {
+//количество феромонов, которое оставит каждый муравей
+function calculateDeltaPheromones(pathLengths) {    
     let delta = new Array(antsCount);
 
     for (let i = 0; i < antsCount; i++) {
@@ -106,6 +112,7 @@ function calculateDeltaPheromones(pathLengths) {
     return delta;
 }
 
+//матрциа с феромонами
 function createPheromonesMatrix() {
     pheromonesMatrix = new Array(verticesList.length);
 
@@ -118,6 +125,7 @@ function createPheromonesMatrix() {
     }
 }
 
+//матрица с посещенными вершинами, i-строка - список посещенных вершин i-го муравья
 function createTabuMatrix() {
     tabuMatrix = new Array(antsCount);
 
@@ -126,8 +134,8 @@ function createTabuMatrix() {
     }
 }
 
+//испарение феромонов, это происходит после каждой итерации алгоритма
 function evaporationPheromones() {
-    //испарение феромонов 
     for (let i = 0; i < pheromonesMatrix.length; i++) {             //здесь проходимся
         for (let j = 0; j < pheromonesMatrix[i].length; j++) {      //по всем ребрам, кроме петель
             if (i != j) {
@@ -137,6 +145,7 @@ function evaporationPheromones() {
     }
 }
 
+//индекс следующей вершины, для конкретного муравья
 function getIndexNextVertex(currentVertex, antNumber) {
     let possibleNextVertices = [];
 
@@ -179,6 +188,7 @@ function getIndexNextVertex(currentVertex, antNumber) {
     return possibleNextVertices[possibleNextVertices.length - 1];
 }
 
+//посстанавливаем путь по списки посещенных вершин (где-то это называется список запретов)
 function getPath(tabuList) {
     let currentVertex = 0;
     let nextVertex = 0;
@@ -193,6 +203,7 @@ function getPath(tabuList) {
     return path;
 }
 
+//индекс ячейки с минимальным значением массива 
 function getIndexMinLength(pathLengths) {
     let index = -1;
 
@@ -208,7 +219,8 @@ function getIndexMinLength(pathLengths) {
     return index;
 }
 
-async function sprayPheromones(pathLengths) {
+//распыление феромонов на ребра (запускаем после каждой итерации алгоритма)
+function sprayPheromones(pathLengths) {
     let deltaList = calculateDeltaPheromones(pathLengths);
 
     for (let antNumber = 0; antNumber < antsCount; antNumber++) {       //проходимся по всем муравьям
@@ -228,9 +240,10 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function updatePheromones(pathLengths) {
-    evaporationPheromones();
-    sprayPheromones(pathLengths);
+//испарение и распыление феромонов
+async function updatePheromones(pathLengths) {
+    await evaporationPheromones();
+    await sprayPheromones(pathLengths);
 }
 
 export default antAlgorithmWrapper;
