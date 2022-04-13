@@ -2,7 +2,7 @@ import { addVertex } from "./func_for_canvas.js";
 import { removeVertex } from "./func_for_canvas.js";
 import { getIndexHitVertex } from "./func_for_canvas.js";
 import { isCanAddVertex } from "./func_for_canvas.js";
-import { drawEdgesWithWeight } from "./func_for_canvas.js";
+import { drawEdges } from "./func_for_canvas.js";
 import { deleteEdge } from "./func_for_canvas.js";
 import { drawEdgeAnswer } from "./func_for_canvas.js";
 import { disableButtons } from "./func_for_canvas.js";
@@ -15,7 +15,7 @@ import { algorithmsStart } from "./algorithm.js";
 const canvas = document.querySelector('canvas');
 export const ctx = canvas.getContext('2d');
 
-export const SIZE_WIDTH = 1000,
+export const SIZE_WIDTH = 1400,
     SIZE_HEIGHT = 600;
 const LIMIT_NUMBER_VERTEX = 46;
 export const VERTEX_RADIUS = 20,
@@ -43,7 +43,7 @@ canvas.height = SIZE_HEIGHT;
 
 document.getElementById('canvas').addEventListener('click', handler);
 document.getElementById('add_vertex').addEventListener('click', () => { activeMode = 1 });
-document.getElementById('draw_edjes').addEventListener('click', drawEdgesWithWeight);
+document.getElementById('draw_edjes').addEventListener('click', drawEdges);
 document.getElementById('remove_vertex').addEventListener('click', () => { activeMode = 2 });
 document.getElementById('clear').addEventListener('click', () => { window.location.reload() }); // режим очистки поля
 document.getElementById('start_algo').addEventListener('click', startAlgorithm);
@@ -72,8 +72,6 @@ function startAlgorithm(event) {
     if (vertexList.length === 0) {
         alert("Сначала нарисуйте вершины на плоскости")
     }
-
-    activeMode = 0;
     disableButtons();
 
     POPULATION_SIZE = Math.pow(vertexList.length, 2);
@@ -87,7 +85,7 @@ function startAlgorithm(event) {
     let id = setInterval(function() {
         if (count > COUNT_GENERATIONS || counter_stop == 250) {
             deleteEdge();
-            drawEdgeAnswer('green');
+            drawEdgeAnswer('#247ABF');
 
             enableButtons();
             clearInterval(id);
@@ -102,13 +100,15 @@ function startAlgorithm(event) {
         if (fit2 != fit1) { // проверка на новую хромосому
             counter_stop = 0;
             deleteEdge();
-            drawEdgeAnswer('black');
+            drawEdgeAnswer('#7AB0DC');
         }
 
         count++;
         counter_stop++;
 
     }, 0);
+
+    activeMode = 0;
 }
 
 //добавить изменение цвета при наведении и нажатии
