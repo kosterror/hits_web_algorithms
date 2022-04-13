@@ -1,7 +1,7 @@
 * {
-    background-color: #3b728a;
     margin: 0;
-    padding: 0;
+    font-family: 'Montserrat';
+    text-align: center;
 }
 
 header {
@@ -11,13 +11,8 @@ header {
 
 .flex-wrapper {
     display: flex;
-}
-
-.flex-wrapper>.reference {
-    height: 40px;
-    margin-top: auto;
-    margin-bottom: auto;
-    flex-grow: 1;
+    align-items: center;
+    justify-content: space-between;
 }
 
 header>div p {
@@ -66,7 +61,7 @@ header>.flex-wrapper>.reference>.active>a {
 }
 
 .wrapper {
-    margin-top: 100px;
+    margin-top: 1%;
     display: grid;
     grid-template-columns: 2fr 5fr;
 }
@@ -75,26 +70,7 @@ header>.flex-wrapper>.reference>.active>a {
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
-
-.div-two-cell {
-    display: block;
-    height: 50px;
-    margin: 0 auto 10px auto;
-}
-
-.two-cell1 {
-    width: 35px;
-    height: 40px;
-    text-align: center;
-}
-
-.two-cell2 {
-    width: 250px;
-    height: 40px;
-    background: #247ABF;
-    border: 0;
-    border-radius: 10px;
+    margin: 50px;
 }
 
 .button {
@@ -102,14 +78,42 @@ header>.flex-wrapper>.reference>.active>a {
     border: 0;
     border-radius: 10px;
     background: #247ABF;
-    color: rgb(24, 22, 22);
+    color: white;
     font-size: 16px;
     font-weight: lighter;
     margin: 5px auto 5px auto;
     text-align: center;
     display: block;
     width: 300px;
-    height: 40px;
+    height: 50px;
+}
+
+.button2 {
+    appearance: none;
+    border: 0;
+    border-radius: 10px;
+    background: #247ABF;
+    color: white;
+    font-size: 16px;
+    font-weight: lighter;
+    margin: 5px auto 5px auto;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+}
+
+.button3 {
+    appearance: none;
+    border: 0;
+    border-radius: 10px;
+    background: #247ABF;
+    color: white;
+    font-size: 16px;
+    font-weight: lighter;
+    margin: 5px auto 5px auto;
+    text-align: center;
+    width: 240px;
+    height: 50px;
 }
 
 input:hover {
@@ -119,12 +123,4 @@ input:hover {
 input:focus {
     outline: none;
     box-shadow: 0 0 0 2px #cbd6ee;
-}
-
-#restartAlg {
-    position: relative;
-    background-color: #b8ced3;
-    left: 40%;
-    width: 15%;
-    height: 50px;
 }

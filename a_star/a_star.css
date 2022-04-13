@@ -11,13 +11,8 @@ header {
 
 .flex-wrapper {
     display: flex;
-}
-
-.flex-wrapper > .reference {
-    height: 40px;
-    margin-top: auto;
-    margin-bottom: auto;
-    flex-grow: 1;
+    align-items: center;
+    justify-content: space-between;
 }
 
 header > div p {
@@ -50,7 +45,7 @@ header > .flex-wrapper > .reference > .active > a {
 }
 
 .content {
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 .wrapper {
