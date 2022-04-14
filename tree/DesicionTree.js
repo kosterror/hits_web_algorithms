@@ -5,6 +5,7 @@ class Node {
         this.branches = [];
         this.atribute = atribute;
         this.atributeNumber = atributeNumber;
+        this.a;
     }
 
     isLeaf() {
@@ -21,6 +22,55 @@ class Node {
 
 let root;
 let uniqueResults = [];
+
+async function bypassTree() {
+    let str = document.getElementById('input_data').value;
+    array = parseCSVtoArray(str);
+    let currentNode = root;
+    while(true) {
+        await gradient('rgb(255, 255, 255)', 'rgb(36, 122, 191)', currentNode);
+        await sleep(100);
+        for(let j = 0; j<currentNode.branches.length; j++) {
+            if((currentNode.branches[j].nodeName === array[currentNode.branches[j].atributeNumber])||
+               (currentNode.branches[j].atributeNumber === root.data[0].length-1)) {
+                currentNode = currentNode.branches[j];
+                break;
+            }
+        } 
+        if(currentNode.atribute === root.data[0][root.data[0].length-1]) {
+            await gradient('rgb(255, 255, 255)', 'rgb(36, 122, 191)', currentNode);
+            break;
+        }
+    }
+}
+
+async function gradient(start_RGB, finish_RGB, node) {
+    let rgb = getRGB(start_RGB);
+    start_RGB = getRGB(start_RGB);
+    finish_RGB = getRGB(finish_RGB);
+    for(let i = 0; i<255; i++) {
+        for(let j = 0; j<3; j++) {
+            rgb[j] -= (start_RGB[j] - finish_RGB[j])/255;
+        }
+        node.a.style.backgroundColor = 'rgb('+ rgb[0] +','+ rgb[1] +','+ rgb[2] +')';
+        await sleep(1);
+    }
+} 
+
+function getRGB(str){
+    let regex = /\d{1,3}/;
+    let rgb = [];
+    for(let i = 0; i<3; i++) {
+        rgb[i] = parseFloat(regex.exec(str));
+        str = str.replace(regex, "")
+    }
+    return rgb
+}
+
+function sleep(ms) { 
+   return new Promise(resolve => setTimeout(resolve, ms));
+} 
+
 
 
 function buildTree(data) {
