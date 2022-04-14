@@ -116,10 +116,6 @@ header>.flex-wrapper>.reference>.active>a {
     height: 50px;
 }
 
-input:hover {
-    background: #7AB0DC;
-}
-
 input:focus {
     outline: none;
     box-shadow: 0 0 0 2px #cbd6ee;

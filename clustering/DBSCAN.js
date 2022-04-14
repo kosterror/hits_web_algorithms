@@ -1,87 +1,103 @@
 import {
     RADIUS_CHANGE,
-    COUNT_NEIGHBOURS_POINTS
+    COUNT_NEIGHBOURS_POINTS,
+    data_points,
+    POINT_RADIUS
 } from "./main.js";
 
-import { deepCopy, getRandomInt } from "./func_for_algos.js"
-import { calculateDistance } from "./func_for_canvas.js";
+import {
+    checkingOnError,
+    deepCopy
+} from "./func_for_algo.js"
 
-export { DBSCAN }
+import {
+    disableButtons,
+    enableButtons
+} from "./buttons_handler.js";
+
+import {
+    calculateDistance,
+    showOldPoints
+} from "./canvas_handler.js";
+
+export { startDBSCAN }
+
+
+function startDBSCAN() {
+    showOldPoints();
+    disableButtons();
+    debugger;
+    if (data_points.length > 0) {
+        DBSCAN(deepCopy(data_points));
+
+        enableButtons();
+    }
+}
 
 function DBSCAN(points) {
     let count_clusters = 0;
 
     for (let i = 0; i < points.length; i++) {
-        if (points[i].cluster == 0) {
-            let neighbours = findNeighbours(points[i], points);
+        if (points[i].cluster == 0 && points[i].core === false) {
+            let neighbours = findNeighbours(points[i], count_clusters, points);
 
-            if (neighbours.length >= COUNT_NEGHBOURS_POINTS) {
+            if (neighbours.length !== 0) {
                 points[i].core = true;
                 count_clusters++;
 
-                points.cluster = count_clusters;
+                points[i].cluster = count_clusters;
+                points[i].draw();
+
                 let queue = deepCopy(neighbours);
 
-                for (let j = 0; j < neighbours.length; j++) {
-                    if (points[j].core === false) {
-                        points[j].core = true;
+                for (let j = 0; j < queue.length; j++) {
+                    if (queue[j].core === false) {
+                        queue[j].core = true;
                     }
 
-                    points[j].cluster = count_clusters;
+                    queue[j].cluster = count_clusters;
+                    queue[j].draw();
 
-                    neighbours = findNeighbours(points[j], points);
-                    if (neighbours.length >= COUNT_NEGHBOURS_POINTS) {
-                        queue.push(neighbours);
+                    neighbours = findNeighbours(queue[j], count_clusters, points);
+                    if (neighbours.length !== 0) {
+                        for (let i = 0; i < neighbours.length; i++) {
+                            queue.push(neighbours[i]);
+                        }
+                        drawNeighbours(neighbours, 'pink');
                     }
-
                 }
+
+            } else {
+                points[i].cluster = -1;
             }
         }
     }
 }
 
-// function findNeighbours(point, points) {
-//     let neighbours = [];
-//     for (let i = 0; i < points.length; i++) {
-//         if (calculateDistance(point.x, point.y, points[i].x, points[i].y) <= RADIUS_CHANGE) {
-//             neighbours.push(points[i]);
-//         }
-//     }
+function findNeighbours(point, current_cluster, points) {
+    let count_neighbours = 0;
+    let neighbours = [];
+    for (let i = 0; i < points.length; i++) {
+        if (point.x !== points[i].x && point.y !== points[i].y && points[i].cluster < 1) {
+            if (calculateDistance(point.x, point.y, points[i].x, points[i].y) - POINT_RADIUS <= RADIUS_CHANGE) {
+                neighbours.push(points[i]);
+                count_neighbours++;
+            }
 
-//     return neighbours;
-// }
+        } else if (points[i].cluster === current_cluster && current_cluster != 0) {
+            count_neighbours++;
+        }
+    }
 
-// function DBSCAN(points) {
-//     let core_points = [];
-//     for (let i = 0; i < points.length; i++) {
-//         if (isCorePoint(points[i], JSON.parse(JSON.stringify(points)))) {
-//             points[i].core = true;
-//             core_points.push(points[i]);
-//         }
-//     } //indentify core and non-core points
+    if (count_neighbours >= COUNT_NEIGHBOURS_POINTS) {
+        return neighbours;
+    }
 
-//     let ind = getRandomInt(0, core_points.length);
+    return [];
+}
 
-//     points[ind].clusters = 1;
-
-//     let label_point = [];
-//     for (let i = 0; i < points.length; i++) {
-//         label_point.push(false);
-//     }
-// }
-
-// function isCorePoint(p, points) {
-//     let count_neighbours = 0;
-
-//     for (let i = 0; i < points.length; i++) {
-//         if (calculateDistance(p.x, p.y, points[i].x, points[i].y) <= RADIUS_CHANGE) {
-//             count_neighbours++;
-//         }
-
-//         if (count_neighbours === COUNT_NEGHBOURS_POINTS) {
-//             return true;
-//         }
-//     }
-
-//     return false;
-// }
+function drawNeighbours(N, color) {
+    for (let i = 0; i < N.length; i++) {
+        N[i].redraw(color);
+    }
+}
