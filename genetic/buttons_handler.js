@@ -12,7 +12,7 @@ export {
 const COLOR_ACTIVE = '#7AB0DC';
 const COLOR_UNACTIVE = '#247ABF';
 
-async function buttonsHandler(activeNumber, e) {
+function buttonsHandler(activeNumber, e) {
     activeMode.value = activeNumber;
     buttonsRender();
 
@@ -23,7 +23,7 @@ async function buttonsHandler(activeNumber, e) {
 
     } else if (activeMode.value === 4) {
         buttonsRender();
-        await startAlgorithm();
+        startAlgorithm();
         buttonsRender();
     }
 }
@@ -39,10 +39,10 @@ function buttonsRenderEvent(e) {
         } else if (e.target.id === 'draw_edjes' && activeMode.value !== 2) {
             document.getElementById('draw_edjes').style.backgroundColor = COLOR_UNACTIVE;
 
-        } else if (e.target.id === 'remove_vertex' && activeMode.value !== 3) {
+        } else if (e.target.id === 'remove_vertex') {
             document.getElementById('remove_vertex').style.backgroundColor = COLOR_UNACTIVE;
 
-        } else if (e.target.id === 'start_algo' && activeMode.value !== 4) {
+        } else if (e.target.id === 'start_algo') {
             document.getElementById('start_algo').style.backgroundColor = COLOR_UNACTIVE;
 
         } else if (e.target.id === 'clear') {
@@ -55,21 +55,31 @@ function buttonsRenderEvent(e) {
 function buttonsRender() {
     if (activeMode.value === 0) {
         document.getElementById('add_vertex').style.backgroundColor = COLOR_UNACTIVE;
+        document.getElementById('draw_edjes').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('remove_vertex').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('start_algo').style.backgroundColor = COLOR_UNACTIVE;
 
     } else if (activeMode.value === 1) {
         document.getElementById('add_vertex').style.backgroundColor = COLOR_ACTIVE;
+        document.getElementById('draw_edjes').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('remove_vertex').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('start_algo').style.backgroundColor = COLOR_UNACTIVE;
 
     } else if (activeMode.value === 2) {
         document.getElementById('add_vertex').style.backgroundColor = COLOR_UNACTIVE;
+        document.getElementById('draw_edjes').style.backgroundColor = COLOR_ACTIVE;
+        document.getElementById('remove_vertex').style.backgroundColor = COLOR_UNACTIVE;
+        document.getElementById('start_algo').style.backgroundColor = COLOR_UNACTIVE;
+
+    } else if (activeMode.value === 3) {
+        document.getElementById('add_vertex').style.backgroundColor = COLOR_UNACTIVE;
+        document.getElementById('draw_edjes').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('remove_vertex').style.backgroundColor = COLOR_ACTIVE;
         document.getElementById('start_algo').style.backgroundColor = COLOR_UNACTIVE;
 
     } else if (activeMode.value === 4) {
         document.getElementById('add_vertex').style.backgroundColor = COLOR_UNACTIVE;
+        document.getElementById('draw_edjes').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('remove_vertex').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('start_algo').style.backgroundColor = COLOR_ACTIVE;
 
