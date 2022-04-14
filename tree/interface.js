@@ -6,10 +6,7 @@ function drawTree(currentNode, treeElement) {
     let a = document.createElement("a");
     a.href = "#";
     let nodeName = currentNode.nodeName;
-    let atr = "Ответ"
-    if(currentNode.atribute !== undefined) {
-        atr = currentNode.atribute
-    }
+    let atr = currentNode.atribute
     if(nodeName === "root") {
         a.textContent = nodeName;
     }

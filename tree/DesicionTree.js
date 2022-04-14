@@ -1,50 +1,17 @@
-/*
-*
-*   этот файл содержит те еще раритеты, 
-*   после которых читающему скорее всего захочется разбить экран комьютера,
-*   выкинуть его в окно и забыть программирование, как страшный сон.   
-*   исходя из вышенаписанного, дальнейшее чтение этого кода 
-*   будет являться добровольным истязанием самого себя 
-*
-*/
-
-
-
-
-
 class Node {
-    constructor() {
-        let nodeName;
-        let data;
-        let branches = [];
-        let atribute = ""
-        let atributeNumber = ""
-    }
-
-    setName(name) {
-        this.nodeName = name;
-    }
-    setAtribute(atr) {
-        this.atribute = atr;
-    }
-    setAtributeNum(num) {
-        this.atributeNumber = num;
-    }
-    setData(data) {
+    constructor(nodeName, atribute, atributeNumber) {
+        this.nodeName = nodeName;
         this.data = [];
-        for (var i = 0; i < data.length; i++) {
-            this.data[i] = []
-            for (var j = 0; j < data[i].length; j++) {
-                this.data[i][j] = data[i][j];
-            }
-        }
+        this.branches = [];
+        this.atribute = atribute;
+        this.atributeNumber = atributeNumber;
     }
 
     isLeaf() {
         if (this.branches == undefined) {
             return true;
         }
-        else if(this.branches.length == 0) {
+        else if (this.branches.length == 0) {
             return true;
         }
 
@@ -52,127 +19,88 @@ class Node {
     }
 }
 
-let dataTree;
-let positiveAtribute;
 let root;
+let uniqueResults = [];
+
 
 function buildTree(data) {
-    dataTree = data;
-    positiveAtribute = dataTree[1][dataTree[1].length - 1];
-    root = new Node();
-    root.setName("root");
-    root.setData(dataTree);
+    root = new Node("root");
+    root.data = data;
+    for(let i = 1; i<root.data.length; i++) {
+        uniqueResults[i - 1] = root.data[i][root.data[i].length-1];
+    }
+    uniqueResults = getUniqueAtributes(uniqueResults);
     growBranch(root);
 }
 
-function growBranch(currentNode) {
-    let branches = getBranches(currentNode.data);
-    currentNode.branches = branches;
-    var currentData = currentNode.data;
-    for (var i = 0; i < branches.length; i++) {
-        var nextData = []
-        for (var j = 0; j < currentData.length; j++) {
-            if (j === 0) {
-                nextData[nextData.length] = [currentData[j].length];
-                for (var k = 0; k < currentData[j].length; k++) {
-                    nextData[nextData.length - 1][k] = currentData[j][k]
-                }
-            }
-            else if (currentData[j][branches[i].atributeNumber] === branches[i].nodeName) {
-                nextData[nextData.length] = [currentData[j].length];
-                for (var k = 0; k < currentData[j].length; k++) {
-                    nextData[nextData.length - 1][k] = currentData[j][k];
+function growBranch(currentNode) { 
+    currentNode.branches = getArrayOfBranches(currentNode.data);
+    for(let i = 0; i<currentNode.branches.length; i++) {
+        var nextNode = currentNode.branches[i];
+        for(var j = 0; j < currentNode.data.length; j++) {
+            if((j === 0) || (currentNode.data[j][currentNode.branches[i].atributeNumber] === currentNode.branches[i].nodeName)) {
+                nextNode.data[nextNode.data.length] = []
+                for(let k = 0; k<currentNode.data[j].length; k++) {
+                    nextNode.data[nextNode.data.length-1][k] = currentNode.data[j][k];
                 }
             }
         }
-        if (nextData.length === 1) {
-            for (let j = 0; j < currentData.length; j++) {
-                let flag = false;
-                for (let k = 0; k < currentData[j].length; k++) {
-                    if (currentData[j][k] === branches[i].nodeName) {
-                        branches[i].setName(currentData[j][currentData[j].length - 1]);
-                        flag = true;
-                    }
-                    if (flag)
-                        break;
-                }
-            }
-            continue
-        }
-        branches[i].setData(nextData);
-        if (branches.length === 1) {
+        if ((nextNode.data.length === 1)||(nextNode.atributeNumber === nextNode.data[0].length - 1)){
             return;
         }
-        growBranch(branches[i]);
+        growBranch(nextNode);
     }
 }
 
-function getBranches(data) {
+function getArrayOfBranches(data) {
     let gain = calculateGain(data);
+    let atr = getUniqueAtributes(getColumnInMatrix(data, getIndexOfMaxElement(gain)));
     let branches = [];
-    let max = -1;
-    let ind;
-    for (var i = 0; i < gain.length; i++) {
-        if (max < gain[i]) {
-            max = gain[i];
-            ind = i;
-        }
-    }
-    let atr = []
-    let wasAdded;
-    for (var i = 1; i < data.length; i++) {
-        wasAdded = false;
-        for (var j = 0; j < atr.length; j++) {
-            if (atr[j] === data[i][ind]) {
-                wasAdded = true;
-                break;
-            }
-        }
-        if (!wasAdded) {
-            atr[atr.length] = data[i][ind];
-        }
-    }
 
-    for (var i = 0; i < atr.length; i++) {
-        branches[i] = new Node();
+    for (var i = 1; i < atr.length; i++) {
+        branches[i-1] = new Node(atr[i], data[0][getIndexOfMaxElement(gain)], getIndexOfMaxElement(gain));
         if (gain.length === 1) {
-            branches[i].setName(data[1][data[0].length - 1])
-            return branches;
+            branches[i-1].nodeName = data[1][data[0].length - 1];
         }
-        branches[i].setName(atr[i])
-        branches[i].setAtribute(data[0][ind])
-        branches[i].setAtributeNum(ind);
     }
-
     return branches;
 }
 
+function getIndexOfMaxElement(array) {
+    let max = -1;
+    let ind;
+    for (var i = 0; i < array.length; i++) {
+        if (max <= array[i]) {
+            max = array[i];
+            ind = i;
+        }
+    }
+
+    return ind;
+}
+
 function calculateGain(data) {
+    let resultEntropy = countningUniqeAtributesByResult(getColumnInMatrix(data, data[0].length - 1), 
+                                                        getColumnInMatrix(data, data[0].length - 1));
     let entropy = calculateEntropy(data);
-    let res = [];
-    for (var j = 1; j < data.length; j++) {
-        res[res.length] = data[j][data[j].length - 1];
-    }
-    let resultEntropy = getCountUnique(res, res);
-    if (resultEntropy.length === 1) {
-        return [0];
-    }
     let gain = [];
-
-
+    if (resultEntropy.length === 2) {
+        for(let i = 0; i<data[0].length; i++) {
+            gain[i] = 0
+        }
+        return gain
+    }
     for (let i = 0; i < entropy.length; i++) {
-        if (resultEntropy[0][0] === positiveAtribute) {
-            gain[i] = -(resultEntropy[0][1] / (data.length - 1)) * Math.log2(resultEntropy[0][1] / (data.length - 1));
-            gain[i] -= (resultEntropy[1][2] / (data.length - 1)) * Math.log2(resultEntropy[1][2] / (data.length - 1));
+        positive = 1;
+        negative  = 2;
+        if (resultEntropy[1][0] !== uniqueResults[0]) {
+            positive, negative = negative, positive;
         }
-        else {
-            gain[i] = -(resultEntropy[1][1] / (data.length - 1)) * Math.log2(resultEntropy[1][1] / (data.length - 1));
-            gain[i] -= (resultEntropy[0][2] / (data.length - 1)) * Math.log2(resultEntropy[0][2] / (data.length - 1));
-        }
+        positive = resultEntropy[positive][1] / (data.length - 1);
+        negative = resultEntropy[negative][2] / (data.length - 1);
+        // number in log2 is need because positive or negative can be 0
+        gain[i] = -(positive) * Math.log2(positive + 0.0000001) - (negative) * Math.log2(negative + 0.0000001);
         for (let j = 0; j < entropy[i].length; j++) {
-            if (entropy[i][j] === 0) {
-                continue;
-            }
             gain[i] = gain[i] - entropy[i][j] / (data.length - 1);
         }
     }
@@ -182,70 +110,72 @@ function calculateGain(data) {
 
 function calculateEntropy(data) {
     let entropy = [];
-
-    uniqe = []
-    for (let i = 0; i < data[0].length - 1; i++) {
+    for(let i = 0; i<data[0].length - 1; i++) {
+        let unique = countningUniqeAtributesByResult(getColumnInMatrix(data, i), getColumnInMatrix(data, data[0].length - 1));
         entropy[i] = [];
-        let atr = [];
-        let res = [];
-        for (var j = 1; j < data.length; j++) {
-            atr[atr.length] = data[j][i];
-            res[res.length] = data[j][data[j].length - 1];
-        }
-        uniqe = getCountUnique(atr, res);
-        for (let j = 0; j < uniqe.length; j++) {
-            let positive;
-            let negtive;
-            if (uniqe[j][2] === 0) {
-                negtive = 0;
-            }
-            else {
-                negtive = uniqe[j][2] / (uniqe[j][1] + uniqe[j][2]);
-                negtive = - negtive * Math.log2(negtive)
-            }
-            if (uniqe[j][1] === 0) {
-                positive = 0;
-            }
-            else {
-                positive = uniqe[j][1] / (uniqe[j][1] + uniqe[j][2]);
-                positive = - positive * Math.log2(positive)
-            }
-            entropy[i][j] = positive + negtive;
-            entropy[i][j] *= (uniqe[j][1] + uniqe[j][2])
+        for(var j = 1; j<unique.length; j++) {
+            let positive = unique[j][1] / (unique[j][1] + unique[j][2]);
+            // number in log2 is need because positive or negative can be 0
+            positive = - positive * Math.log2(positive + 0.0000001);
+            let negtive = unique[j][2] / (unique[j][1] + unique[j][2]);
+            negtive = - negtive * Math.log2(negtive + 0.00000001);
+            entropy[i][j - 1] = (positive + negtive) * (unique[j][1] + unique[j][2]);
         }
     }
-    return entropy
+
+    return entropy;
 }
 
-function getCountUnique(atribute, result) {
-    let keys = [];
+function getColumnInMatrix(matrix, columnNumber) {
+    let array = [];
+    for(let i = 0; i<matrix.length; i++) {
+        array[i] = matrix[i][columnNumber];
+    }
+    return array;
+}
+
+// function that returns matrix which contains all uniqe values and count of them relative to results
+function countningUniqeAtributesByResult(array, result) {
+    let matrix = []
+    uniqueAtributes = getUniqueAtributes(array);
+    for (let i = 0; i < uniqueAtributes.length; i++) {
+        matrix[i] = [];
+        matrix[i][0] = uniqueAtributes[i];
+        for (let j = 0; j < uniqueResults.length; j++) {
+            matrix[i][j + 1] = 0;
+        }
+    }
+    for (let i = 0; i < array.length; i++) {
+        for (let j = 0; j < uniqueAtributes.length; j++) {
+            if (array[i] === uniqueAtributes[j]) {
+                for (let k = 0; k < uniqueResults.length; k++) {
+                    if(result[i] === uniqueResults[k]) {
+                        matrix[j][k + 1] ++;
+                    }
+                }
+            }
+        }
+    }
+
+    return matrix;
+}
+
+// function that returns array which contains all unique values from input array
+function getUniqueAtributes(array) {
+    let unique = [];
     let wasAdded;
-    for (let i = 0; i < atribute.length; i++) {
-        wasAdded = false;
-        for (let j = 0; j < keys.length; j++) {
-            if (atribute[i] === keys[j][0]) {
-                if (result[i] === positiveAtribute) {
-                    keys[j][1]++;
-                }
-                else {
-                    keys[j][2]++;
-                }
+    for (let i = 0; i < array.length; i++) {
+        wasAdded = false
+        for (let j = 0; j < unique.length; j++) {
+            if (array[i] === unique[j]) {
                 wasAdded = true;
                 break;
             }
         }
         if (!wasAdded) {
-            keys[keys.length] = []
-            keys[keys.length - 1][0] = atribute[i];
-            keys[keys.length - 1][1] = 0;
-            keys[keys.length - 1][2] = 0;
-            if (result[i] === positiveAtribute) {
-                keys[keys.length - 1][1]++;
-            }
-            else {
-                keys[keys.length - 1][2]++;
-            }
+            unique[unique.length] = array[i];
         }
     }
-    return keys;
+
+    return unique;
 }
