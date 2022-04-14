@@ -1,20 +1,74 @@
 import { Chromosome } from "./classes.js";
+import { activeMode, COUNT_GENERATIONS } from "./main.js";
 
-import { getRandomInt } from "./func_for_algo.js";
-import { findFitness } from "./func_for_algo.js";
-import { createDescendant } from "./func_for_algo.js";
-import { mutation } from "./func_for_algo.js";
+import {
+    getRandomInt,
+    findFitness,
+    createDescendant,
+    mutation
+} from "./func_for_algo.js";
 
-import { POPULATION_SIZE } from "./main.js";
-import { population } from "./main.js";
 import { vertexList } from "./main.js";
 import { MUTATION_PERCENTAGE } from "./main.js";
 
+import {
+    disableButtons,
+    enableButtons
+} from "./buttons_handler.js";
+
+import { deleteEdge } from "./canvas_handler.js";
+import { drawEdgeAnswer } from "./canvas_handler.js";
+
 export {
-    InitialPopulationGeneration,
-    algorithmsStart
+    startAlgorithm
 }
 
+export let population = [], //массив хромосом
+    POPULATION_SIZE;
+
+function startAlgorithm() {
+    if (vertexList.length === 0) {
+        alert("Сначала нарисуйте вершины на плоскости");
+        return;
+    }
+    disableButtons();
+
+    POPULATION_SIZE = Math.pow(vertexList.length, 2);
+    population = []; //при добавлении новых вершин обнуляем популяцию
+
+    InitialPopulationGeneration();
+
+    let count = 0, //счетчик поколений
+        counter_stop = 0; //счетчик для остановки программы
+
+    let id = setInterval(function() {
+        if (count > COUNT_GENERATIONS || counter_stop == 250) {
+            deleteEdge();
+            drawEdgeAnswer('#247ABF');
+
+            clearInterval(id);
+        }
+
+        let fit1 = population[0].fitness; //запоминаем лучшую хромосому
+
+        CrossingAlgorithm();
+
+        let fit2 = population[0].fitness; // запоминаем в измененной популяции лучшую хромосому
+
+        if (fit2 != fit1) { // проверка на новую хромосому
+            counter_stop = 0;
+            deleteEdge();
+            drawEdgeAnswer('#7AB0DC');
+        }
+
+        count++;
+        counter_stop++;
+
+    }, 0);
+
+    enableButtons();
+
+}
 
 function InitialPopulationGeneration() {
     let arr = [];
@@ -46,10 +100,6 @@ function InitialPopulationGeneration() {
     }
 
     population.sort((a, b) => a.fitness - b.fitness); //сортируем популяцию по приспособленности
-}
-
-function algorithmsStart() {
-    CrossingAlgorithm();
 }
 
 function CrossingAlgorithm() {
