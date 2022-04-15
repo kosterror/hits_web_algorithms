@@ -1,5 +1,5 @@
 import Vertex from './class_vertex.js';
-import { HEIGHT, VERTEX_RADIUS, WIDTH, activeMode, verticesList } from './main.js'
+import { HEIGHT, VERTEX_RADIUS, WIDTH, activeMode, verticesList, ctx } from './main.js'
 
 
 function canvasHandler(x, y) {
@@ -39,6 +39,7 @@ function calculateDistance(x1, y1, x2, y2) {
 }
 
 function removeVertex(index) {
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
     verticesList[index].remove();
     verticesList.splice(index, 1);
 
