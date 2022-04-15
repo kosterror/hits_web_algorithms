@@ -30,7 +30,8 @@ function handler(x, y) {
             addVertex(x, y);
         }
 
-    } else if (activeMode.value === 3) { //режим удаления вершины
+    } else if (activeMode.value === 3) {
+        debugger; //режим удаления вершины
         removeVertex(x, y);
     }
 }
@@ -49,7 +50,7 @@ function removeVertex(x, y) {
         ctx.beginPath();
         ctx.arc(vertexList[index].x, vertexList[index].y, VERTEX_RADIUS + 2, 0, Math.PI * 2);
         ctx.closePath();
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = 'rgb(212, 220, 233)';
         ctx.fill();
 
         vertexList.splice(index, 1);
@@ -59,6 +60,7 @@ function removeVertex(x, y) {
 }
 
 function renumberVertices() {
+    deleteEdge();
     for (let i = 0; i < vertexList.length; i++) {
         vertexList[i].number = i;
         vertexList[i].draw();
