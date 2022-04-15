@@ -5,6 +5,12 @@
     margin: 0;
 }
 
+body {
+    background-image: url(../main/images/ants.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 header {
     height: 100px;
     background-color: #247ABF;
