@@ -1,11 +1,13 @@
 import { vertexList } from "./main.js";
 import { adjMatrix } from "./main.js";
+import { calculateDistance } from "./canvas_handler.js";
 
 export {
     createDescendant,
     findFitness,
     getRandomInt,
-    mutation
+    mutation,
+    createAdjMatrix
 };
 
 
@@ -99,4 +101,18 @@ function mutation(descendant) {
     }
 
     return arr;
+}
+
+function createAdjMatrix() {
+    for (let i = 0; i < vertexList.length; i++) {
+        adjMatrix.push(new Array(vertexList.length));
+    }
+
+    for (let i = 0; i < vertexList.length; i++) {
+        for (let j = i + 1; j < vertexList.length; j++) {
+            let dist = calculateDistance(vertexList[i].x, vertexList[i].y, vertexList[j].x, vertexList[j].y);
+            adjMatrix[i][j] = dist;
+            adjMatrix[j][i] = dist;
+        }
+    }
 }

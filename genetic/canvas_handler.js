@@ -1,7 +1,6 @@
 import { Vertex } from "./classes.js";
 
-import { vertexList } from "./main.js";
-import { adjMatrix } from "./main.js";
+import { EDGE_COLOR, vertexList } from "./main.js";
 import { population } from "./algorithm.js";
 import { SIZE_HEIGHT } from "./main.js";
 import { SIZE_WIDTH } from "./main.js";
@@ -19,7 +18,8 @@ export {
     drawEdgeAnswer,
     isCanAddVertex,
     getIndexHitVertex,
-    handler
+    handler,
+    calculateDistance
 };
 
 function handler(x, y) {
@@ -30,8 +30,7 @@ function handler(x, y) {
             addVertex(x, y);
         }
 
-    } else if (activeMode.value === 3) {
-        debugger; //режим удаления вершины
+    } else if (activeMode.value === 3) { //режим удаления вершины
         removeVertex(x, y);
     }
 }
@@ -39,8 +38,6 @@ function handler(x, y) {
 function addVertex(x, y) {
     vertexList.push(new Vertex(x, y, vertexList.length));
     vertexList[vertexList.length - 1].draw();
-
-    expandAdjMatrix();
 }
 
 function removeVertex(x, y) {
@@ -50,7 +47,7 @@ function removeVertex(x, y) {
         ctx.beginPath();
         ctx.arc(vertexList[index].x, vertexList[index].y, VERTEX_RADIUS + 2, 0, Math.PI * 2);
         ctx.closePath();
-        ctx.fillStyle = 'rgb(212, 220, 233)';
+        ctx.fillStyle = EDGE_COLOR;
         ctx.fill();
 
         vertexList.splice(index, 1);
@@ -189,22 +186,22 @@ function calculateDistance(x1, y1, x2, y2) {
     return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 }
 
-function expandAdjMatrix() {
-    if (adjMatrix.length == 0) { //первая вершина
-        adjMatrix.push([0]);
+// function expandAdjMatrix() {
+//     if (adjMatrix.length == 0) { //первая вершина
+//         adjMatrix.push([0]);
 
-    } else {
-        let newROW = new Array(adjMatrix.length + 1);
-        newROW.fill(0);
+//     } else {
+//         let newROW = new Array(adjMatrix.length + 1);
+//         newROW.fill(0);
 
-        for (let i = 0; i < vertexList.length; i++) {
-            newROW[i] = calculateDistance(vertexList[vertexList.length - 1].x, vertexList[vertexList.length - 1].y, vertexList[i].x, vertexList[i].y);
-        }
+//         for (let i = 0; i < vertexList.length; i++) {
+//             newROW[i] = calculateDistance(vertexList[vertexList.length - 1].x, vertexList[vertexList.length - 1].y, vertexList[i].x, vertexList[i].y);
+//         }
 
-        adjMatrix.push(newROW);
+//         adjMatrix.push(newROW);
 
-        for (let i = 0; i < adjMatrix.length - 1; i++) {
-            adjMatrix[i].push(newROW[i]);
-        }
-    }
-}
+//         for (let i = 0; i < adjMatrix.length - 1; i++) {
+//             adjMatrix[i].push(newROW[i]);
+//         }
+//     }
+// }

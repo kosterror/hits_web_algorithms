@@ -36,10 +36,10 @@ function buttonsRenderEvent(e) {
         if (e.target.id === 'add_vertex' && activeMode.value !== 1) {
             document.getElementById('add_vertex').style.backgroundColor = COLOR_UNACTIVE;
 
-        } else if (e.target.id === 'draw_edjes' && activeMode.value !== 2) {
+        } else if (e.target.id === 'draw_edjes') {
             document.getElementById('draw_edjes').style.backgroundColor = COLOR_UNACTIVE;
 
-        } else if (e.target.id === 'remove_vertex') {
+        } else if (e.target.id === 'remove_vertex' && activeMode.value !== 3) {
             document.getElementById('remove_vertex').style.backgroundColor = COLOR_UNACTIVE;
 
         } else if (e.target.id === 'start_algo') {
@@ -52,7 +52,7 @@ function buttonsRenderEvent(e) {
     }
 }
 
-function buttonsRender() {
+export function buttonsRender() {
     if (activeMode.value === 0) {
         document.getElementById('add_vertex').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('draw_edjes').style.backgroundColor = COLOR_UNACTIVE;

@@ -1,5 +1,4 @@
 import { DEFAULT_FILL_COLOR } from "./main.js";
-import { STROKE_COLOR } from "./main.js";
 import { STROKE_WIDTH } from "./main.js";
 import { VERTEX_RADIUS } from "./main.js";
 import { ctx } from "./main.js";
@@ -20,29 +19,11 @@ class Vertex {
 
     draw() {
         ctx.fillStyle = DEFAULT_FILL_COLOR;
-        ctx.strokeStyle = STROKE_COLOR;
         ctx.lineWidth = STROKE_WIDTH;
 
         ctx.beginPath();
         ctx.arc(this.x, this.y, VERTEX_RADIUS, 0, 2 * Math.PI);
         ctx.fill();
-        ctx.stroke();
-        ctx.closePath();
-
-        this.drawNumber();
-    }
-
-    redraw(fillColor) {
-        this.color = fillColor;
-
-        ctx.fillStyle = fillColor;
-        ctx.strokeStyle = STROKE_COLOR;
-        ctx.lineWidth = STROKE_WIDTH;
-
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, VERTEX_RADIUS, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.stroke();
         ctx.closePath();
 
         this.drawNumber();
@@ -51,7 +32,7 @@ class Vertex {
     drawNumber() {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillStyle = 'rgb(241, 241, 241)';
+        ctx.fillStyle = 'black';
         ctx.font = 'bold ' + VERTEX_RADIUS + 'px sans-serif';
 
         ctx.beginPath();

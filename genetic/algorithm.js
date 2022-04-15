@@ -5,7 +5,8 @@ import {
     getRandomInt,
     findFitness,
     createDescendant,
-    mutation
+    mutation,
+    createAdjMatrix
 } from "./func_for_algo.js";
 
 import { vertexList } from "./main.js";
@@ -18,6 +19,7 @@ import {
 
 import { deleteEdge } from "./canvas_handler.js";
 import { drawEdgeAnswer } from "./canvas_handler.js";
+import { buttonsRender } from "./buttons_handler.js";
 
 export {
     startAlgorithm
@@ -31,6 +33,8 @@ function startAlgorithm() {
         alert("Сначала нарисуйте вершины на плоскости");
         return;
     }
+    createAdjMatrix();
+
     POPULATION_SIZE = Math.pow(vertexList.length, 2);
     population = []; //при добавлении новых вершин обнуляем популяцию
 
@@ -44,6 +48,9 @@ function startAlgorithm() {
         if (count > COUNT_GENERATIONS || counter_stop == 250) {
             deleteEdge();
             drawEdgeAnswer('#247ABF');
+
+            activeMode.value = 0;
+            buttonsRender();
 
             enableButtons();
             clearInterval(id);
@@ -65,7 +72,6 @@ function startAlgorithm() {
         counter_stop++;
 
     }, 0);
-
 }
 
 function InitialPopulationGeneration() {

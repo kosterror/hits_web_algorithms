@@ -7,22 +7,20 @@ export const ctx = canvas.getContext('2d');
 
 export const SIZE_WIDTH = 1000,
     SIZE_HEIGHT = 600;
-export const LIMIT_NUMBER_VERTEX = 46;
-export const VERTEX_RADIUS = 20,
+
+export const LIMIT_NUMBER_VERTEX = 46,
+    VERTEX_RADIUS = 20,
     STROKE_WIDTH = 2,
-    STROKE_COLOR = 'black',
     DEFAULT_FILL_COLOR = 'rgb(131, 118, 46)',
-    EDGE_COLOR = 'blue',
+    EDGE_COLOR = 'rgb(212, 220, 233)',
     EDGE_WIDTH = 3;
 
-export const MUTATION_PERCENTAGE = 80,
+export const MUTATION_PERCENTAGE = 70,
     COUNT_GENERATIONS = 100000;
 
 export let vertexList = []; //массив вершин
 export let adjMatrix = []; //матрица смежности
 export let activeMode = { value: 0 }; //режим для взаимодействия с canvas
-
-let time = performance.now();;
 
 canvas.width = SIZE_WIDTH;
 canvas.height = SIZE_HEIGHT;
