@@ -6,7 +6,7 @@
 }
 
 body {
-    background-image: url(/main/images/star.jpeg);
+    background-image: url(../main/images/star.jpeg);
     background-repeat: no-repeat;
     background-size: cover;
 }
