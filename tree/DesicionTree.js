@@ -6,6 +6,7 @@ class Node {
         this.atribute = atribute;
         this.atributeNumber = atributeNumber;
         this.a;
+        this.wasPainted = false;
     }
 
     isLeaf() {
@@ -27,9 +28,13 @@ async function bypassTree() {
     let str = document.getElementById('input_data').value;
     array = parseCSVtoArray(str);
     let currentNode = root;
+    let counter = root.data[0].length;
     while(true) {
-        await gradient('rgb(255, 255, 255)', 'rgb(36, 122, 191)', currentNode);
-        await sleep(100);
+        if(!currentNode.wasAdded){
+            currentNode.wasAdded = true;
+            await gradient('rgb(255, 255, 255)', 'rgb(36, 122, 191)', currentNode);
+            await sleep(100);
+        }
         for(let j = 0; j<currentNode.branches.length; j++) {
             if((currentNode.branches[j].nodeName === array[currentNode.branches[j].atributeNumber])||
                (currentNode.branches[j].atributeNumber === root.data[0].length-1)) {
@@ -37,8 +42,14 @@ async function bypassTree() {
                 break;
             }
         } 
-        if(currentNode.atribute === root.data[0][root.data[0].length-1]) {
+        if((currentNode.atribute === root.data[0][root.data[0].length-1])&&(!currentNode.wasPainted)) {
+            currentNode.wasPainted = true;
             await gradient('rgb(255, 255, 255)', 'rgb(36, 122, 191)', currentNode);
+            break;
+        }
+        counter--;
+        if(counter<0) {
+            alert("Я не могу распознать ваш тест.")
             break;
         }
     }
