@@ -4,6 +4,13 @@
     text-align: center;
     outline: none;
 }
+
+body {
+    background-image: url(/main/images/star.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 header {
     height: 100px;
     background-color: #247ABF;
