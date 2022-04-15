@@ -48,9 +48,9 @@ async function gradient(start_RGB, finish_RGB, node) {
     let rgb = getRGB(start_RGB);
     start_RGB = getRGB(start_RGB);
     finish_RGB = getRGB(finish_RGB);
-    for(let i = 0; i<255; i++) {
+    for(let i = 0; i<150; i++) {
         for(let j = 0; j<3; j++) {
-            rgb[j] -= (start_RGB[j] - finish_RGB[j])/255;
+            rgb[j] -= (start_RGB[j] - finish_RGB[j])/150;
         }
         node.a.style.backgroundColor = 'rgb('+ rgb[0] +','+ rgb[1] +','+ rgb[2] +')';
         await sleep(1);

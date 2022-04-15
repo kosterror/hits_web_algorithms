@@ -60,7 +60,7 @@ a, a:visited, a:hover {
     margin-right: auto;
 }
 
-input {
+input{
     appearance: none;
     border: 0;
     border-radius: 10px;
@@ -68,7 +68,12 @@ input {
     color: #fff;
     font-size: 16px;
     margin: 20px auto 20px auto;
+    
+    
     text-align: center;
+    display: none;
+    width: 300px;
+    height: 50px;
 }
 
 .tree {
@@ -119,6 +124,25 @@ input {
     width: 300px;
     height: 50px;
 }
+
+.label {
+    appearance: none;
+    border: 0;
+    border-radius: 10px;
+    background: #247ABF;
+    color: #fff;
+    font-size: 16px;
+    padding: 15px;
+    margin: 20px auto 20px auto;
+    text-align: center;
+    display: block;
+    width: 270px;
+    height: 20px;
+}
+
+
+
+
 
 
 

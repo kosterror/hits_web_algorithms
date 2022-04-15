@@ -68,5 +68,5 @@ function getData(number) {
         ["GIAM",    "ON DINH",  "CAO",      "TB",       "CAO "  ]
     ];
 
-    return data[number];
+    return data[number]
 }

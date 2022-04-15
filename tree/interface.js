@@ -1,12 +1,27 @@
 start_button.addEventListener('click', start);
 reset_button.addEventListener('click', reset);
-
+getFile_button.addEventListener('click', getFile);
+const FILE = document.getElementById('file_input');
+let flag = true;
+function getFile() {
+    if(FILE.value === '') {
+        buildTree(getData(3));
+    }
+    else {
+        buildTree(parseCSVToMatrix(FILE.value));
+    }
+    drawTree(root, treeRoot);
+    flag = true;
+} 
 function start() {
-    bypassTree();
+    if(flag) {
+        bypassTree();
+        flag = false;
+    }
 }
 function reset() {
     treeRoot = removeTree(treeRoot);
-    drawTree(root, treeRoot);
+    //drawTree(root, treeRoot);
 }
 
 document.getElementById('input_data').value = "TANG,ON DINH,CAO,TB"
