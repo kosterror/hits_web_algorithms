@@ -1,16 +1,29 @@
 start_button.addEventListener('click', start);
 reset_button.addEventListener('click', reset);
-getFile_button.addEventListener('click', getFile);
+getFile_button.addEventListener('click', createTree);
 const FILE = document.getElementById('file_input');
 let flag = true;
-function getFile() {
+document.getElementById('input_data').value = "TANG,ON DINH,CAO,TB"
+buildTree(getData(3));
+var treeRoot = document.getElementById("root");
+
+function createTree() {
+    treeRoot = removeTree();
     if(FILE.value === '') {
         buildTree(getData(3));
+        drawTree(root, treeRoot);
     }
     else {
-        buildTree(parseCSVToMatrix(FILE.value));
+        let data = FILE.files[0];
+        let reader = new FileReader();
+        reader.readAsText(data);
+        console.log(data);
+        reader.onload = function () {
+            data = parseCSVtoMatrix(reader.result);
+            buildTree(data);
+            drawTree(root, treeRoot);
+        }
     }
-    drawTree(root, treeRoot);
     flag = true;
 } 
 function start() {
@@ -24,9 +37,7 @@ function reset() {
     //drawTree(root, treeRoot);
 }
 
-document.getElementById('input_data').value = "TANG,ON DINH,CAO,TB"
-buildTree(getData(3));
-var treeRoot = document.getElementById("root");
+
 
 function drawTree(currentNode, treeElement) {
     let li = document.createElement("li");
@@ -54,7 +65,7 @@ function drawTree(currentNode, treeElement) {
     }
 }
 
-function removeTree(rootElement) {
+function removeTree() {
     let divTree = document.getElementById("tree");
     treeRoot.remove();
     let ul = document.createElement("ul");

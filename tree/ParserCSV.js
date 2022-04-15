@@ -1,12 +1,12 @@
 function parseCSVtoMatrix(strCSV) {
-    var buff = parseCSV(strCSV);
+    var buff = parseCSVtoArray(strCSV);
     return transformArrayToMatrix(buff);
 }
 
 function parseCSVtoArray(strCSV) {
     try {
         let data = []
-        let regex = /("([^"]|"")*"|([^",\n]*))?(,|\n)?/
+        let regex = /("([^"]|"")*"|([^",\r\n]*))?(,|\r\n)?/
         let size = 0;
         let check = false;
         while (regex.test) {
@@ -22,7 +22,7 @@ function parseCSVtoArray(strCSV) {
                 }
             }
             data[data.length] = current
-            if ((!check) && (buff[4] === '\n')) {
+            if ((!check) && (buff[4] === '\r\n')) {
                 check = true;
                 size++;
             }
