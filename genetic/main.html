@@ -45,18 +45,19 @@
             <div id="right_logo"><img class="logo" src="../main/images/logo_hits.png"></div>
         </div>
     </header>
-
-    <div class="wrapper" id="wrapper">
-        <div class="toolbar">
-            <input type="button" class="button" id="add_vertex" value="Добавить вершину">
-            <input type="button" class="button" id="draw_edjes" value="Нарисовать ребра">
-            <input type="button" class="button" id="remove_vertex" value="Удалить вершину">
-            <input type="button" class="button" id="clear" value="Стереть всё">
-            <br>
-            <input type="button" class="button" id="start_algo" value="Запуск алгоритма">
+    <div class="content">
+        <div class="wrapper" id="wrapper">
+            <div class="toolbar">
+                <input type="button" class="button" id="add_vertex" value="Добавить вершину">
+                <input type="button" class="button" id="draw_edjes" value="Нарисовать ребра">
+                <input type="button" class="button" id="remove_vertex" value="Удалить вершину">
+                <input type="button" class="button" id="clear" value="Стереть всё">
+                <br>
+                <input type="button" class="button" id="start_algo" value="Запуск алгоритма">
+            </div>
+            <canvas id="canvas"></canvas>
+            <script type='module' src="./main.js"></script>
         </div>
-        <canvas id="canvas"></canvas>
-        <script type='module' src="./main.js"></script>
     </div>
 </body>
 

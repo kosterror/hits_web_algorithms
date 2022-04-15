@@ -10,6 +10,10 @@ body {
     background-size: cover;
 }
 
+.content {
+    margin-top: 5px;
+}
+
 header {
     height: 100px;
     background-color: #247ABF;
@@ -60,13 +64,13 @@ header>.flex-wrapper>.reference>.active>a {
 #canvas {
     background-color: rgb(212, 220, 233);
     display: block;
-    margin-top: 20px;
+    /* margin-top: 20px; */
     margin-left: auto;
     margin-right: auto;
 }
 
 .wrapper {
-    margin-top: 1%;
+    /* margin-top: 1%; */
     display: grid;
     grid-template-columns: 2fr 5fr;
 }

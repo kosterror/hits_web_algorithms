@@ -45,27 +45,28 @@
             <div id="right_logo"><img class="logo" src="../main/images/logo_hits.png"></div>
         </div>
     </header>
+    <div class="content">
+        <div class="wrapper" id="wrapper">
+            <div class="toolbar">
+                <input type="button" class="button" id="add_point" value="Добавить точки">
+                <input type="button" class="button" id="remove_point" value="Удалить точки">
+                <input type="button" class="button" id="show_old_points" value="Сделать точки чёрными">
+                <input type="button" class="button" id="clear" value="Сбросить всё">
+                <br><br>
 
-    <div class="wrapper" id="wrapper">
-        <div class="toolbar">
-            <input type="button" class="button" id="add_point" value="Добавить точки">
-            <input type="button" class="button" id="remove_point" value="Удалить точки">
-            <input type="button" class="button" id="show_old_points" value="Сделать точки чёрными">
-            <input type="button" class="button" id="clear" value="Сбросить всё">
-            <br><br>
+                <input type="number" class="button2" id="getClusters" min="1" max="27" step="1" value="3">
+                <input type="button" class="button3" id="kMeans" value="Запуск алгоритма k-means">
 
-            <input type="number" class="button2" id="getClusters" min="1" max="27" step="1" value="3">
-            <input type="button" class="button3" id="kMeans" value="Запуск алгоритма k-means">
+                <input type="button" class="button" id="DBSCAN" value="Запуск алгоритма DBSCAN">
 
-            <input type="button" class="button" id="DBSCAN" value="Запуск алгоритма DBSCAN">
+                <input type="button" class="button" id="Graph" value="Запуск графического алгоритма">
+            </div>
 
-            <input type="button" class="button" id="Graph" value="Запуск графического алгоритма">
+            <canvas id="canvas"></canvas>
         </div>
-
-        <canvas id="canvas"></canvas>
     </div>
     <script type='module' src="./main.js "></script>
-    </div>
+
 </body>
 
 </html>
