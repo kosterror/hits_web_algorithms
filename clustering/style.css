@@ -4,8 +4,12 @@
     text-align: center;
 }
 
+*:focus {
+    outline: none;
+}
+
 body {
-    background-image: url(../main/images/cluster.png);
+    background-image: url(../main/images/cluster.jpeg);
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -36,7 +40,7 @@ a:hover {
 }
 
 header>.flex-wrapper>.reference>.active>a {
-    color: rgb(165, 163, 163);
+    color: black;
 }
 
 .grid-wrapper {
@@ -63,7 +67,6 @@ header>.flex-wrapper>.reference>.active>a {
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
-    /* border: 5px solid black; */
 }
 
 .wrapper {
@@ -120,9 +123,4 @@ header>.flex-wrapper>.reference>.active>a {
     text-align: center;
     width: 240px;
     height: 50px;
-}
-
-input:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px #cbd6ee;
 }

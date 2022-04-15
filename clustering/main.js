@@ -8,7 +8,6 @@ export {
     SIZE_HEIGHT,
     SIZE_WIDTH,
     POINT_RADIUS,
-    LIMIT_COUNT_KLUSTERS,
     RADIUS_CHANGE,
     COUNT_NEIGHBOURS_POINTS,
     count_clusters,
@@ -21,8 +20,6 @@ const ctx = canvas.getContext('2d');
 const SIZE_WIDTH = 1000,
     SIZE_HEIGHT = 600,
     POINT_RADIUS = 10;
-
-const LIMIT_COUNT_KLUSTERS = 10;
 
 const RADIUS_CHANGE = 40,
     COUNT_NEIGHBOURS_POINTS = 2;

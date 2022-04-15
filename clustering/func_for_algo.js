@@ -1,5 +1,5 @@
 import { count_clusters } from "./kMeans.js";
-import { LIMIT_COUNT_KLUSTERS } from "./main.js";
+import { colors } from "./Objects.js";
 import { data_points } from "./main.js";
 
 import { Point } from "./Objects.js";
@@ -11,8 +11,8 @@ export {
 }
 
 function checkingOnError(count_clusters) {
-    if ((count_clusters > LIMIT_COUNT_KLUSTERS) || (count_clusters === 0) || (count_clusters == NaN)) {
-        alert("Превышен лимит кластеров (максимум 10)");
+    if ((count_clusters > colors.length) || (count_clusters === 0) || (count_clusters == NaN)) {
+        alert("Превышен лимит кластеров");
         return true;
     } else if (data_points.length < count_clusters) {
         alert("Вы ввели кол-во групп больше, чем точек. Добавьте точки или измените кол-во кластеров");
