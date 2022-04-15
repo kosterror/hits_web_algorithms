@@ -31,11 +31,10 @@ function startAlgorithm() {
         alert("Сначала нарисуйте вершины на плоскости");
         return;
     }
-    disableButtons();
-
     POPULATION_SIZE = Math.pow(vertexList.length, 2);
     population = []; //при добавлении новых вершин обнуляем популяцию
 
+    disableButtons();
     InitialPopulationGeneration();
 
     let count = 0, //счетчик поколений
@@ -46,6 +45,7 @@ function startAlgorithm() {
             deleteEdge();
             drawEdgeAnswer('#247ABF');
 
+            enableButtons();
             clearInterval(id);
         }
 
@@ -65,8 +65,6 @@ function startAlgorithm() {
         counter_stop++;
 
     }, 0);
-
-    enableButtons();
 
 }
 

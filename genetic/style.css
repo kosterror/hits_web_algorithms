@@ -4,6 +4,12 @@
     text-align: center;
 }
 
+body {
+    background-image: url(/main/images/genetic.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 header {
     height: 100px;
     background-color: #247ABF;
@@ -57,12 +63,12 @@ header>.flex-wrapper>.reference>.active>a {
 }
 
 #canvas {
-    background-color: white;
+    background-color: rgba(212, 220, 233, 0.767);
     display: block;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
-    border: 5px solid black;
+    /* border: 5px solid black; */
 }
 
 .wrapper {
