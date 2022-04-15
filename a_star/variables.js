@@ -1,6 +1,7 @@
 export let activeMode = [0, 0, 0, 0, 0];
 export let currentSpeed = [0, 0, 0, 0, 0];
 export let delay = { value: 250 };
+export let isDrawing = {value: false};
 
 export let idButtons = ['change_size', 'generate_maze', 'generate_empty_maze', 'add_wall', 'delete_wall', 'change_start', 'change_finish', 'launch', 'speed_1', 'speed_2', 'speed_3', 'speed_4', 'speed_5', 'break'];
 export let idIntrectionButtons = ['add_wall', 'delete_wall', 'change_start', 'change_finish', 'launch'];
