@@ -52,7 +52,7 @@ function buttonsRenderEvent(e) {
         } else if (e.target.id === 'remove_point' && activeMode.value != 2) {
             document.getElementById('remove_point').style.backgroundColor = COLOR_UNACTIVE;
 
-        } else if (e.target.id === 'show_old_points' && activeMode.value != 2) {
+        } else if (e.target.id === 'show_old_points' && activeMode.value != 3) {
             document.getElementById('show_old_points').style.backgroundColor = COLOR_UNACTIVE;
 
         } else if (e.target.id === 'clear') {

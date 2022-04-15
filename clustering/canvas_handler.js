@@ -38,9 +38,8 @@ function removePoint(x, y) {
         ctx.beginPath();
         ctx.arc(data_points[index].x, data_points[index].y, POINT_RADIUS + 1, 0, Math.PI * 2);
         ctx.closePath();
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = 'rgb(211, 210, 210)';
         ctx.fill();
-
         data_points.splice(index, 1);
     }
 }
@@ -70,7 +69,7 @@ function getIndexPoint(x, y) {
     let index = getNearestPointIndex(x, y);
 
     if (index != -1) {
-        if (Math.pow(calculateDistance(data_points[index].x, data_points[index].y, x, y), 2) < POINT_RADIUS) {
+        if (calculateDistance(data_points[index].x, data_points[index].y, x, y) < POINT_RADIUS) {
             return index; //попали по вершине
         } else {
             return -1; //не попали по вершине

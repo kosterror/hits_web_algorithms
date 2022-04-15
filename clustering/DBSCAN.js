@@ -74,6 +74,10 @@ function DBSCAN(points) {
             }
         }
     }
+
+    if (!checkingOnChange(points)) {
+        alert('Не удалось распределить точки в кластеры');
+    }
 }
 
 function findNeighbours(point, current_cluster, points) {
@@ -102,4 +106,14 @@ function drawNeighbours(N, color) {
     for (let i = 0; i < N.length; i++) {
         N[i].redraw(color);
     }
+}
+
+function checkingOnChange(points) {
+    for (let i = 0; i < points.length; i++) {
+        if (points[i].cluster !== -1) {
+            return true;
+        }
+    }
+
+    return false;
 }

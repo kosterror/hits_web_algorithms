@@ -81,38 +81,76 @@ function getSpanTree(points) {
     return spanning_tree;
 }
 
+// function ZEMST(points, span_tree) { // The Zahn’s maximum spanning tree
+//     for (let i = 0; i < points.length; i++) {
+//         for (let j = 0; j < points.length; j++) {
+//             if (span_tree[i][j] != undefined) {
+//                 let sub_tree1 = findSubTree(i, j, points, span_tree);
+//                 let sub_tree2 = findSubTree(j, i, points, span_tree);
+
+//                 let aver_weight_sub_tree1 = calculateAverageWeightEdge(sub_tree1, span_tree);
+//                 let aver_weight_sub_tree2 = calculateAverageWeightEdge(sub_tree2, span_tree);
+
+//                 let dev_weight_sub_tree1 = calculateStandartDeviationWeight(aver_weight_sub_tree1, sub_tree1, span_tree);
+//                 let dev_weight_sub_tree2 = calculateStandartDeviationWeight(aver_weight_sub_tree2, sub_tree2, span_tree);
+
+//                 if (span_tree[i][j] > aver_weight_sub_tree1 - dev_weight_sub_tree1) {
+//                     span_tree[i][j] = 0;
+//                     span_tree[i][j] = 0;
+//                     definitionCluster(sub_tree2, points);
+
+//                 } else if (adjMatrix[i][j] > aver_weight_sub_tree2 - dev_weight_sub_tree2) {
+//                     span_tree[i][j] = 0;
+//                     span_tree[i][j] = 0;
+//                     definitionCluster(sub_tree2, points);
+
+//                 } else if (adjMatrix[i][j] > ((calculateSumWeightEdges(sub_tree1, span_tree) + calculateSumWeightEdges(sub_tree2, span_tree)) / (sub_tree1.length + sub_tree2.length))) {
+//                     span_tree[i][j] = 0;
+//                     span_tree[i][j] = 0;
+//                     definitionCluster(sub_tree2, points);
+//                 }
+//             }
+//         }
+//     }
+// }
+
 function ZEMST(points, span_tree) { // The Zahn’s maximum spanning tree
+    let x1, x2, max_weight_edge;
+
     for (let i = 0; i < points.length; i++) {
         for (let j = 0; j < points.length; j++) {
-            if (span_tree[i][j] != undefined) {
-                let sub_tree1 = findSubTree(i, j, points, span_tree);
-                let sub_tree2 = findSubTree(j, i, points, span_tree);
 
-                let aver_weight_sub_tree1 = calculateAverageWeightEdge(sub_tree2, span_tree);
-                let aver_weight_sub_tree2 = calculateAverageWeightEdge(sub_tree1, span_tree);
+        }
+    }
 
-                let dev_weight_sub_tree1 = calculateStandartDeviationWeight(aver_weight_sub_tree1, sub_tree2, span_tree);
-                let dev_weight_sub_tree2 = calculateStandartDeviationWeight(aver_weight_sub_tree2, sub_tree1, span_tree);
+    if (span_tree[i][j] != undefined) {
+        let sub_tree1 = findSubTree(i, j, points, span_tree);
+        let sub_tree2 = findSubTree(j, i, points, span_tree);
 
-                if (span_tree[i][j] > aver_weight_sub_tree1 - dev_weight_sub_tree1) {
-                    span_tree[i][j] = 0;
-                    span_tree[i][j] = 0;
-                    definitionCluster(sub_tree2, points);
+        let aver_weight_sub_tree1 = calculateAverageWeightEdge(sub_tree1, span_tree);
+        let aver_weight_sub_tree2 = calculateAverageWeightEdge(sub_tree2, span_tree);
 
-                } else if (adjMatrix[i][j] > aver_weight_sub_tree2 - dev_weight_sub_tree2) {
-                    span_tree[i][j] = 0;
-                    span_tree[i][j] = 0;
-                    definitionCluster(sub_tree2, points);
+        let dev_weight_sub_tree1 = calculateStandartDeviationWeight(aver_weight_sub_tree1, sub_tree1, span_tree);
+        let dev_weight_sub_tree2 = calculateStandartDeviationWeight(aver_weight_sub_tree2, sub_tree2, span_tree);
 
-                } else if (adjMatrix[i][j] > ((calculateSumWeightEdges(sub_tree1, span_tree) + calculateSumWeightEdges(sub_tree2, span_tree)) / (sub_tree1.length + sub_tree2.length))) {
-                    span_tree[i][j] = 0;
-                    span_tree[i][j] = 0;
-                    definitionCluster(sub_tree2, points);
-                }
-            }
+        if (span_tree[i][j] > aver_weight_sub_tree1 - dev_weight_sub_tree1) {
+            span_tree[i][j] = 0;
+            span_tree[i][j] = 0;
+            definitionCluster(sub_tree2, points);
+
+        } else if (adjMatrix[i][j] > aver_weight_sub_tree2 - dev_weight_sub_tree2) {
+            span_tree[i][j] = 0;
+            span_tree[i][j] = 0;
+            definitionCluster(sub_tree2, points);
+
+        } else if (adjMatrix[i][j] > ((calculateSumWeightEdges(sub_tree1, span_tree) + calculateSumWeightEdges(sub_tree2, span_tree)) / (sub_tree1.length + sub_tree2.length))) {
+            span_tree[i][j] = 0;
+            span_tree[i][j] = 0;
+            definitionCluster(sub_tree2, points);
         }
     }
 }
+
 
 function findSubTree(ind_p1, ind_p2, points, span_tree) {
     let sub_tree = [ind_p1];
