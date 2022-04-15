@@ -31,7 +31,7 @@ function startGraph() {
 function Graph(points) {
     let span_tree = getSpanTree(points);
 
-    ZEMST(points);
+    ZEMST(points, span_tree);
 }
 
 function getSpanTree(points) {
@@ -49,7 +49,7 @@ function getSpanTree(points) {
 
     set_visit[0] = true;
 
-    while (edge_count < points.length) {
+    while (edge_count < points.length - 1) {
         let mini = Infinity,
             ind_cur_ver1 = -1,
             ind_cur_ver2 = -1;
@@ -71,51 +71,66 @@ function getSpanTree(points) {
         if (ind_cur_ver1 !== -1 && ind_cur_ver2 !== -1) {
             spanning_tree[ind_cur_ver1][ind_cur_ver2] = mini;
             spanning_tree[ind_cur_ver2][ind_cur_ver1] = mini;
+            points[ind_cur_ver1]
 
             edge_count++;
-            set_visit[cur_ver2] = true;
+            set_visit[ind_cur_ver2] = true;
         }
     }
 
     return spanning_tree;
 }
 
-function ZEMST(points) { // The Zahn’s maximum spanning tree
+function ZEMST(points, span_tree) { // The Zahn’s maximum spanning tree
     for (let i = 0; i < points.length; i++) {
         for (let j = 0; j < points.length; j++) {
-            let sub_tree1 = findSubTree(i, j, points);
-            let sub_tree2 = findSubTree(j, i, points);
+            if (span_tree[i][j] != undefined) {
+                let sub_tree1 = findSubTree(i, j, points, span_tree);
+                let sub_tree2 = findSubTree(j, i, points, span_tree);
 
-            let aver_weight_sub_tree1 = calculateAverageWeightEdge(sub_tree2);
-            let aver_weight_sub_tree2 = calculateAverageWeightEdge(sub_tree1);
+                let aver_weight_sub_tree1 = calculateAverageWeightEdge(sub_tree2, span_tree);
+                let aver_weight_sub_tree2 = calculateAverageWeightEdge(sub_tree1, span_tree);
 
-            let dev_weight_sub_tree1 = calculateStandartDeviationWeight(sub_tree2);
-            let dev_weight_sub_tree2 = calculateStandartDeviationWeight(sub_tree1);
+                let dev_weight_sub_tree1 = calculateStandartDeviationWeight(aver_weight_sub_tree1, sub_tree2, span_tree);
+                let dev_weight_sub_tree2 = calculateStandartDeviationWeight(aver_weight_sub_tree2, sub_tree1, span_tree);
 
-            if (adjMatrix[i][j] > aver_weight_sub_tree1 - dev_weight_sub_tree1) {
-                adjMatrix[i][j] = 0;
-                adjMatrix[j][i] = 0;
+                if (span_tree[i][j] > aver_weight_sub_tree1 - dev_weight_sub_tree1) {
+                    span_tree[i][j] = 0;
+                    span_tree[i][j] = 0;
+                    definitionCluster(sub_tree2, points);
 
-            } else if (adjMatrix[i][j] > aver_weight_sub_tree2 - dev_weight_sub_tree2) {
-                adjMatrix[i][j] = 0;
-                adjMatrix[j][i] = 0;
+                } else if (adjMatrix[i][j] > aver_weight_sub_tree2 - dev_weight_sub_tree2) {
+                    span_tree[i][j] = 0;
+                    span_tree[i][j] = 0;
+                    definitionCluster(sub_tree2, points);
 
+                } else if (adjMatrix[i][j] > ((calculateSumWeightEdges(sub_tree1, span_tree) + calculateSumWeightEdges(sub_tree2, span_tree)) / (sub_tree1.length + sub_tree2.length))) {
+                    span_tree[i][j] = 0;
+                    span_tree[i][j] = 0;
+                    definitionCluster(sub_tree2, points);
+                }
             }
         }
     }
 }
 
-function findSubTree(ind_p1, ind_p2, points) {
-    let sub_tree = [points[ind_p1]];
+function findSubTree(ind_p1, ind_p2, points, span_tree) {
+    let sub_tree = [ind_p1];
     let ind_cur_p = ind_p1;
     let flag = true;
+    let used_points = [];
+    for (let i = 0; i < points.length; i++) {
+        used_points.push(false);
+    }
 
     while (flag) {
         flag = false;
 
         for (let i = 0; i < points.length; i++) {
-            if (adjMatrix[ind_cur_p][i] !== 0 && i !== ind_p2) {
-                sub_tree.push(points[i]);
+            if (span_tree[ind_cur_p][i] !== undefined && used_points[i] === false && i !== ind_p2) {
+                sub_tree.push(i);
+                used_points[ind_cur_p] = true;
+
                 flag = true;
                 ind_cur_p = i;
                 break;
@@ -126,26 +141,39 @@ function findSubTree(ind_p1, ind_p2, points) {
     return sub_tree;
 }
 
-function calculateAverageWeightEdge(sub_tree) {
-    let sum_edges = 0;
-    for (let i = 0; i < sub_tree.length - 1; i++) {
-        sum_edges += adjMatrix[i][i + 1];
-    }
+function calculateAverageWeightEdge(sub_tree, span_tree) {
+    let sum_weight_edges = calculateSumWeightEdges(sub_tree.slice(), span_tree);
 
-    return sum_edges / sub_tree.length - 1;
+    return (sum_weight_edges / (sub_tree.length - 1));
 }
 
-function calculateAverageWeightEdgeOnTree() {
-
-}
-
-function calculateStandartDeviationWeight(aver_weight_sub_tree1, sub_tree2) {
+function calculateStandartDeviationWeight(aver_weight_sub_tree1, sub_tree2, span_tree) {
     let sum = 0;
     for (let i = 0; i < sub_tree2.length - 1; i++) {
-        sum += Math.pow(adjMatrix[i][i + 1] - aver_weight_sub_tree1, 2);
+        sum += Math.pow(span_tree[sub_tree2[i]][sub_tree2[i + 1]] - aver_weight_sub_tree1, 2);
     }
 
-    return Math.sqrt(sum / sub_tree2.length - 1);
+    return (Math.sqrt(sum / (sub_tree2.length - 1)));
+}
+
+function calculateSumWeightEdges(tree, span_tree) {
+    let sum = 0;
+    for (let i = 0; i < tree.length - 1; i++) {
+        if (span_tree[tree[i]][tree[i + 1]] != 'empty') {
+            sum += span_tree[tree[i]][tree[i + 1]];
+        }
+    }
+
+    return sum;
+}
+
+function definitionCluster(sub_tree2, points) {
+    let count_clusters = points[sub_tree2[0]].cluster;
+    for (let i = 0; i < sub_tree2.length; i++) {
+        points[sub_tree2[i]].cluster = count_clusters + 1;
+    }
+
+    drawPoints(points, sub_tree2);
 }
 
 function checkOnValidEdge(set_visit, ind_p1, ind_p2) {
@@ -169,5 +197,11 @@ function createAdjMatrix(points) {
             adjMatrix[i][j] = dist;
             adjMatrix[j][i] = dist;
         }
+    }
+}
+
+function drawPoints(points, tree) {
+    for (let i = 0; i < tree.length; i++) {
+        points[tree[i]].draw();
     }
 }

@@ -4,6 +4,12 @@
     text-align: center;
 }
 
+body {
+    background-image: url(/main/images/back.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 header {
     height: 100px;
     background-color: #247ABF;
@@ -30,7 +36,7 @@ a:hover {
 }
 
 header>.flex-wrapper>.reference>.active>a {
-    color: black;
+    color: rgb(165, 163, 163);
 }
 
 .grid-wrapper {
@@ -52,12 +58,12 @@ header>.flex-wrapper>.reference>.active>a {
 }
 
 #canvas {
-    background-color: white;
+    background-color: rgba(211, 210, 210, 0.76);
     display: block;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
-    border: 5px solid black;
+    /* border: 5px solid black; */
 }
 
 .wrapper {
