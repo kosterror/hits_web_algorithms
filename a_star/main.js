@@ -5,13 +5,20 @@ import {
 } from './handler_buttons.js';
 
 import { buttonsRenderMouseMove } from './render_buttons.js';
-import { idButtons } from './variables.js';
+import {
+    idButtons,
+    isDrawing
+} from './variables.js';
 import { tableHandler } from './handler_table.js';
 
 speedButtonsHandler(3);
 generateMazeButtonsHandler(-1);
 
 document.getElementById('table_container').addEventListener('click', (e) => { tableHandler(e) });
+document.getElementById('table_container').addEventListener('mousemove', (e) => { tableHandler(e) });
+document.getElementById('table_container').addEventListener('mousedown', () => { isDrawing.value = true });
+document.getElementById('table_container').addEventListener('mouseup', () => { isDrawing.value = false });
+document.getElementById('table_container').addEventListener('mouseleave', () => { isDrawing.value = false });
 
 document.getElementById('change_size').addEventListener('click', () => { generateMazeButtonsHandler(-1) });
 document.getElementById('generate_maze').addEventListener('click', () => { generateMazeButtonsHandler(-1) });

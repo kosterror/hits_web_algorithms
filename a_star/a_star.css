@@ -11,6 +11,18 @@ body {
     background-size: cover;
 }
 
+#table_container {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+}
+
+/* * {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+} */
+
 header {
     height: 100px;
     background-color: #247ABF;
@@ -22,7 +34,7 @@ header {
     justify-content: space-between;
 }
 
-header > div p {
+header>div p {
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -42,12 +54,14 @@ header > div p {
     margin-right: 28px;
 }
 
-a, a:visited, a:hover {
+a,
+a:visited,
+a:hover {
     text-decoration: none;
     color: #fff;
 }
 
-header > .flex-wrapper > .reference > .active > a {
+header>.flex-wrapper>.reference>.active>a {
     color: black;
 }
 
@@ -113,7 +127,7 @@ input {
     margin: 0;
 }
 
-#table_container{
+#table_container {
     display: block;
     width: 600px;
     height: 600px;
