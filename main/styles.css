@@ -1,8 +1,113 @@
+/* * {
+    margin: 0;
+    font-family: 'Montserrat';
+    text-align: center;
+}
+
+header {
+    height: 100px;
+    background-color: #247ABF;
+}
+
+.flex-wrapper {
+    display: flex;
+}
+
+.flex-wrapper>.reference {
+    height: 40px;
+    margin-top: auto;
+    margin-bottom: auto;
+    flex-grow: 1;
+}
+
+header>div p {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+}
+
+.active {
+    background-color: #155080;
+}
+
+.grid-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.logo {
+    width: 78px;
+    margin-top: 4px;
+}
+
+#left_logo {
+    margin-left: 28px;
+}
+
+#right_logo {
+    margin-right: 28px;
+}
+
+.content>.grid-wrapper>.first-column>.photo-wrapper {
+    margin-top: 25%;
+    font-size: 30px;
+}
+
+.content>.grid-wrapper>.second-column>.photo-wrapper {
+    margin-top: 9%;
+    font-size: 30px;
+}
+
+.content>.grid-wrapper>.third-column>.photo-wrapper {
+    margin-top: 5%;
+    font-size: 30px;
+}
+
+.content>.grid-wrapper>.third-column>.photo-wrapper {
+    margin-top: 5%;
+    font-size: 30px;
+}
+
+.content>.grid-wrapper>.third-column>.photo-wrapper>p {
+    margin-top: -60px;
+}
+
+.title {
+    margin-top: 7%;
+    font-size: 45px;
+}
+
+.photo {
+    width: 80%;
+}
+
+#coronavirus {
+    width: 8%;
+    position: absolute;
+    right: 20%;
+    bottom: 20px;
+}
+
+a,
+a:visited,
+a:hover {
+    text-decoration: none;
+    color: #fff;
+} */
+
 * {
     margin: 0;
     font-family: 'Montserrat';
     text-align: center;
 }
+
+
+/* body {
+    background-image: url(/main/images/paper.jpeg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+} */
 
 *:focus {
     outline: none;
@@ -57,16 +162,31 @@ a:hover {
     height: min-content;
 }
 
+.container>h1 {
+    color: #247ABF;
+    font-size: 400%;
+    line-height: 300%;
+}
+
 .text {
-    width: 900px;
+    width: 90%;
     padding: 0 50px 50px 50px;
     font-weight: lighter;
+    line-height: 250%;
 }
 
 .text>p {
     text-align: justify;
+    text-indent: 6%;
 }
 
 .text>h2 {
     text-align: left;
+}
+
+.text>h3 {
+    text-align: left;
+    font-style: italic;
+    font-weight: lighter;
+    text-decoration: underline;
 }
