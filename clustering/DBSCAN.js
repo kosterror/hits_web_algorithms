@@ -65,7 +65,6 @@ function DBSCAN(points) {
                         for (let i = 0; i < neighbours.length; i++) {
                             queue.push(neighbours[i]);
                         }
-                        drawNeighbours(neighbours, 'pink');
                     }
                 }
 
@@ -100,12 +99,6 @@ function findNeighbours(point, current_cluster, points) {
     }
 
     return [];
-}
-
-function drawNeighbours(N, color) {
-    for (let i = 0; i < N.length; i++) {
-        N[i].redraw(color);
-    }
 }
 
 function checkingOnChange(points) {
