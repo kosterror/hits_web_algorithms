@@ -52,11 +52,10 @@ header > .flex-wrapper > .reference > .active > a {
 }
 
 #canvas {
-    background-color: #ffffff;
+    background-color: #f1f1f1;
     display: block;
     margin: 0 auto 0 auto;
     padding: 0;
-    border: 5px solid black;
 }
 
 .wrapper {

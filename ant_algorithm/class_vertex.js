@@ -42,7 +42,7 @@ export default class Vertex {
     }
 
     remove() {
-        this.context.fillStyle = 'white';
+        this.context.fillStyle = '#f1f1f1';
 
         this.context.beginPath();
         this.context.arc(this.x, this.y, this.radius + this.radius * 0.1, 0, 2 * Math.PI);   //стирает на 0.1 радиуса больше, чем надо
