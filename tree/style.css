@@ -8,15 +8,15 @@
     outline:none;
 }
 
+header {
+    height: 100px;
+    background-color: #247ABF;
+}
+
 body {
     background-image: url(../main/images/background_tree.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-}
-
-header {
-    height: 100px;
-    background-color: #247ABF;
 }
 
 .flex-wrapper {
