@@ -1,6 +1,5 @@
 import { startkMeans } from "./kMeans.js";
 import { startDBSCAN } from "./DBSCAN.js";
-import { startGraph } from "../scripts/graph2.js";
 import { showOldPoints } from "./canvas_handler.js";
 import { activeMode } from "./main.js";
 
