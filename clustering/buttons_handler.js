@@ -31,6 +31,7 @@ function buttonsHandler(activeNumber, e) {
     } else if (activeMode.value === 5) {
         buttonsRender();
         showOldPoints();
+        activeMode.value = 0;
         buttonsRender();
     }
 
