@@ -11,7 +11,6 @@ import {
 } from "./func_for_algo.js"
 
 import {
-    buttonsRender,
     disableButtons,
     enableButtons
 } from "./buttons_handler.js";
