@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Khula:700);
+
 * {
     margin: 0;
     font-family: 'Montserrat';
@@ -57,7 +59,7 @@ a:hover {
 }
 
 .container {
-    width: 1000px;
+    width: 1200px;
     background-color: rgba(206, 204, 204, 0.521);
     margin: 0 auto 0 auto;
     height: min-content;
@@ -74,6 +76,7 @@ a:hover {
     padding: 0 50px 50px 50px;
     font-weight: lighter;
     line-height: 250%;
+    font-size: 24px;;
 }
 
 .text>p {
@@ -91,3 +94,26 @@ a:hover {
     font-weight: lighter;
     text-decoration: underline;
 }
+
+
+.console-container {
+    font-size: 40px;
+    text-align: center;
+    height: 50px;
+    width: 700px;
+    display: block;
+    color: rgb(0, 0, 0);
+    margin: auto;
+    padding: 25px;
+}
+
+.console-underscore {
+    display: inline-block;
+    position: relative;
+    top: -0.14em;
+    left: 10px;
+}
+
+.hidden {
+    opacity:0;
+  }
