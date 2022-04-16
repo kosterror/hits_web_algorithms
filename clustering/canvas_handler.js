@@ -4,8 +4,10 @@ import {
     SIZE_HEIGHT,
     SIZE_WIDTH
 } from "./main.js";
-import { data_points } from "./main.js"
-import { activeMode } from "./main.js";
+import {
+    data_points,
+    activeMode
+} from "./main.js"
 
 import { Point } from "./Objects.js";
 
@@ -15,10 +17,15 @@ export {
     isCanAddPoint,
     calculateDistance,
     showOldPoints,
+    startDrawing,
+    stopDrawing,
     handler
 };
 
-function handler(x, y) {
+function handler(event) {
+    let x = event.offsetX;
+    let y = event.offsetY;
+
     if (activeMode.value === 1 && isCanAddPoint(x, y)) {
         addPoint(x, y);
     } else if (activeMode.value === 2) {
@@ -43,6 +50,16 @@ function removePoint(x, y) {
         data_points.splice(index, 1);
     }
 }
+
+//on and off drawing
+function startDrawing() {
+    document.getElementById('canvas').addEventListener('mousemove', handler);
+}
+
+function stopDrawing() {
+    document.getElementById('canvas').removeEventListener('mousemove', handler);
+}
+
 
 function showOldPoints() {
     ctx.clearRect(0, 0, SIZE_WIDTH, SIZE_HEIGHT);
@@ -101,5 +118,5 @@ function getNearestPointIndex(x, y) {
 }
 
 function calculateDistance(x1, y1, x2, y2) {
-    return Math.sqrt(Math.pow(Math.abs(x2 - x1), 2) + Math.pow(Math.abs(y2 - y1), 2));
+    return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 }
