@@ -2,15 +2,16 @@ import {
     RADIUS_CHANGE,
     COUNT_NEIGHBOURS_POINTS,
     data_points,
-    POINT_RADIUS
+    POINT_RADIUS,
+    activeMode
 } from "./main.js";
 
 import {
-    checkingOnError,
     deepCopy
 } from "./func_for_algo.js"
 
 import {
+    buttonsRender,
     disableButtons,
     enableButtons
 } from "./buttons_handler.js";
@@ -25,11 +26,10 @@ export { startDBSCAN }
 
 function startDBSCAN() {
     showOldPoints();
-    disableButtons();
-    debugger;
-    if (data_points.length > 0) {
-        DBSCAN(deepCopy(data_points));
 
+    if (data_points.length > 0) {
+        disableButtons();
+        DBSCAN(deepCopy(data_points));
         enableButtons();
     } else {
         alert("Сначала нарисуйте хотя бы одну точку на плоскости")

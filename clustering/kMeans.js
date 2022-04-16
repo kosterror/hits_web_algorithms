@@ -1,9 +1,12 @@
+import { activeMode, data_points } from "./main.js";
+
 import {
     calculateDistance,
     showOldPoints
 } from "./canvas_handler.js";
-import { data_points } from "./main.js";
+
 import {
+    buttonsRender,
     disableButtons,
     enableButtons
 } from "./buttons_handler.js";
@@ -14,7 +17,11 @@ import {
     getRandomInt
 } from "./func_for_algo.js";
 
+import { Point } from "./Objects.js";
+
 export { startkMeans };
+
+
 
 export let count_clusters;
 
@@ -26,7 +33,6 @@ function startkMeans() {
         disableButtons();
 
         kMeans(deepCopy(data_points));
-
         enableButtons();
     }
 }
@@ -36,13 +42,8 @@ function kMeans(points) {
     points = findFirstCentroids(points.slice(), centroids) //create array the first centroids
 
     let counter = 0;
-    while (counter < 50) {
-        let points_new = assignPointsToCluster(points.slice(), centroids.slice());
-
-        if (points == points_new) {
-            break;
-        }
-        points = points_new.slice();
+    while (counter < 100) {
+        assignPointsToCluster(points, centroids.slice());
 
         centroids = calculateNewPositionClusters(points.slice(), centroids.slice());
         counter++;
@@ -52,7 +53,7 @@ function kMeans(points) {
 function findFirstCentroids(points, centroids) {
     let ind = getRandomInt(0, points.length);
     points[ind].cluster = 1;
-    centroids[0] = points[ind];
+    centroids[0] = Copy(points[ind]);
     centroids[0].draw();
 
     for (let i = 0; i < count_clusters - 1; i++) {
@@ -70,7 +71,7 @@ function findFirstCentroids(points, centroids) {
 
             }
             points[ind_next_centr].cluster = i + 2;
-            centroids[i + 1] = points[ind_next_centr];
+            centroids[i + 1] = Copy(points[ind_next_centr]);
             centroids[i + 1].draw();
 
         } else {
@@ -89,7 +90,7 @@ function findFirstCentroids(points, centroids) {
             }
 
             points[ind_next_centr].cluster = i + 2;
-            centroids[i + 1] = points[ind_next_centr];
+            centroids[i + 1] = Copy(points[ind_next_centr]);
             centroids[i + 1].draw();
 
         }
@@ -110,13 +111,11 @@ function assignPointsToCluster(points, centroids) {
             }
         }
 
-        if (points[i].cluster !== num_clust && ChangeCluster(points[i], num_clust, points, centroids)) {
+        if (points[i].cluster !== num_clust) {
             points[i].cluster = num_clust;
             points[i].draw();
         }
     }
-
-    return points;
 }
 
 function calculateNewPositionClusters(points, centroids) {
@@ -145,23 +144,6 @@ function calculateNewPositionClusters(points, centroids) {
     return centroids_new;
 }
 
-function ChangeCluster(point, num_clust, points, centroids) { //проверка на то, стоит ли менять кластер у точки
-    let dist1 = calculateDistance(point, centroids[point.cluster - 1]);
-    for (let i = 0; i < points.length; i++) {
-        if (points[i].cluster == point.cluster && calculateDistance(point, points[i])) {
-
-        }
-    }
-
-    let dist2 = calculateDistance(point, centroids[num_clust - 1]);
-
-    if (dist1 < dist2) {
-        return false;
-    } else {
-        return true;
-    }
-}
-
 function isCanCentroids(point, centroids) {
     for (let i = 0; i < centroids.length; i++) {
         if (centroids[i].x == point.x & centroids[i].y == point.y) {
@@ -170,4 +152,8 @@ function isCanCentroids(point, centroids) {
     }
 
     return true;
+}
+
+function Copy(obj) {
+    return new Point(obj.x, obj.y, obj.cluster);
 }

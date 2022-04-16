@@ -1,12 +1,13 @@
 import { startkMeans } from "./kMeans.js";
 import { startDBSCAN } from "./DBSCAN.js";
-import { startGraph } from "./Graph.js";
+import { startGraph } from "../scripts/graph2.js";
 import { showOldPoints } from "./canvas_handler.js";
 import { activeMode } from "./main.js";
 
 export {
     buttonsHandler,
     buttonsRenderEvent,
+    buttonsRender,
     disableButtons,
     enableButtons
 }
@@ -30,11 +31,6 @@ function buttonsHandler(activeNumber, e) {
 
     } else if (activeMode.value === 5) {
         buttonsRender();
-        startGraph();
-        buttonsRender();
-
-    } else if (activeMode.value === 6) {
-        buttonsRender();
         showOldPoints();
         buttonsRender();
     }
@@ -52,7 +48,7 @@ function buttonsRenderEvent(e) {
         } else if (e.target.id === 'remove_point' && activeMode.value != 2) {
             document.getElementById('remove_point').style.backgroundColor = COLOR_UNACTIVE;
 
-        } else if (e.target.id === 'show_old_points' && activeMode.value != 3) {
+        } else if (e.target.id === 'show_old_points' && activeMode.value != 5) {
             document.getElementById('show_old_points').style.backgroundColor = COLOR_UNACTIVE;
 
         } else if (e.target.id === 'clear') {
@@ -64,9 +60,6 @@ function buttonsRenderEvent(e) {
         } else if (e.target.id === 'DBSCAN') {
             document.getElementById('DBSCAN').style.backgroundColor = COLOR_UNACTIVE;
 
-        } else if (e.target.id === 'Graph') {
-            document.getElementById('Graph').style.backgroundColor = COLOR_UNACTIVE;
-
         }
     }
 }
@@ -77,7 +70,6 @@ function buttonsRender() {
         document.getElementById('remove_point').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('kMeans').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('DBSCAN').style.backgroundColor = COLOR_UNACTIVE;
-        document.getElementById('Graph').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('show_old_points').style.backgroundColor = COLOR_UNACTIVE;
 
     } else if (activeMode.value === 1) {
@@ -85,7 +77,6 @@ function buttonsRender() {
         document.getElementById('remove_point').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('kMeans').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('DBSCAN').style.backgroundColor = COLOR_UNACTIVE;
-        document.getElementById('Graph').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('show_old_points').style.backgroundColor = COLOR_UNACTIVE;
 
     } else if (activeMode.value === 2) {
@@ -93,7 +84,6 @@ function buttonsRender() {
         document.getElementById('remove_point').style.backgroundColor = COLOR_ACTIVE;
         document.getElementById('kMeans').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('DBSCAN').style.backgroundColor = COLOR_UNACTIVE;
-        document.getElementById('Graph').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('show_old_points').style.backgroundColor = COLOR_UNACTIVE;
 
     } else if (activeMode.value === 3) {
@@ -101,7 +91,6 @@ function buttonsRender() {
         document.getElementById('remove_point').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('kMeans').style.backgroundColor = COLOR_ACTIVE;
         document.getElementById('DBSCAN').style.backgroundColor = COLOR_UNACTIVE;
-        document.getElementById('Graph').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('show_old_points').style.backgroundColor = COLOR_UNACTIVE;
 
     } else if (activeMode.value === 4) {
@@ -109,7 +98,6 @@ function buttonsRender() {
         document.getElementById('remove_point').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('kMeans').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('DBSCAN').style.backgroundColor = COLOR_ACTIVE;
-        document.getElementById('Graph').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('show_old_points').style.backgroundColor = COLOR_UNACTIVE;
 
     } else if (activeMode.value === 5) {
@@ -117,27 +105,24 @@ function buttonsRender() {
         document.getElementById('remove_point').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('kMeans').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('DBSCAN').style.backgroundColor = COLOR_UNACTIVE;
-        document.getElementById('Graph').style.backgroundColor = COLOR_ACTIVE;
-        document.getElementById('show_old_points').style.backgroundColor = COLOR_UNACTIVE;
-
-    } else if (activeMode.value === 6) {
-        document.getElementById('add_point').style.backgroundColor = COLOR_UNACTIVE;
-        document.getElementById('remove_point').style.backgroundColor = COLOR_UNACTIVE;
-        document.getElementById('kMeans').style.backgroundColor = COLOR_UNACTIVE;
-        document.getElementById('DBSCAN').style.backgroundColor = COLOR_UNACTIVE;
-        document.getElementById('Graph').style.backgroundColor = COLOR_UNACTIVE;
         document.getElementById('show_old_points').style.backgroundColor = COLOR_ACTIVE;
     }
 }
 
 function disableButtons() {
     document.getElementById('add_point').disabled = true;
-    document.getElementById('kMeans').disabled = true;
+    document.getElementById('remove_point').disabled = true;
+    document.getElementById('show_old_points').disabled = true;
     document.getElementById('getClusters').disabled = true;
+    document.getElementById('kMeans').disabled = true;
+    document.getElementById('DBSCAN').disabled = true;
 }
 
 function enableButtons() {
     document.getElementById('add_point').disabled = false;
-    document.getElementById('kMeans').disabled = false;
+    document.getElementById('remove_point').disabled = false;
+    document.getElementById('show_old_points').disabled = false;
     document.getElementById('getClusters').disabled = false;
+    document.getElementById('kMeans').disabled = false;
+    document.getElementById('DBSCAN').disabled = false;
 }
