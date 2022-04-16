@@ -1,5 +1,5 @@
 //анимация позаимствована отсюда: https://codepen.io/Tbgse/pen/dYaJyJ
-consoleText(['ОПИСАНИЕ.', 'ИНФОРМАЦИЯ О ПРОЕКТЕ'], 'text', ['black']);
+consoleText(['ОПИСАНИЕ', 'ИНФОРМАЦИЯ О ПРОЕКТЕ'], 'text', ['black']);
 
 function consoleText(words, id, colors) {
     var visible = true;
