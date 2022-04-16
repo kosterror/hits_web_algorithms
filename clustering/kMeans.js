@@ -6,7 +6,6 @@ import {
 } from "./canvas_handler.js";
 
 import {
-    buttonsRender,
     disableButtons,
     enableButtons
 } from "./buttons_handler.js";
@@ -39,7 +38,7 @@ function startkMeans() {
 
 function kMeans(points) {
     let centroids = [];
-    points = findFirstCentroids(points.slice(), centroids) //create array the first centroids
+    points = findFirstCentroids(deepCopy(points), centroids) //create array the first centroids
 
     let counter = 0;
     while (counter < 100) {
