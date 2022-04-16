@@ -17,9 +17,9 @@ let activeMode = VIEW_MODE;
 let isMouseDown;
 
 let inputMatrix = new Array(PIXEL_PER_SIDE);
-for(var i = 0; i<PIXEL_PER_SIDE; i++) {
+for(let i = 0; i<PIXEL_PER_SIDE; i++) {
     inputMatrix[i] = new Array(PIXEL_PER_SIDE);
-    for(var j = 0 ; j<PIXEL_PER_SIDE; j++) {
+    for(let j = 0 ; j<PIXEL_PER_SIDE; j++) {
         inputMatrix[i][j] = 0;
     }
 }
@@ -48,25 +48,25 @@ function stopDrawing() {
 function handler(event) {
     //ANSWER_TEXT.value = 'Ответ: ' + makeGuess(inputMatrix);
     if(activeMode != VIEW_MODE){
-        var pixelSize = Math.ceil(CANVAS_SIZE/PIXEL_PER_SIDE);
+        let pixelSize = Math.ceil(CANVAS_SIZE/PIXEL_PER_SIDE);
         let x = event.offsetX;
         let y = event.offsetY;
         x = x - (x % pixelSize);
         y = y - (y % pixelSize);
         if(activeMode == PEN_MODE){ 
-            var color = "black";
+            let color = "black";
             draw(x, y, color, PEN_WIDTH, pixelSize, activeMode);
         }
         if(activeMode == ERASER_MODE) { 
-            var color = "white";
+            let color = "white";
             draw(x, y, color, ERASER_WIDTH, pixelSize, activeMode);
         }
     }
 }
 function draw(x, y, color, width, pixelSize, mode) {
     ctx.fillStyle = color;
-    for(var i = 0; i<width; i++) {
-        for(var j = 0; j<width; j++) {
+    for(let i = 0; i<width; i++) {
+        for(let j = 0; j<width; j++) {
             if(inMatrix(x + i*pixelSize, y + j*pixelSize)) {
                 ctx.fillRect(x + i*pixelSize, y + j*pixelSize, pixelSize, pixelSize);
                 inputMatrix[parseInt(y/pixelSize + j)][parseInt(x/pixelSize + i)] = mode;
@@ -87,8 +87,8 @@ function inMatrix(x, y, pixel) {
 function flush() {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-    for(var i = 0; i<PIXEL_PER_SIDE; i++) {
-        for(var j = 0; j<PIXEL_PER_SIDE; j++) {
+    for(let i = 0; i<PIXEL_PER_SIDE; i++) {
+        for(let j = 0; j<PIXEL_PER_SIDE; j++) {
             inputMatrix[i][j] = 0;
         }
     }

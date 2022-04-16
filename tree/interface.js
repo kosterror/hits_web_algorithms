@@ -5,7 +5,7 @@ const FILE = document.getElementById('file_input');
 let flag = true;
 document.getElementById('input_data').value = "TANG,ON DINH,CAO,TB"
 buildTree(getData(3));
-var treeRoot = document.getElementById("root");
+let treeRoot = document.getElementById("root");
 
 function createTree() {
     treeRoot = removeTree();

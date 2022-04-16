@@ -9,7 +9,7 @@ function initNN() {
     layers = new Array(countLayers);
     weights = getWeight();
     layersSize = [28*28 , 48, 10];
-    for(var i = 0; i<countLayers; i++) {
+    for(let i = 0; i<countLayers; i++) {
         layers[i] = new Array(layersSize[i]);
     }
     clearMatrix(layers);
@@ -25,10 +25,10 @@ function clearMatrix(matrix) {
 }
 
 function makeGuess(input) {
-    var k = 0;
+    let k = 0;
     clearMatrix(layers);
-    for(var i = 0; i<input.length; i+=2) {
-        for(var j = 0; j<input[i].length; j+=2) {
+    for(let i = 0; i<input.length; i+=2) {
+        for(let j = 0; j<input[i].length; j+=2) {
             layers[0][k] = (input[i][j] + input[i+1][j] + input[i][j+1] + input[i+1][j+1])/4;
             k++;
         }
@@ -36,9 +36,9 @@ function makeGuess(input) {
 
     forwardFeed()
 
-    var max = -1;
-    var answer;
-    for(var i = 0; i<layersSize[countLayers-1]; i++) {
+    let max = -1;
+    let answer;
+    for(let i = 0; i<layersSize[countLayers-1]; i++) {
         if(max<layers[countLayers-1][i]) {
             max = layers[countLayers-1][i];
             answer = i;
@@ -48,9 +48,9 @@ function makeGuess(input) {
 }
 
 function forwardFeed() {
-    for(var i = 1; i<countLayers; i++) {
-        for(var j = 0; j<layersSize[i]; j++) {
-            for(var k = 0; k<layersSize[i-1]; k++) {
+    for(let i = 1; i<countLayers; i++) {
+        for(let j = 0; j<layersSize[i]; j++) {
+            for(let k = 0; k<layersSize[i-1]; k++) {
                 layers[i][j] += layers[i-1][k]*weights[i-1][k][j];
             }
             layers[i][j] = activateFun(layers[i][j]);

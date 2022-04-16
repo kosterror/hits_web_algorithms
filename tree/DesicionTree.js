@@ -97,8 +97,8 @@ function buildTree(data) {
 function growBranch(currentNode) { 
     currentNode.branches = getArrayOfBranches(currentNode.data);
     for(let i = 0; i<currentNode.branches.length; i++) {
-        var nextNode = currentNode.branches[i];
-        for(var j = 0; j < currentNode.data.length; j++) {
+        let nextNode = currentNode.branches[i];
+        for(let j = 0; j < currentNode.data.length; j++) {
             if((j === 0) || (currentNode.data[j][currentNode.branches[i].atributeNumber] === currentNode.branches[i].nodeName)) {
                 nextNode.data[nextNode.data.length] = []
                 for(let k = 0; k<currentNode.data[j].length; k++) {
@@ -118,7 +118,7 @@ function getArrayOfBranches(data) {
     let atr = getUniqueAtributes(getColumnInMatrix(data, getIndexOfMaxElement(gain)));
     let branches = [];
 
-    for (var i = 1; i < atr.length; i++) {
+    for (let i = 1; i < atr.length; i++) {
         branches[i-1] = new Node(atr[i], data[0][getIndexOfMaxElement(gain)], getIndexOfMaxElement(gain));
         if (gain.length === 1) {
             branches[i-1].nodeName = data[1][data[0].length - 1];
@@ -130,7 +130,7 @@ function getArrayOfBranches(data) {
 function getIndexOfMaxElement(array) {
     let max = -1;
     let ind;
-    for (var i = 0; i < array.length; i++) {
+    for (let i = 0; i < array.length; i++) {
         if (max <= array[i]) {
             max = array[i];
             ind = i;
@@ -174,7 +174,7 @@ function calculateEntropy(data) {
     for(let i = 0; i<data[0].length - 1; i++) {
         let unique = countningUniqeAtributesByResult(getColumnInMatrix(data, i), getColumnInMatrix(data, data[0].length - 1));
         entropy[i] = [];
-        for(var j = 1; j<unique.length; j++) {
+        for(let j = 1; j<unique.length; j++) {
             let positive = unique[j][1] / (unique[j][1] + unique[j][2]);
             // number in log2 is need because positive or negative can be 0
             positive = - positive * Math.log2(positive + 0.0000001);
