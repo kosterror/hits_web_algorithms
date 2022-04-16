@@ -123,11 +123,6 @@ function moveRubber(rubber) {
     rubber.x = rubber.x + step[1] * (direction == 1) - step[3] * (direction == 3);
     rubber.y = rubber.y - step[0] * (direction == 0) + step[2] * (direction == 2);
 
-    if (0 > rubber.x || rubber.x >= SIZE || 0 > rubber.y || rubber.y >= SIZE) {
-        console.log('Выход за границы карты при генерации лабиринта');
-    }
-
-
     if (matrix[rubber.y][rubber.x] == -1) {
         matrix[rubber.y][rubber.x] = 0;
 
