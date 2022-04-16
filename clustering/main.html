@@ -52,8 +52,10 @@
             <input type="button" class="button" id="remove_point" value="Удалить точки">
             <input type="button" class="button" id="show_old_points" value="Сделать точки чёрными">
             <input type="button" class="button" id="clear" value="Сбросить всё">
-            <input type="number" class="button2" id="getClusters" min="1" max="27" step="1" value="3">
-            <input type="button" class="button3" id="kMeans" value="Запуск метода k-means">
+            <div id="button-wrapper">
+                <input type="number" id="getClusters" min="1" max="27" step="1" value="3">
+                <input type="button" id="kMeans" value="Запуск метода k-means">
+            </div>
             <input type="button" class="button" id="DBSCAN" value="Запуск метода DBSCAN">
         </div>
 
